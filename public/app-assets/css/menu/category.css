@@ -1,0 +1,39 @@
+
+.transh-icon-color{
+	color: red;
+}
+.btn-sm-search{
+	border-color:red;
+	color:red;
+	background-color: white;
+	width:75px; 
+	height:38px;
+	
+}
+.btn-sm-add{
+	height:38px;
+	width:96px;
+}
+  .explore-Row td {
+    padding: 0 !important;
+}
+.hiddenRow{
+   background-color:#F7F7F7
+}
+.table .table {
+    background-color: #FFF;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+     background-color: #fff; 
+}
+
+.table .table tbody tr td:nth-child(1) {
+   width: 25%;
+} 
+.dropdown  .dropdown-toggle::after{
+	display: none;
+}
+
+.form-group-right {
+    padding: 5px;
+}

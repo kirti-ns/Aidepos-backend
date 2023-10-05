@@ -1,0 +1,352 @@
+CRITICAL - 2023-06-20 07:57:26 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 07:57:55 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 07:58:11 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 07:58:54 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 07:59:49 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 08:02:27 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 08:03:58 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 08:05:00 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 08:05:02 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 08:06:01 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 08:06:45 --> Call to undefined function App\Controllers\getSessionData()
+in APPPATH/Controllers/DashboardController.php on line 43.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 08:42:12 --> Invalid file: "pages/purchases/purchase_order_js.php"
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 33.
+ 1 SYSTEMPATH/View/View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1180): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/includes/footer.php(379): view()
+ 4 SYSTEMPATH/View/View.php(224): include('/www/wwwroot/enterpro.net/aidepos-new/app/Views/includes/footer.php')
+ 5 SYSTEMPATH/View/View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1180): CodeIgniter\View\View->render()
+ 7 APPPATH/Libraries/Template.php(11): view()
+ 8 APPPATH/Controllers/DashboardController.php(137): App\Libraries\Template->render()
+ 9 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+10 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+11 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+12 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 08:42:36 --> Invalid file: "pages/purchases/purchase_order_js.php"
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 33.
+ 1 SYSTEMPATH/View/View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1180): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/includes/footer.php(379): view()
+ 4 SYSTEMPATH/View/View.php(224): include('/www/wwwroot/enterpro.net/aidepos-new/app/Views/includes/footer.php')
+ 5 SYSTEMPATH/View/View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1180): CodeIgniter\View\View->render()
+ 7 APPPATH/Libraries/Template.php(11): view()
+ 8 APPPATH/Controllers/DashboardController.php(137): App\Libraries\Template->render()
+ 9 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\DashboardController->index()
+10 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+11 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+12 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 08:47:28 --> Class 'App\Models\GiftCardMasterModel' not found
+in APPPATH/Controllers/CustomersController.php on line 20.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\CustomersController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 157.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 224.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractPayment()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 444.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getCompletedLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:35 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 157.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:35 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:35 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 224.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractPayment()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:35 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:35 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:08:35 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 444.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getCompletedLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:13:26 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 157.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:13:26 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 224.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractPayment()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:13:26 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:13:26 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:13:26 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:13:26 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 444.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getCompletedLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:04 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 157.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:04 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 224.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractPayment()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:04 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 444.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getCompletedLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:04 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:04 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:04 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:16 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 157.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:16 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:16 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 224.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractPayment()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:16 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 444.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getCompletedLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:16 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:16 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 224.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractPayment()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 157.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:14:25 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 444.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getCompletedLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:20:21 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 157.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:20:21 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 224.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractPayment()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:20:21 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:20:21 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:20:21 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 444.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getCompletedLaybyContract()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-06-20 09:20:21 --> Class 'App\Models\ContractTransactionModel' not found
+in APPPATH/Controllers/LayByController.php on line 296.
+ 1 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\LayByController->getLaybyContractTxn()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()

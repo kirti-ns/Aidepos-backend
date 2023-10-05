@@ -1,0 +1,16 @@
+
+.transh-icon-color{
+	color: #FF5252;
+}
+.td-paid ,.td-approved{
+	color: #05C1A0;
+}
+.td-unpaid ,.td-pending{
+	color: rgba(249, 147, 1, 1);
+}
+.td-cancelled ,.td-rejected{
+	color: rgba(255, 69, 69, 1);
+}
+.dropdown-toggle::after{
+	padding: 0px 0px 0px 0px !important;
+}

@@ -1,0 +1,35 @@
+.card .card-title {
+	font-size: 15px!important;
+	margin: 0px;
+    text-align: justify;
+}
+.nav.nav-tabs.nav-underline .nav-item a.nav-link.active h4 span{
+    color: #F05624;
+    background-color: transparent;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+}
+.card-title span:hover {
+    color: #F05624;
+    background-color: transparent;
+}
+
+.card-title small {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #767676;
+}
+/*.border-right{
+	border-right: 2px solid #E8E8E8!important;
+}*/
+.uploadOuter input[type="file"],.send_mail input[type="file"] {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  top: 0;
+  left: 0;
+}
+

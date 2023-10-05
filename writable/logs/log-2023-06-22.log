@@ -1,0 +1,27 @@
+ERROR - 2023-06-22 20:15:56 --> mysqli_sql_exception: FUNCTION aidepos_db.JSON_EXTRACT does not exist in /www/wwwroot/enterpro.net/system/Database/MySQLi/Connection.php:295
+Stack trace:
+#0 /www/wwwroot/enterpro.net/system/Database/MySQLi/Connection.php(295): mysqli->query()
+#1 /www/wwwroot/enterpro.net/system/Database/BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute()
+#2 /www/wwwroot/enterpro.net/system/Database/BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery()
+#3 /www/wwwroot/enterpro.net/system/Database/BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query()
+#4 /www/wwwroot/enterpro.net/system/Model.php(241): CodeIgniter\Database\BaseBuilder->get()
+#5 /www/wwwroot/enterpro.net/system/BaseModel.php(618): CodeIgniter\Model->doFindAll()
+#6 /www/wwwroot/enterpro.net/app/Controllers/ItemsController.php(216): CodeIgniter\BaseModel->findAll()
+#7 /www/wwwroot/enterpro.net/system/CodeIgniter.php(932): App\Controllers\ItemsController->EditModifier()
+#8 /www/wwwroot/enterpro.net/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#9 /www/wwwroot/enterpro.net/system/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+#10 /www/wwwroot/enterpro.net/index.php(67): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-06-22 20:15:56 --> FUNCTION aidepos_db.JSON_EXTRACT does not exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 295.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(295): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query()
+ 5 SYSTEMPATH/Model.php(241): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH/BaseModel.php(618): CodeIgniter\Model->doFindAll()
+ 7 APPPATH/Controllers/ItemsController.php(216): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH/CodeIgniter.php(932): App\Controllers\ItemsController->EditModifier()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest()
+11 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()

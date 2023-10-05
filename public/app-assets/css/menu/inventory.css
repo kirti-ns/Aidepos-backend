@@ -1,0 +1,35 @@
+.modal-footer{
+	border-top: none;
+}
+#inventory-form .new-row td,#production-tbl .new-row td {
+	    padding: 0px 0px 0px 0px;
+
+}
+#inventory-form .inventory-id {
+	padding: 0.5rem!important;
+}
+/*Ruchika*/
+  .explore-Row td {
+    padding: 0 !important;
+}
+.hiddenRow{
+   background-color:#F7F7F7
+}
+.table .table {
+    background-color: #FFF;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+     background-color: #fff; 
+}
+.table .table tbody tr td:nth-child(1) {
+   width: 25%;
+} 
+.dropdown  .dropdown-toggle::after{
+	display: none;
+}
+.form-group-right {
+    padding: 5px;
+}
+.td-audit{
+	color: darkred;
+}

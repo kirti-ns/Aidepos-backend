@@ -1,0 +1,27 @@
+
+.adjustment{
+	border: 1px dashed #D4D4D4;
+}
+.border .border-info{
+	border-bottom-color: #F05624!important;
+    border-top-color: #F05624!important;
+    border-right-color: #F05624!important;
+    border-left-color: #F05624!important;
+}
+.discount,.discount_type {
+	    width: 48%!important;
+	    display: initial;
+}
+.form-footer-center{
+	margin-top: 10px;
+}
+.amount-footer{
+	width: 80%;
+    display: initial;
+}
+
+
+/*Sales*/
+.store-name{
+	display: grid;
+}
