@@ -653,6 +653,50 @@
                                      <?= StatusInput(isset($value['status']) ? $value['status'] : '1') ?>
                                     </div>
                                   </div>
+
+
+                              <br><br>
+                              <h5 class="text-bold-500">Item Specification</h5>
+                              <div class="row pt-1">
+                                  <div class="col-md-12">
+                                    <table class="table br-table" id="br-table">
+                                      <thead class="threadClass">
+                                        <th>Specification</th>
+                                        <th>Barcode</th>
+                                        <th>Unit</th>
+                                        <th>Coefficient</th>
+                                        <th>Action</th>
+                                      </thead>
+                                      <tbody>
+                                        <tbody>
+                                          <?php if(isset($value['barcode_specification']) && !empty($value['barcode_specification'])) { 
+                                            $bJson = json_decode($value['barcode_specification']);
+                                            foreach($bJson as $k => $v) {
+                                          ?>
+                                          <tr class="new-row">
+                                           <td><input type="text" name="br[<?= $k+1 ?>][specification]" class="form-control" value="<?=$v->specification?>"></td>
+                                           <td><input type="text" name="br[<?= $k+1 ?>][barcode]" class="form-control" value="<?=$v->barcode?>"></td>
+                                           <td><input type="text" name="br[<?= $k+1 ?>][unit]" class="form-control" value="<?=$v->unit?>"></td>
+                                           <td><input type="text" name="br[<?= $k+1 ?>][coefficient]" class="form-control" value="<?=$v->coefficient?>"></td>
+                                           <td></td>
+                                          </tr>
+                                        <?php } } else { ?>
+                                          <tr class="new-row">
+                                           <td><input type="text" name="br[0][specification]" class="form-control"></td>
+                                           <td><input type="text" name="br[0][barcode]" class="form-control"></td>
+                                           <td><input type="text" name="br[0][unit]" class="form-control"></td>
+                                           <td><input type="text" name="br[0][coefficient]" class="form-control"></td>
+                                           <td></td>
+                                         </tr>
+                                       <?php } ?>
+                                        </tbody>
+                                      </tbody>
+                                    </table>
+                                    <div class="col-12">
+                                        <button  onclick="addBarcodeSpec();" data-repeater-create type="button" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add</button>
+                                     </div>
+                                  </div>
+                              </div>
                               </div>
                               <div class="col-4">
                                  <p class="text-bold-400">Item Image</p>
@@ -1225,6 +1269,51 @@
                                         <button type="button" class="btn" style="width:100%;" data-target="#select-modifiers-item" data-toggle="modal">Modifiers</button>
                                         <input type="hidden" class="u-modifiers" name="modifier_id" value='<?= isset($value['modifier_id']) && $type==3?$value['modifier_id']:"" ?>'>
                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                      <br><br>
+                                      <h5 class="text-bold-500">Item Specification</h5>
+                                      <div class="row pt-1">
+                                          <div class="col-md-12">
+                                            <table class="table br-table" id="br-table">
+                                              <thead class="threadClass">
+                                                <th>Specification</th>
+                                                <th>Barcode</th>
+                                                <th>Unit</th>
+                                                <th>Coefficient</th>
+                                                <th>Action</th>
+                                              </thead>
+                                              <tbody>
+                                                <tbody>
+                                                  <?php if(isset($value['barcode_specification']) && !empty($value['barcode_specification'])) { 
+                                                    $bJson = json_decode($value['barcode_specification']);
+                                                    foreach($bJson as $k => $v) {
+                                                  ?>
+                                                  <tr class="new-row">
+                                                   <td><input type="text" name="br[<?= $k+1 ?>][specification]" class="form-control" value="<?=$v->specification?>"></td>
+                                                   <td><input type="text" name="br[<?= $k+1 ?>][barcode]" class="form-control" value="<?=$v->barcode?>"></td>
+                                                   <td><input type="text" name="br[<?= $k+1 ?>][unit]" class="form-control" value="<?=$v->unit?>"></td>
+                                                   <td><input type="text" name="br[<?= $k+1 ?>][coefficient]" class="form-control" value="<?=$v->coefficient?>"></td>
+                                                   <td></td>
+                                                  </tr>
+                                                <?php } } else { ?>
+                                                  <tr class="new-row">
+                                                   <td><input type="text" name="br[0][specification]" class="form-control"></td>
+                                                   <td><input type="text" name="br[0][barcode]" class="form-control"></td>
+                                                   <td><input type="text" name="br[0][unit]" class="form-control"></td>
+                                                   <td><input type="text" name="br[0][coefficient]" class="form-control"></td>
+                                                   <td></td>
+                                                 </tr>
+                                               <?php } ?>
+                                                </tbody>
+                                              </tbody>
+                                            </table>
+                                            <div class="col-12">
+                                                <button  onclick="addBarcodeSpec();" data-repeater-create type="button" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add</button>
+                                             </div>
+                                          </div>
+                                      </div>
                                     </div>
                                     <!-- <div class="col-md-4">
                                        <div class="form-floating">

@@ -77,6 +77,7 @@ $routes->post('/items/getUom','ItemsController::getUom');
 $routes->post('/items/getBrand','ItemsController::getBrand');
 $routes->post('/items/getVariants','ItemsController::getVariants');
 $routes->post('/items/getLocation','ItemsController::getLocation');
+$routes->post('/items/getExpiryItems','ItemsController::getExpiryItems');
 $routes->post('/items/getItemDataById','ItemsController::getItemDataById');
 $routes->post('getItemsByCategoryId','ItemsController::getItemsByCategoryId');
 $routes->get('searchItems','ItemsController::searchItems');

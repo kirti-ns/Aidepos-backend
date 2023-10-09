@@ -37,6 +37,9 @@
                         <li class="nav-item">
                             <a class="nav-link" id="linkIcon12-tab9" data-toggle="tab" href="#variants" aria-controls="linkIcon12" aria-expanded="false">Variant</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="linkIcon12-tab9" data-toggle="tab" href="#expiration-date" aria-controls="linkIcon12" aria-expanded="false">Expiration Date</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -759,6 +762,61 @@
                                                                 <th>ID</th>
                                                                 <th>Variant Name</th>
                                                                 <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="expiration-date" aria-labelledby="activeIcon12-tab9" aria-expanded="true">
+                    <form class="filterExpire">
+                        <section class="mb-1 filter-bar">
+                            <div class="filter-bar-item" style="flex-grow: 1;">
+                                <span>
+                                    <input type="text" placeholder="Search" name="match[search]" class="form-control purchase-search searchDtField" value="" />
+                                    <div class="form-control-position">
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="filter-bar-item">
+                                <span><button id="exSubmit" type="button" class="btn btn-outline-info btn-sm">Search</button></span>
+                            </div>
+                        </section>
+                    </form>
+                    <div class="card card-content collapse show">
+                        <div class="card-body card-dashboard">
+                            <section id="configuration">
+                                <div class="col-12">
+                                    <div class="status-div"><span class="active-span"></span><span> Active</span> <span class="inactive-span"></span><span> Inactive</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-content collapse show">
+                                                <div class="card-body card-dashboard">
+                                                    <table id="expiry-dt-table" class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Store</th>
+                                                                <th>Location</th>
+                                                                <th>Item Name</th>
+                                                                <th>SKU</th>
+                                                                <!-- <th>Cost</th> -->
+                                                                <th>Inventory Qty</th>
+                                                                <th>Lot No.</th>
+                                                                <th>DOM</th>
+                                                                <th>Expiry Date</th>
+                                                                <th>Remaining Days to Expire</th>
+                                                                <th>Overdue Reminder Days</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody></tbody>

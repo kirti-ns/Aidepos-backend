@@ -1308,7 +1308,91 @@
           e.preventDefault();
           varTbl.draw();
         });
+        var exTbl = $('#expiry-dt-table').DataTable({
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            dom: "<'row'<'col-sm-12'tr>>" +
+            "<'row rowDt'<'col-sm-6 colDt'><'col-sm-4'i><'col-sm-2'p>>",
+            'ajax': {
+               'url':"<?=base_url('items/getExpiryItems')?>",
+               'data': function(data){
+                var obj = $("form.filterExpire").serializeArray();
+                
+                data["advFilter"] = {};
+                $.each(obj, function(k, v){
+                  var aFName = v.name.replaceAll("]", "").split("[");;
+                  switch(aFName.length){
+                    case 1:
+                      data["advFilter"][aFName[0]] = v.value;
+                      break;
+                    case 2:
+                      if(data["advFilter"][aFName[0]] == undefined){
+                        data["advFilter"][aFName[0]] = {};
+                      }
+                      data["advFilter"][aFName[0]][aFName[1]] = v.value;
+                      break;
+                  }
+                });
+                
+                  // CSRF Hash
+                  var csrfName = $('.txt_csrfname').attr('name'); // CSRF Token name
+                  var csrfHash = $('.txt_csrfname').val(); // CSRF hash
 
+                  return {
+                    data: data,
+                    [csrfName]: csrfHash // CSRF Token
+                  };
+               },
+               dataSrc: function(data){
+                  
+                  // Update token hash
+                  $('.txt_csrfname').val(data.token);
+
+                  // Datatable data
+                  return data.aaData;
+               }
+            },
+            columnDefs: [
+              { "orderable": false, "targets": 0 },
+              {
+                 "defaultContent": "-",
+                 "targets": "_all"
+              }
+            ],
+            createdRow: function(row, data, dataIndex ) {
+              var c0 = dataIndex+1;
+              var c1 = data.store_name;
+              var c2 = data.location_description;
+              var c3 = data.item_name;
+              var c4 = data.sku_barcode;
+              // var c5 = data.retail_price;
+              var c6 = data.qty;
+              var c7 = data.lot_no;
+              var c8 = data.dom;
+              var c9 = data.expiry_date;
+              var c10 = data.remaining_days;
+              var c11 = data.overdue_days;
+              
+              $(row).children().eq(0).html(c0);
+              $(row).children().eq(1).html(c1);
+              $(row).children().eq(2).html(c2);
+              $(row).children().eq(3).html(c3);
+              $(row).children().eq(4).html(c4);
+              // $(row).children().eq(5).html(c5);
+              $(row).children().eq(5).html(c6);
+              $(row).children().eq(6).html(c7);
+              $(row).children().eq(7).html(c8);
+              $(row).children().eq(8).html(c9);
+              $(row).children().eq(9).html(c10);
+              $(row).children().eq(10).html(c11);
+              
+            }
+      });
+        $(document).on("click", "#exSubmit", function(e){
+              e.preventDefault();
+              exTbl.draw();
+          });
         var locationTbl = $('#location-tbl').DataTable({
             'processing': true,
             'serverSide': true,

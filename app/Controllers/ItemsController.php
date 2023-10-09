@@ -2288,7 +2288,109 @@ class ItemsController extends BaseController
 
        return $this->response->setJSON($response);
     }
-    
+    public function getExpiryItems()
+    {
+        $request = service('request');
+        $postData = $request->getPost();
+        $dtpostData = $postData['data'];
+        $response = array();
+        $sessData = getSessionData();
+
+        $db = db_connect();
+
+        $sql = 'SELECT
+                i.item_name,
+                i.sku_barcode,
+                s.store_name,
+                l.location_description,
+                id.qty,
+                id.lot_no,
+                id.dom,
+                id.expiry_date,
+                DATEDIFF(id.expiry_date, CURDATE()) AS remaining_days
+                FROM
+                current_inventory_details id
+                JOIN
+                current_inventory iv ON id.current_inventory_id = iv.id
+                JOIN
+                items i ON iv.item_id = i.id
+                JOIN
+                location l ON iv.location_id = l.id
+                JOIN
+                stores s ON iv.store_id = s.id
+                WHERE
+                id.qty > 0
+                AND id.expiry_date >= CURDATE()
+                AND id.expiry_date <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH)';
+        $query = $db->query($sql)->getResult();
+
+        $sql2 = 'SELECT
+                i.item_name,
+                i.sku_barcode,
+                s.store_name,
+                l.location_description,
+                id.qty,
+                id.lot_no,
+                id.dom,
+                id.expiry_date,
+                DATEDIFF(CURDATE(), id.expiry_date) as overdue_days
+            FROM
+                current_inventory_details id
+            JOIN
+                current_inventory iv ON id.current_inventory_id = iv.id
+            JOIN
+                items i ON iv.item_id = i.id
+            JOIN
+                stores s ON iv.store_id = s.id
+            JOIN
+                location l ON iv.location_id = l.id
+            WHERE
+                id.qty > 0
+                AND id.expiry_date <= CURDATE()';
+        $query2 = $db->query($sql2)->getResult();
+
+        $data = [];
+        foreach($query as $k => $v) {
+            $list['store_name'] = $v->store_name;
+            $list['location_description'] = $v->location_description;
+            $list['item_name'] = $v->item_name;
+            $list['sku_barcode'] = $v->sku_barcode;
+            $list['qty'] = $v->qty;
+            $list['lot_no'] = $v->lot_no;
+            $list['dom'] = $v->dom;
+            $list['expiry_date'] = $v->expiry_date;
+            $list['remaining_days'] = $v->remaining_days;
+            $list['overdue_days'] = '-';
+            $data[] = $list;
+        }
+
+        foreach($query2 as $k => $v) {
+            $list['store_name'] = $v->store_name;
+            $list['location_description'] = $v->location_description;
+            $list['item_name'] = $v->item_name;
+            $list['sku_barcode'] = $v->sku_barcode;
+            $list['qty'] = $v->qty;
+            $list['lot_no'] = $v->lot_no;
+            $list['dom'] = $v->dom;
+            $list['expiry_date'] = $v->expiry_date;
+            $list['remaining_days'] = '-'.$v->overdue_days;           
+            $list['overdue_days'] = $v->overdue_days;
+            $data[] = $list;
+        }
+
+        $totalRecords = count($data);
+
+        ## Response
+        $response = array(
+          "draw" => 10,
+          "iTotalRecords" => $totalRecords,
+          "iTotalDisplayRecords" => $totalRecords,
+          "aaData" => $data,
+          "token" => csrf_hash() // New token hash
+        );
+
+       return $this->response->setJSON($response);
+    }
     public function getMasterItemsList($id)
     {
         $cm = new ItemMasterModel();
