@@ -1,42 +1,361 @@
-INFO - 2023-09-01 01:17:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 01:17:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 02:20:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 02:26:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 02:26:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 03:31:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 03:31:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 04:10:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 04:10:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 05:59:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 05:59:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 07:33:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 07:33:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 07:33:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 07:34:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 08:30:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 10:09:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 10:09:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 10:09:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 10:09:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 10:59:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 11:28:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 12:12:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 12:12:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 12:22:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 12:43:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 12:43:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 13:55:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 13:55:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 13:56:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 13:56:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 13:57:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 13:57:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 17:12:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 17:12:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 18:53:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 18:53:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 19:37:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 19:37:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 19:48:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 21:16:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
-INFO - 2023-09-01 21:16:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:26:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:26:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:26:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:26:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:26:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:26:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:26:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:26:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:46:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:46:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:46:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:46:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:46:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:46:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:46:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:46:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2023-09-01 04:46:58 --> mysqli_sql_exception: Unknown column 'location.location_name' in 'field list' in C:\xampp\htdocs\enterpro\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\enterpro\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT `goods_r...', 0)
+#1 C:\xampp\htdocs\enterpro\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `goods_r...')
+#2 C:\xampp\htdocs\enterpro\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `goods_r...')
+#3 C:\xampp\htdocs\enterpro\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `goods_r...', Array, false)
+#4 C:\xampp\htdocs\enterpro\system\Model.php(268): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\enterpro\system\BaseModel.php(656): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\enterpro\app\Models\GoodsReceivedModel.php(58): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\enterpro\app\Controllers\PurchasesController.php(435): App\Models\GoodsReceivedModel->getGoodsReceivedDataById('1')
+#8 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(932): App\Controllers\PurchasesController->View_Goods_Received('1')
+#9 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PurchasesController))
+#10 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\enterpro\index.php(67): CodeIgniter\CodeIgniter->run()
+#12 {main}
+CRITICAL - 2023-09-01 04:46:58 --> Unknown column 'location.location_name' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT `goods_received`.*, `purchaseorders`.`is_include_tax`, `purchaseorders`.`order_number`, `purchaseorders`.`store_id`, `purchaseorders`.`supplier_id`, `purchaseorders`.`due_date`, `purchaseorders`.`terms`, `currencies`.`currency_code`, `purchaseorders`.`currency_rate`, `stores`.`store_name`, `suppliers`.`registered_name` as `supplier_name`, `location`.`location_name`
+FROM `goods_received`
+JOIN `purchaseorders` ON `purchaseorders`.`id` = `goods_received`.`p_o_id`
+LEFT JOIN `currencies` ON `purchaseorders`.`currency_id` = `currencies`.`id`
+LEFT JOIN `stores` ON `purchaseorders`.`store_id` = `stores`.`id`
+LEFT JOIN `location` ON `goods_received`.`location_id` = `location`.`id`
+LEFT JOIN `suppliers` ON `purchaseorders`.`supplier_id` = `suppliers`.`id`
+WHERE `goods_received`.`id` = \'1\'
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `goods_received`.*, `purchaseorders`.`is_include_tax`, `purchaseorders`.`order_number`, `purchaseorders`.`store_id`, `purchaseorders`.`supplier_id`, `purchaseorders`.`due_date`, `purchaseorders`.`terms`, `currencies`.`currency_code`, `purchaseorders`.`currency_rate`, `stores`.`store_name`, `suppliers`.`registered_name` as `supplier_name`, `location`.`location_name`
+FROM `goods_received`
+JOIN `purchaseorders` ON `purchaseorders`.`id` = `goods_received`.`p_o_id`
+LEFT JOIN `currencies` ON `purchaseorders`.`currency_id` = `currencies`.`id`
+LEFT JOIN `stores` ON `purchaseorders`.`store_id` = `stores`.`id`
+LEFT JOIN `location` ON `goods_received`.`location_id` = `location`.`id`
+LEFT JOIN `suppliers` ON `purchaseorders`.`supplier_id` = `suppliers`.`id`
+WHERE `goods_received`.`id` = \'1\'
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `goods_received`.*, `purchaseorders`.`is_include_tax`, `purchaseorders`.`order_number`, `purchaseorders`.`store_id`, `purchaseorders`.`supplier_id`, `purchaseorders`.`due_date`, `purchaseorders`.`terms`, `currencies`.`currency_code`, `purchaseorders`.`currency_rate`, `stores`.`store_name`, `suppliers`.`registered_name` as `supplier_name`, `location`.`location_name`
+FROM `goods_received`
+JOIN `purchaseorders` ON `purchaseorders`.`id` = `goods_received`.`p_o_id`
+LEFT JOIN `currencies` ON `purchaseorders`.`currency_id` = `currencies`.`id`
+LEFT JOIN `stores` ON `purchaseorders`.`store_id` = `stores`.`id`
+LEFT JOIN `location` ON `goods_received`.`location_id` = `location`.`id`
+LEFT JOIN `suppliers` ON `purchaseorders`.`supplier_id` = `suppliers`.`id`
+WHERE `goods_received`.`id` = \'1\'
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `goods_received`.*, `purchaseorders`.`is_include_tax`, `purchaseorders`.`order_number`, `purchaseorders`.`store_id`, `purchaseorders`.`supplier_id`, `purchaseorders`.`due_date`, `purchaseorders`.`terms`, `currencies`.`currency_code`, `purchaseorders`.`currency_rate`, `stores`.`store_name`, `suppliers`.`registered_name` as `supplier_name`, `location`.`location_name`
+FROM `goods_received`
+JOIN `purchaseorders` ON `purchaseorders`.`id` = `goods_received`.`p_o_id`
+LEFT JOIN `currencies` ON `purchaseorders`.`currency_id` = `currencies`.`id`
+LEFT JOIN `stores` ON `purchaseorders`.`store_id` = `stores`.`id`
+LEFT JOIN `location` ON `goods_received`.`location_id` = `location`.`id`
+LEFT JOIN `suppliers` ON `purchaseorders`.`supplier_id` = `suppliers`.`id`
+WHERE `goods_received`.`id` = :goods_received.id:
+ LIMIT 1', [...], false)
+ 5 SYSTEMPATH\Model.php(268): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(656): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Models\GoodsReceivedModel.php(58): CodeIgniter\BaseModel->first()
+ 8 APPPATH\Controllers\PurchasesController.php(435): App\Models\GoodsReceivedModel->getGoodsReceivedDataById('1')
+ 9 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\PurchasesController->View_Goods_Received('1')
+10 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PurchasesController))
+11 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-09-01 04:47:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2023-09-01 04:47:15 --> mysqli_sql_exception: Unknown column 'location.location_name' in 'field list' in C:\xampp\htdocs\enterpro\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\enterpro\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT `goods_r...', 0)
+#1 C:\xampp\htdocs\enterpro\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `goods_r...')
+#2 C:\xampp\htdocs\enterpro\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `goods_r...')
+#3 C:\xampp\htdocs\enterpro\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `goods_r...', Array, false)
+#4 C:\xampp\htdocs\enterpro\system\Model.php(268): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\enterpro\system\BaseModel.php(656): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\enterpro\app\Models\GoodsReceivedModel.php(58): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\enterpro\app\Controllers\PurchasesController.php(435): App\Models\GoodsReceivedModel->getGoodsReceivedDataById('1')
+#8 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(932): App\Controllers\PurchasesController->View_Goods_Received('1')
+#9 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PurchasesController))
+#10 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\enterpro\index.php(67): CodeIgniter\CodeIgniter->run()
+#12 {main}
+CRITICAL - 2023-09-01 04:47:15 --> Unknown column 'location.location_name' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT `goods_received`.*, `purchaseorders`.`is_include_tax`, `purchaseorders`.`order_number`, `purchaseorders`.`store_id`, `purchaseorders`.`supplier_id`, `purchaseorders`.`due_date`, `purchaseorders`.`terms`, `currencies`.`currency_code`, `purchaseorders`.`currency_rate`, `stores`.`store_name`, `suppliers`.`registered_name` as `supplier_name`, `location`.`location_name`
+FROM `goods_received`
+JOIN `purchaseorders` ON `purchaseorders`.`id` = `goods_received`.`p_o_id`
+LEFT JOIN `currencies` ON `purchaseorders`.`currency_id` = `currencies`.`id`
+LEFT JOIN `stores` ON `purchaseorders`.`store_id` = `stores`.`id`
+LEFT JOIN `location` ON `goods_received`.`location_id` = `location`.`id`
+LEFT JOIN `suppliers` ON `purchaseorders`.`supplier_id` = `suppliers`.`id`
+WHERE `goods_received`.`id` = \'1\'
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `goods_received`.*, `purchaseorders`.`is_include_tax`, `purchaseorders`.`order_number`, `purchaseorders`.`store_id`, `purchaseorders`.`supplier_id`, `purchaseorders`.`due_date`, `purchaseorders`.`terms`, `currencies`.`currency_code`, `purchaseorders`.`currency_rate`, `stores`.`store_name`, `suppliers`.`registered_name` as `supplier_name`, `location`.`location_name`
+FROM `goods_received`
+JOIN `purchaseorders` ON `purchaseorders`.`id` = `goods_received`.`p_o_id`
+LEFT JOIN `currencies` ON `purchaseorders`.`currency_id` = `currencies`.`id`
+LEFT JOIN `stores` ON `purchaseorders`.`store_id` = `stores`.`id`
+LEFT JOIN `location` ON `goods_received`.`location_id` = `location`.`id`
+LEFT JOIN `suppliers` ON `purchaseorders`.`supplier_id` = `suppliers`.`id`
+WHERE `goods_received`.`id` = \'1\'
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `goods_received`.*, `purchaseorders`.`is_include_tax`, `purchaseorders`.`order_number`, `purchaseorders`.`store_id`, `purchaseorders`.`supplier_id`, `purchaseorders`.`due_date`, `purchaseorders`.`terms`, `currencies`.`currency_code`, `purchaseorders`.`currency_rate`, `stores`.`store_name`, `suppliers`.`registered_name` as `supplier_name`, `location`.`location_name`
+FROM `goods_received`
+JOIN `purchaseorders` ON `purchaseorders`.`id` = `goods_received`.`p_o_id`
+LEFT JOIN `currencies` ON `purchaseorders`.`currency_id` = `currencies`.`id`
+LEFT JOIN `stores` ON `purchaseorders`.`store_id` = `stores`.`id`
+LEFT JOIN `location` ON `goods_received`.`location_id` = `location`.`id`
+LEFT JOIN `suppliers` ON `purchaseorders`.`supplier_id` = `suppliers`.`id`
+WHERE `goods_received`.`id` = \'1\'
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `goods_received`.*, `purchaseorders`.`is_include_tax`, `purchaseorders`.`order_number`, `purchaseorders`.`store_id`, `purchaseorders`.`supplier_id`, `purchaseorders`.`due_date`, `purchaseorders`.`terms`, `currencies`.`currency_code`, `purchaseorders`.`currency_rate`, `stores`.`store_name`, `suppliers`.`registered_name` as `supplier_name`, `location`.`location_name`
+FROM `goods_received`
+JOIN `purchaseorders` ON `purchaseorders`.`id` = `goods_received`.`p_o_id`
+LEFT JOIN `currencies` ON `purchaseorders`.`currency_id` = `currencies`.`id`
+LEFT JOIN `stores` ON `purchaseorders`.`store_id` = `stores`.`id`
+LEFT JOIN `location` ON `goods_received`.`location_id` = `location`.`id`
+LEFT JOIN `suppliers` ON `purchaseorders`.`supplier_id` = `suppliers`.`id`
+WHERE `goods_received`.`id` = :goods_received.id:
+ LIMIT 1', [...], false)
+ 5 SYSTEMPATH\Model.php(268): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(656): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Models\GoodsReceivedModel.php(58): CodeIgniter\BaseModel->first()
+ 8 APPPATH\Controllers\PurchasesController.php(435): App\Models\GoodsReceivedModel->getGoodsReceivedDataById('1')
+ 9 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\PurchasesController->View_Goods_Received('1')
+10 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PurchasesController))
+11 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-09-01 04:48:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 04:48:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:00:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:01:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:09:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:09:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:09:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:09:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:09:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:09:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:09:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 05:09:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:42:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:55:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:55:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:55:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:55:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:55:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:55:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:55:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:56:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:56:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:56:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:56:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:56:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:56:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:56:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:58:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:58:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:58:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:58:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:58:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:58:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 12:58:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2023-09-01 13:07:22 --> mysqli_sql_exception: Unknown column 'store_items.store_id' in 'on clause' in C:\xampp\htdocs\enterpro\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\enterpro\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT `items`....', 0)
+#1 C:\xampp\htdocs\enterpro\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `items`....')
+#2 C:\xampp\htdocs\enterpro\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `items`....')
+#3 C:\xampp\htdocs\enterpro\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `items`....', Array, false)
+#4 C:\xampp\htdocs\enterpro\system\Model.php(241): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\enterpro\system\BaseModel.php(618): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\enterpro\app\Controllers\InventoryController.php(708): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(932): App\Controllers\InventoryController->getCurrentStock()
+#8 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InventoryController))
+#9 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\enterpro\index.php(67): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-09-01 13:07:22 --> Unknown column 'store_items.store_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT `items`.`id` as `item_code`, `items`.`item_name`, `items`.`sku_barcode`, `p`.`retail_price`, `stores`.`store_name`, `uom_master`.`uom`, `location`.`location_type`
+FROM `items`
+LEFT JOIN `current_inventory` ON `items`.`id` = `current_inventory`.`item_id`
+LEFT JOIN `location` ON `current_inventory`.`location_id` = `location`.`id`
+LEFT JOIN `items_price` `p` ON `items`.`id` = `p`.`items_id`
+LEFT JOIN `stores` ON `store_items`.`store_id` = `stores`.`id`
+LEFT JOIN `uom_master` ON `items`.`uom_id` = `uom_master`.`id`
+ORDER BY `current_inventory`.`id` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `items`.`id` as `item_code`, `items`.`item_name`, `items`.`sku_barcode`, `p`.`retail_price`, `stores`.`store_name`, `uom_master`.`uom`, `location`.`location_type`
+FROM `items`
+LEFT JOIN `current_inventory` ON `items`.`id` = `current_inventory`.`item_id`
+LEFT JOIN `location` ON `current_inventory`.`location_id` = `location`.`id`
+LEFT JOIN `items_price` `p` ON `items`.`id` = `p`.`items_id`
+LEFT JOIN `stores` ON `store_items`.`store_id` = `stores`.`id`
+LEFT JOIN `uom_master` ON `items`.`uom_id` = `uom_master`.`id`
+ORDER BY `current_inventory`.`id` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `items`.`id` as `item_code`, `items`.`item_name`, `items`.`sku_barcode`, `p`.`retail_price`, `stores`.`store_name`, `uom_master`.`uom`, `location`.`location_type`
+FROM `items`
+LEFT JOIN `current_inventory` ON `items`.`id` = `current_inventory`.`item_id`
+LEFT JOIN `location` ON `current_inventory`.`location_id` = `location`.`id`
+LEFT JOIN `items_price` `p` ON `items`.`id` = `p`.`items_id`
+LEFT JOIN `stores` ON `store_items`.`store_id` = `stores`.`id`
+LEFT JOIN `uom_master` ON `items`.`uom_id` = `uom_master`.`id`
+ORDER BY `current_inventory`.`id` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `items`.`id` as `item_code`, `items`.`item_name`, `items`.`sku_barcode`, `p`.`retail_price`, `stores`.`store_name`, `uom_master`.`uom`, `location`.`location_type`
+FROM `items`
+LEFT JOIN `current_inventory` ON `items`.`id` = `current_inventory`.`item_id`
+LEFT JOIN `location` ON `current_inventory`.`location_id` = `location`.`id`
+LEFT JOIN `items_price` `p` ON `items`.`id` = `p`.`items_id`
+LEFT JOIN `stores` ON `store_items`.`store_id` = `stores`.`id`
+LEFT JOIN `uom_master` ON `items`.`uom_id` = `uom_master`.`id`
+ORDER BY `current_inventory`.`id` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(241): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(618): CodeIgniter\Model->doFindAll(10, 0)
+ 7 APPPATH\Controllers\InventoryController.php(708): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\InventoryController->getCurrentStock()
+ 9 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InventoryController))
+10 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-09-01 13:07:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2023-09-01 13:07:27 --> mysqli_sql_exception: Unknown column 'store_items.store_id' in 'on clause' in C:\xampp\htdocs\enterpro\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\enterpro\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT `items`....', 0)
+#1 C:\xampp\htdocs\enterpro\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `items`....')
+#2 C:\xampp\htdocs\enterpro\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `items`....')
+#3 C:\xampp\htdocs\enterpro\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `items`....', Array, false)
+#4 C:\xampp\htdocs\enterpro\system\Model.php(241): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\enterpro\system\BaseModel.php(618): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\enterpro\app\Controllers\InventoryController.php(708): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(932): App\Controllers\InventoryController->getCurrentStock()
+#8 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InventoryController))
+#9 C:\xampp\htdocs\enterpro\system\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\enterpro\index.php(67): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-09-01 13:07:27 --> Unknown column 'store_items.store_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 295.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(295): mysqli->query('SELECT `items`.`id` as `item_code`, `items`.`item_name`, `items`.`sku_barcode`, `p`.`retail_price`, `stores`.`store_name`, `uom_master`.`uom`, `location`.`location_type`
+FROM `items`
+LEFT JOIN `current_inventory` ON `items`.`id` = `current_inventory`.`item_id`
+LEFT JOIN `location` ON `current_inventory`.`location_id` = `location`.`id`
+LEFT JOIN `items_price` `p` ON `items`.`id` = `p`.`items_id`
+LEFT JOIN `stores` ON `store_items`.`store_id` = `stores`.`id`
+LEFT JOIN `uom_master` ON `items`.`uom_id` = `uom_master`.`id`
+ORDER BY `current_inventory`.`id` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `items`.`id` as `item_code`, `items`.`item_name`, `items`.`sku_barcode`, `p`.`retail_price`, `stores`.`store_name`, `uom_master`.`uom`, `location`.`location_type`
+FROM `items`
+LEFT JOIN `current_inventory` ON `items`.`id` = `current_inventory`.`item_id`
+LEFT JOIN `location` ON `current_inventory`.`location_id` = `location`.`id`
+LEFT JOIN `items_price` `p` ON `items`.`id` = `p`.`items_id`
+LEFT JOIN `stores` ON `store_items`.`store_id` = `stores`.`id`
+LEFT JOIN `uom_master` ON `items`.`uom_id` = `uom_master`.`id`
+ORDER BY `current_inventory`.`id` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `items`.`id` as `item_code`, `items`.`item_name`, `items`.`sku_barcode`, `p`.`retail_price`, `stores`.`store_name`, `uom_master`.`uom`, `location`.`location_type`
+FROM `items`
+LEFT JOIN `current_inventory` ON `items`.`id` = `current_inventory`.`item_id`
+LEFT JOIN `location` ON `current_inventory`.`location_id` = `location`.`id`
+LEFT JOIN `items_price` `p` ON `items`.`id` = `p`.`items_id`
+LEFT JOIN `stores` ON `store_items`.`store_id` = `stores`.`id`
+LEFT JOIN `uom_master` ON `items`.`uom_id` = `uom_master`.`id`
+ORDER BY `current_inventory`.`id` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `items`.`id` as `item_code`, `items`.`item_name`, `items`.`sku_barcode`, `p`.`retail_price`, `stores`.`store_name`, `uom_master`.`uom`, `location`.`location_type`
+FROM `items`
+LEFT JOIN `current_inventory` ON `items`.`id` = `current_inventory`.`item_id`
+LEFT JOIN `location` ON `current_inventory`.`location_id` = `location`.`id`
+LEFT JOIN `items_price` `p` ON `items`.`id` = `p`.`items_id`
+LEFT JOIN `stores` ON `store_items`.`store_id` = `stores`.`id`
+LEFT JOIN `uom_master` ON `items`.`uom_id` = `uom_master`.`id`
+ORDER BY `current_inventory`.`id` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(241): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(618): CodeIgniter\Model->doFindAll(10, 0)
+ 7 APPPATH\Controllers\InventoryController.php(708): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\InventoryController->getCurrentStock()
+ 9 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InventoryController))
+10 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-09-01 13:07:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-09-01 13:07:52 --> Undefined index: id
+in APPPATH\Controllers\InventoryController.php on line 718.
+ 1 APPPATH\Controllers\InventoryController.php(718): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index: id', 'C:\\xampp\\htdocs\\enterpro\\app\\Controllers\\InventoryController.php', 718, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(932): App\Controllers\InventoryController->getCurrentStock()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InventoryController))
+ 4 SYSTEMPATH\CodeIgniter.php(366): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-09-01 13:07:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:07:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-09-01 13:11:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
