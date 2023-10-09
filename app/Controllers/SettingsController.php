@@ -974,7 +974,7 @@ class SettingsController extends BaseController
         $transferData = $transferMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
         $ids = array_column($transferData, 'id');
         if(!empty($ids)) {
-            $commonModelodel->DeleteMultipleDataByField('transfer_items','transfer_id',$ids);
+            $commonModel->DeleteMultipleDataByField('transfer_items','transfer_id',$ids);
         }
         $transferMdl->where('pos_id',$sessData['pos_id'])->delete();
 

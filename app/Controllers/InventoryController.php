@@ -411,14 +411,14 @@ class InventoryController extends BaseController
                 {
                     case 'stockadjusts':
                         foreach($post['item'] as $row){
-                            $storeItemModel = new StoreItemsModel();
+                            /*$storeItemModel = new StoreItemsModel();
                                         $store_data = [
                                             'item_id'=>$row['item_id'],
                                             'store_id'=>$post['store_id'],
                                             'qty'=>$row['quantity'],
                                             'type'=>'adjustment'
                                         ];
-                            $store_item = $storeItemModel->GetStoreItemId($store_data);
+                            $store_item = $storeItemModel->GetStoreItemId($store_data);*/
 
                             $new_data = array(
                                 'stock_adjust_id'=>$result,
@@ -428,7 +428,7 @@ class InventoryController extends BaseController
                                 'cost'=>$row['cost']
                             );
                             $commonModel->AddData('stock_adjustments_items',$new_data);
-                            $this->updateItemStocks($row['quantity'],$row['item_id'],2);
+                            // $this->updateItemStocks($row['quantity'],$row['item_id'],2);
                         }
                     break;
                     case 'transfer':
@@ -494,7 +494,7 @@ class InventoryController extends BaseController
                         }
                     break;
                     case 'production':
-                        $storeItemModel = new StoreItemsModel();
+                        /*$storeItemModel = new StoreItemsModel();
                         $store_data = [
                             'item_id'=>$post['item_id'],
                             'store_id'=>$post['store_id'],
@@ -502,7 +502,7 @@ class InventoryController extends BaseController
                             'type'=>'production',
                             'is_mainItem'=>true
                         ];
-                        $storeItemModel->GetStoreItemId($store_data);
+                        $storeItemModel->GetStoreItemId($store_data);*/
                         
                         foreach($post['items'] as $row){
 
@@ -551,7 +551,7 @@ class InventoryController extends BaseController
                                 $commonModel->AddData('stock_adjustments_items',$new_data);
                                 }
                             }
-                            $this->updateItemStocks($row['quantity'],$row['item_id'],2);
+                            // $this->updateItemStocks($row['quantity'],$row['item_id'],2);
                         }
                      break;
                      case 'transfer':

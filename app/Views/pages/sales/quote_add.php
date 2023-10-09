@@ -145,7 +145,7 @@
                                             <td class="text-center"><?= $k+1 ?></td>
                                             <td colspan="2">
                                                <input type="hidden" name="items[<?= $k+1; ?>][id]" value="<?= $row['id']; ?>">
-                                               <select class="form-control form-select select2 item-add item_id-sales text-left" data-tab="sell" name="items[<?= $k+1; ?>][item_id]">
+                                               <select class="form-control form-select select2 item-add quote-item-o text-left" data-tab="sell" name="items[<?= $k+1; ?>][item_id]">
                                                   <option value="">Click to select item</option>
                                                   <?php
                                                   $items = json_decode($data['items']);
@@ -189,7 +189,8 @@
                                        <tr class="new-row">
                                             <td class="text-center">1</td>
                                             <td colspan="2">
-                                               <select name="items[1][item_id]" class="quote-item-o item-add form-control"></select>
+                                               <select name="items[1][item_id]" class="quote-item-o item-add form-control">
+                                               </select>
                                             </td>
                                             <td>
                                                <input class="uom form-control " type="text" name="items[1][uom]"><input class="uomid form-control " type="hidden" name="items[1][uomid]">

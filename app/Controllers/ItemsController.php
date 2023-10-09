@@ -2298,7 +2298,7 @@ class ItemsController extends BaseController
 
         $db = db_connect();
 
-        $sql = 'SELECT
+        $sql = "SELECT
                 i.item_name,
                 i.sku_barcode,
                 s.store_name,
@@ -2319,9 +2319,10 @@ class ItemsController extends BaseController
                 JOIN
                 stores s ON iv.store_id = s.id
                 WHERE
+                i.item_options LIKE '%".'track_expiry'.":1%' AND
                 id.qty > 0
                 AND id.expiry_date >= CURDATE()
-                AND id.expiry_date <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH)';
+                AND id.expiry_date <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH)";
         $query = $db->query($sql)->getResult();
 
         $sql2 = 'SELECT

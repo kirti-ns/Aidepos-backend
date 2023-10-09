@@ -135,7 +135,34 @@
 $(document).ready(function() { 
   $('#invoice_form input').change(function() { 
         somethingChanged = true; 
-  }); 
+  });
+
+  $('.quote-item-o').select2({
+        placeholder: 'Select Item',
+        minimumInputLength: 3,
+        ajax: {
+            url: base_url+'searchItems?type=sales',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    term: params.term
+                };
+            },
+            processResults: function (data) {
+              var results = [];
+              $.each(data.data, function (index, obj) {
+                  results.push({
+                      id: obj.id,
+                      text: obj.item_name
+                  });
+              });
+              return {
+                  results: results
+              };
+            }
+        }
+    });
 
   $('.item_id-sales').select2({
         placeholder: 'Select Item',

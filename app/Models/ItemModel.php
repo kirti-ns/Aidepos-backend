@@ -170,7 +170,7 @@ class ItemModel extends Model
         return $this->findAll();
     }
     public function getItemList($pos_id){
-        $this->table('items')->select('items.id, p.id as pr_id, items.item_name, items.item_type');
+        $this->table('items')->select('items.id, p.id as pr_id, items.item_name, items.item_type, p.supply_price');
         $this->join('items_price p','items.id = p.items_id');
         if($pos_id != '') {
           $this->where('items.pos_id',$pos_id);
