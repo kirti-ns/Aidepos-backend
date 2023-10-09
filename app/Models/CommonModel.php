@@ -43,6 +43,27 @@ class CommonModel extends Model {
                 ->whereIn($field,$field_value)
                 ->delete();
 	}
+	public function GetTableDataByIDwithQty($table,$where) {
+        $query = $this->db->table($table)->select("*")
+        		->where('store_id',$where['store_id'])
+        		->where('item_id',$where['item_id'])
+        		->where('location_id',$where['location_id'])
+        		->where('quantity >', 0)->get();
+        return $query->getRow();
+    }
+    public function GetTableDataByID($table,$where) {
+        $query = $this->db->table($table)->select("*")
+        		->where('store_id',$where['store_id'])
+        		->where('item_id',$where['item_id'])
+        		->where('location_id',$where['location_id'])
+        		->get();
+        return $query->getRow();
+    }
+
+	public function GetTableDataByKey($table,$key,$val) {
+        return $this->db->table($table)->select("*")
+        		->where($key,$val)->get()->getResult();
+    }
 	public function GetTableData($table,$where) { 
             $this->db->table($table)->select("*");
             if (isset($where)) {

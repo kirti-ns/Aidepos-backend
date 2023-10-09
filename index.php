@@ -65,3 +65,11 @@ $app->setContext($context);
  */
 
 $app->run();
+function p($data,$exit=1)
+{
+    echo '<pre>';
+    print_r($data);
+    if($exit != 0){
+     exit();    
+    }
+}

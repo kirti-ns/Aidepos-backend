@@ -64,6 +64,7 @@ $routes->post('post_data','CustomersController::Post_Customers_Data');
 $routes->get('/items','ItemsController::index');
 $routes->post('/items/itemExportOptions','ItemsController::itemExportOptions');
 $routes->post('/items/synchronizeStorePrices','ItemsController::synchronizeStorePrices');
+$routes->post('/items/copyLocationItems','ItemsController::copyLocationItems');
 $routes->post('/items/itemDeleteOptions','ItemsController::itemDeleteOptions');
 $routes->post('/items/getItem','ItemsController::getItem');
 $routes->post('/items/getCategory','ItemsController::getCategory');

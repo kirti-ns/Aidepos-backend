@@ -8,7 +8,7 @@ class checkSession{
              //header("Location: ".base_url('login'));
             $exp = explode('/',current_url());
             if((!in_array('login',$exp)) && (!in_array('post-login',$exp))) {
-                header("Location: http://enterpro.net/login");exit;
+                header("Location: http://localhost/enterprolive/login");exit;
             }
         	// echo "<pre>";print_r(session()->get());die;
         	// redirect(site_url('login'));

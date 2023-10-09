@@ -924,55 +924,51 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body ml-1">
-                        <form id="copy_items_form" name="copy_items_form" method="post">
-                            <div class="row">
-                                <div class="col-md-12" style="padding-top: 5px;">
-                                    <span>Store</span>
+                    <form id="copy_items_form" name="copy_items_form" method="post">
+                        <div class="modal-body ml-1">
+                                <div class="row">
+                                    <div class="col-md-12" style="padding-top: 5px;">
+                                        <span>Store</span>
+                                    </div>
+                                    <div class="col-md-8" style="margin-top:2px;">
+                                        <select class="form-select" id="c-store" name="main_store" aria-label="Floating label select example">
+                                           <option value="">Select</option>
+                                           <?php 
+                                           if(!empty($data['stores'])) { 
+                                           foreach($data['stores'] as $row) { ?>
+                                           <option value="<?= $row['id']?>"><?=$row['store_name']?> </option>
+                                           <?php } } ?>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-6" style="margin-top:2px;">
-                                    <select class="form-select" id="c-store" name="main_store" aria-label="Floating label select example">
-                                       <option value="">Select</option>
-                                       <?php 
-                                       if(!empty($data['stores'])) { 
-                                       foreach($data['stores'] as $row) { ?>
-                                       <option value="<?= $row['id']?>"><?=$row['store_name']?> </option>
-                                       <?php } } ?>
-                                    </select>
+                                <div class="row pt-1">
+                                    <div class="col-md-12" style="padding-top: 5px;">
+                                        <span>Copy From Location</span>
+                                    </div>
+                                    <div class="col-md-8" style="margin-top:2px;">
+                                        <select class="form-select" id="copy_from_location" name="copy_from_location" aria-label="Floating label select example">
+                                           <option value="">Select</option>
+                                           
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row mt-2 mb-2">
-                                <div class="col-md-12">
-                                    <br />
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th><input type="checkbox" id="select_all_stores" name="stores[]" /></th>
-                                                <th>Store ID</th>
-                                                <th>Store Name</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                             <?php 
-                                             if(!empty($data['stores'])) { 
-                                             foreach($data['stores'] as $row) { ?>
-                                             <tr>
-                                                <td><input type="checkbox" class="select_store" name="stores[]" value="<?= $row['id'] ?>" /></td>
-                                                <td><?= $row['id'] ?></td>
-                                                <td><?= $row['store_name'] ?></td>
-                                             </tr>
-                                             <?php } } ?>
-                                        </tbody>
-                                    </table>
+                                <div class="row pt-1">
+                                    <div class="col-md-12" style="padding-top: 5px;">
+                                        <span>Copy To Location</span>
+                                    </div>
+                                    <div class="col-md-8" style="margin-top:2px;">
+                                        <select class="form-select" id="copy_to_location" name="copy_to_location" aria-label="Floating label select example">
+                                           <option value="">Select</option>
+                                           
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                        <div class="row mb-2">
-                            <div class="col-md-6">
-                                <span class="error-msg" style="color: #ff0000;"></span>
-                            </div>
                         </div>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default_new" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i> Cancel</button>
+                            <button id="btnSubmitCopyLocation" type="submit" class="btn btn-info"><i class="fa fa-file-o"></i> Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

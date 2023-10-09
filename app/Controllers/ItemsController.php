@@ -290,6 +290,98 @@ class ItemsController extends BaseController
         return json_encode(['status'=>"true",'message'=>'Prices Synchronized successfully']); 
     }
 
+    public function copyLocationItems()
+    {
+        $post = $this->request->getVar();
+        $sessData = getSessionData();
+
+        $db = db_connect();
+        $commonModel = new CommonModel($db);
+
+        $mainStoreID = $post['main_store'];
+        $copyFrom = $post['copy_from_location'];
+        $copyTo = $post['copy_to_location'];
+
+        $items = new ItemModel();
+        $itemsData = $items->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $itemPrices = new ItemsPriceModel();
+        $invt = new CurrentInventory();
+
+        foreach ($itemsData as $key => $value) {
+            $pr = $itemPrices->where('store_id',$mainStoreID)->where('items_id',$value['id'])->first();
+
+            $where = [
+                'store_id'=>$mainStoreID,
+                'location_id'=>$copyFrom,
+                'item_id'=>$value['id']
+            ];
+
+            $getData = $commonModel->GetTableDataByIDwithQty('current_inventory',$where);
+
+            if(!empty($getData)) {
+                $getDetailDt = $commonModel->GetTableDataByKey('current_inventory_details','current_inventory_id',$getData->id);
+                $where2 = [
+                    'store_id'=>$mainStoreID,
+                    'location_id'=>$copyTo,
+                    'item_id'=>$value['id']
+                ];
+                $getToData = $commonModel->GetTableDataByID('current_inventory',$where2);
+
+                if(empty($getToData)) {
+                    $aData = [
+                        'store_id'=>$mainStoreID,
+                        'location_id'=>$copyTo,
+                        'item_id'=>$value['id'],
+                        'quantity'=>$getData->quantity
+                    ];
+                    $aRes = $commonModel->AddData('current_inventory',$aData);
+                    if(!empty($getDetailDt)){
+                        foreach ($getDetailDt as $key => $v) {
+                            $aDetData = [
+                                'pos_id'=>$sessData['pos_id'],
+                                'current_inventory_id'=>$aRes,
+                                'qty'=>$v->qty,
+                                'lot_no'=>$v->lot_no,
+                                'dom'=>$v->dom,
+                                'expiry_date'=>$v->expiry_date
+                            ];
+                            $commonModel->AddData('current_inventory_details',$aDetData);
+                        }
+                    }
+                } else {
+                    $uData = [
+                        'quantity'=>$getToData->quantity + (int)$getData->quantity
+                    ];
+                    $commonModel->UpdateData('current_inventory',$getToData->id,$uData);
+                    if(!empty($getDetailDt)){
+                        foreach ($getDetailDt as $key => $v) {
+                            $aDetData = [
+                                'pos_id'=>$sessData['pos_id'],
+                                'current_inventory_id'=>$getToData->id,
+                                'qty'=>$v->qty,
+                                'lot_no'=>$v->lot_no,
+                                'dom'=>$v->dom,
+                                'expiry_date'=>$v->expiry_date
+                            ];
+                            $commonModel->AddData('current_inventory_details',$aDetData);
+                        }
+                    }
+                }
+                $total = $invt->where('item_id',$value['id'])->where('store_id',$mainStoreID)->selectSum('quantity')->first();
+                if(!empty($pr)) {
+                    $uPriceData = [
+                        'current_inventory'=>$total['quantity'],
+                        'inventory_value'=>(int)$total['quantity']*$pr['retail_price']
+                    ];
+                    $commonModel->UpdateData('items_price',$pr['id'],$uPriceData);
+                }
+            }
+
+        }
+
+        return json_encode(['status'=>"true",'message'=>'Items copied successfully']); 
+    }
+
     public function itemDeleteOptions()
     {
         $post = $this->request->getVar();

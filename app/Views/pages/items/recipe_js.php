@@ -1159,4 +1159,94 @@
 
   }
 
+  $('#c-store').change(function(){
+      var id = $(this).val();
+      $.ajax({
+          type: "POST",
+          url: '<?= base_url() ?>'+'/get_location_by_store',
+          data: {id:id},
+          success: function (res) {
+            res = JSON.parse(res);
+            if(res.status == "true") {
+              var data = res.data;
+              $('#copy_from_location').html(data);
+              $('#copy_to_location').html(data);
+            } else {
+              $('#copy_from_location').html('<option value="">Location</option>');
+              $('#copy_to_location').html('<option value="">Location</option>');
+            }
+          }
+      });
+  });
+
+  function checkCopyLocations()
+    {
+      var cF = $('#copy_from_location').val();
+      var cT = $('#copy_to_location').val();
+
+      if(cF != "" && cT != ""){
+        if(cF == cT) {
+          alertMessage('false','You can not choose same locations');
+          $('#copy_to_location').val('');
+          return false;
+        }
+      }
+
+    }
+
+   /*$('#copy_from_location').change(checkCopyLocations);
+   $('#copy_to_location').change(checkCopyLocations);
+*/
+  $('#copy_items_form').validate({
+         rules: {
+            main_store: "required",
+            copy_from_location: "required",
+            copy_to_location: "required"
+         },
+         messages: {
+            main_store: "Please select store",
+            copy_from_location: "Please select location to copy from",
+            copy_to_location: "Please select location to copy to"
+         },
+         errorElement: "div",
+         errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback");
+            error.insertAfter(element);
+         },
+         highlight: function (element) {
+            $(element).removeClass('is-valid').addClass('is-invalid');
+         },
+         unhighlight: function (element) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+         },
+         submitHandler: function (form) {
+            event.preventDefault();
+            // $("#btnSubmitCopyLocation").attr("disabled", true);
+            var formData = $('#copy_items_form').serialize();
+
+            var cF = $('#copy_from_location').val();
+            var cT = $('#copy_to_location').val();
+
+            if(cF != "" && cT != ""){
+              if(cF == cT) {
+                alertMessage('false','You can not choose same locations');
+                $('#copy_to_location').val('');
+                return false;
+              }
+            }
+
+            $.ajax({
+              type: "POST",
+              url: '<?= base_url() ?>'+'/items/copyLocationItems',
+              data: formData,
+              dataType: "json",
+              encode: true,
+            }).done(function (data) {
+              alertMessage(data.status, data.message);
+              $('#copy-items-mdl').modal('hide');
+            });
+
+         }
+    });
+
 </script>
