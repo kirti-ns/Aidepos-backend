@@ -44,6 +44,26 @@
     minimumInputLength: 3
   });
 
+  function addBarcodeSpec (argument) {
+    var table = document.getElementById("br-table");
+    var t1=(table.rows.length);
+    var row = table.insertRow(t1);
+    var cell0 = row.insertCell(0);
+    var cell1 = row.insertCell(1);
+    var cell2 = row.insertCell(2);
+    var cell3 = row.insertCell(3);
+    var cell4 = row.insertCell(4);
+    row.className = "new-row";
+    cell4.className='text-center';
+
+    $('<input type="text" name="br['+t1+'][specification]" class="form-control">').appendTo(cell0)
+    $('<input type="text" name="br['+t1+'][barcode]" class="form-control">').appendTo(cell1);
+    $('<input type="text" name="br['+t1+'][unit]" class="form-control">').appendTo(cell2);
+    $('<input type="text" name="br['+t1+'][coefficient]" class="form-control">').appendTo(cell3)
+    $('<a href="javascript:void(0);" class="transh-icon-color item-remove"><i class="fa fa-trash-o"></i></a>').appendTo(cell4); 
+ 
+  }
+
   $(document).ready(function() {
       var tagsInput1 = [];
       var tagsInput2 = [];

@@ -1060,7 +1060,8 @@ class ItemsController extends BaseController
                         'modifier_id' => $post["modifier_id"],
                         // 'item_description' => $post["item_description"],
                         'item_options' => json_encode($item_options)/*)?json_encode($post['item_option']):""*/,
-                        'status' => isset($post["status"])?$post["status"]:0
+                        'status' => isset($post["status"])?$post["status"]:0,
+                        'barcode_specification'=>isset($post['br'])?json_encode($post['br']):""
                     ];
                        
                 break;
