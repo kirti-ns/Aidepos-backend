@@ -1,2 +1,5 @@
 /vendor/*
 /writable/*
+/writable/debugbar
+/writable/logs
+/writable/uploads
