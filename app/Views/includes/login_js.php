@@ -231,4 +231,26 @@ function form_submit(formid, event) {
 
 }
 
+$('#store').change(function(){
+    var id = $(this).val();
+
+    $.ajax({
+         type: "POST",
+         url: "<?= base_url('getTerminal')?>",
+         data: {
+            id: id
+         },
+         dataType: "json",
+         encode: true,
+      }).done(function (data) {
+         if(data.status == "true") {
+            $('#terminal').html(data.data);
+            $('.terminal-row').show();
+         } else {
+            alertMessage(data.status, data.message);
+            $('.terminal-row').hide();
+         }
+      })    
+ });
+
      </script>

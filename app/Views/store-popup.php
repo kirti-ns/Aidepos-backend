@@ -66,7 +66,7 @@
                   <?php if(isset($data['terminals']) && !empty($data['terminals'])) { ?>
                   <div class="row pt-1">
                      <div class="col-md-12">
-                        <div class="form-floating">
+                        <div class="form-floating terminal-row">
                           <select class="form-select" id="terminal" name="terminal" aria-label="Floating label select example">
                               <option disabled>Select Terminal</option>
                                 <?php
@@ -84,7 +84,7 @@
                </div>
                <div class="modal-footer">
                    <!-- <button  type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default_new">Cancel</button> -->
-                   <button  type="submit" id="btnSubmit" class="btn btn-info">Save</button>
+                   <button type="submit" id="btnSubmit" class="btn btn-info">Save</button>
                </div>
              </form>
           </div>
