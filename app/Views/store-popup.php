@@ -8,8 +8,8 @@
       <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
       <meta name="author" content="PIXINVENT">
       <title>Aidepos - <?= $data['title'];?></title>
-      <link rel="apple-touch-icon" href="<?= base_url()?>/public/app-assets/images/ico/apple-icon-120.png">
-      <link rel="shortcut icon" type="image/x-icon" href="https://pixinvent.com/bootstrap-admin-template/robust/public/app-assets/images/ico/favicon.ico">
+      <link rel="apple-touch-icon" href="<?= base_url()?>public/app-assets/icons/logo.png">
+      <link rel="shortcut icon" type="image/x-icon" href="<?= base_url()?>public/app-assets/icons/logo.png">
       <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,600,600i,700,700i%7CMuli:300,400,500,700" rel="stylesheet">
       <!-- BEGIN VENDOR CSS-->
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/app-assets/css/vendors.min.css">

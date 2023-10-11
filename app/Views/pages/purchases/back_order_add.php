@@ -158,7 +158,7 @@
                                                                 $total .= $row['rate'] * $row['qty'];
                                                             ?>
                                                             <tr class="new-row">
-                                                            <td><?= $k+1; ?></td>
+                                                            <td class="text-center vert-align-md"><?= $k+1; ?></td>
                                                             <td>
                                                                <input type="hidden" name="items[<?= $k+1; ?>][id]" value="<?= $row['id']; ?>">
                                                                <select class="form-control form-select item-add item_id-pr" name="items[<?= $k+1; ?>][item_id]">
@@ -184,7 +184,7 @@
                                                                <input type="text" name="items[<?= $k+1; ?>][tax_amount]" class="form-control tax_amount" value="<?= $row['tax_amount']; ?>" readonly>
                                                                <input class="tax form-control tax" type="hidden" name="items[<?= $k+1; ?>][tax]" value="<?= $row['tax_value']; ?>" readonly>&nbsp;<input class="form-control form-border tax_type" type="hidden" name="items[<?= $k+1; ?>][tax_type]" value="<?= $row['tax_name']; ?>" readonly>
                                                             </td>
-                                                            <td class="form-group">
+                                                            <td class="form-group text-center vert-align-md">
                                                                <input type="hidden" class="tax_exc_amt" name="items[<?= $k+1; ?>][tax_exc_amt]" value="<?= $row['tax_excl'] == 1 ? $row['tax_amount'] : '0'?>">
                                                                <input class="tax_excl" id="tax_excl<?= $k+1; ?>" type="checkbox" name="items[<?= $k+1; ?>][tax_excl]" value="<?= $row['tax_excl']; ?>" <?= $row['tax_excl'] == 1 ? 'checked':''; ?>>
                                                                <label for="tax_excl<?= $k+1;?>"></label>
@@ -199,7 +199,7 @@
                                                          <?php }
                                                           } else { ?> 
                                                             <tr class="new-row">
-                                                              <td>1</td>
+                                                              <td class="text-center vert-align-md">1</td>
                                                               <td>
                                                                  <select class="form-control form-select item-add item_id-pr" name="items[1][item_id]">
                                                                     <option value="">Click to select item</option>
@@ -225,7 +225,7 @@
                                                                <input type="text" name="items[1][tax_amount]" class="form-control tax_amount" value="" readonly>
                                                                <input class="tax form-control tax" type="hidden" name="items[1][tax]" value="" readonly><input class="form-control form-border tax_type" type="hidden" name="items[1][tax_type]" value="" readonly>
                                                             </td>
-                                                            <td class="form-group">
+                                                            <td class="form-group text-center vert-align-md">
                                                                <input type="hidden" class="tax_exc_amt" name="items[1][tax_exc_amt]" value="">
                                                                <input class="tax_excl" id="tax_excl1" type="checkbox" name="items[1][tax_excl]">
                                                                <label for="tax_excl1"></label>
@@ -233,7 +233,7 @@
                                                             <td>
                                                                <input class="tabledit-input form-control amount" type="text" name="items[1][amount]">
                                                             </td>
-                                                            <td>
+                                                            <td class="text-center vert-align-md">
                                                                <a href="javascript:void(0);" class="transh-icon-color item-remove" title="Remove"><i class="fa fa-trash-o"></i></a>
                                                             </td>
                                                             </tr>
@@ -245,7 +245,7 @@
                                            
                                              <div class="form-group overflow-hidden">
                                                 <div class="col-12">
-                                                   <button  onclick="addPurchaseOrderField();" type="button" class="btn btn-info" ><i class="fa fa-plus"></i> Add Item</button>
+                                                   <button  onclick="addBackOrderField();" type="button" class="btn btn-info" ><i class="fa fa-plus"></i> Add Item</button>
                                                 </div><!-- data-repeater-create -->
                                              </div>
                                           

@@ -82,6 +82,92 @@
           }
     });
   }
+  function addBackOrderField (argument) {
+
+    var table = document.getElementById("myTable");
+    var t1=(table.rows.length);
+    
+    var row = table.insertRow(t1);
+    var cell0 = row.insertCell(0);
+    var cell1 = row.insertCell(1);
+    var cell2 = row.insertCell(2);
+    var cell3 = row.insertCell(3);
+    var cell4 = row.insertCell(4);
+    var cell5 = row.insertCell(5);
+    var cell6 = row.insertCell(6);
+    var cell7 = row.insertCell(7);
+    var cell8 = row.insertCell(8);
+    var cell9 = row.insertCell(9);
+    
+    var addClass = "";
+    if($('#is_include_tax').prop('checked') == true){
+      addClass="";
+    }else{
+      addClass="d-none";
+    }
+    row.className = "new-row";
+      
+    cell0.className='text-center orderControl tableOrder vert-align-md';
+    cell1.className='text-left item-row';
+    cell2.className='text-center';
+    cell3.className='text-center';
+    cell4.className='text-center';
+    cell5.className='text-center'; 
+    cell6.className='text-center';
+    cell7.className='text-center form-group vert-align-md';
+    cell8.className='text-center';
+    cell9.className='text-center vert-align-md';
+    
+    var items = '<?php echo isset($data['items'])?$data['items']:""; ?>';
+    var itemArray = JSON.parse(items);
+    var options = "<option value=''>Click to select item</option>";
+    $.each(itemArray,function(k,v){
+        options += '<option value="'+v.id+'">'+v.item_name+'</option>'
+    });
+
+    var id = 'item_id-pr'+t1;
+
+      $('<span class="tabledit-span" >'+t1+'</span>').appendTo(cell0)
+      $('<select class="form-control form-border form-select item-add '+id+'" name="items['+t1+'][item_id]" data-row="'+t1+'">'+options+'</select>').appendTo(cell1);
+      $('<input class="uom form-control form-border" type="text" name="items['+t1+'][uom]" value=""><input class="uomid form-control form-border " type="hidden" name="items['+t1+'][uomid]">').appendTo(cell2);
+      $('<input class="form-control form-border quantity" type="number" name="items['+t1+'][quantity]" value="1">').appendTo(cell3)
+      $('<input class="form-control form-border rate" type="text" name="items['+t1+'][rate]" value="">').appendTo(cell4);
+      $('<input class="discount form-control form-border " type="number" name="items['+t1+'][discount]" value="">&nbsp;<select class="form-control form-border discount_type form-select" name="items['+t1+'][discount_type]"><option value="%">%</option><option value="ZMW">ZMW</option></select><input class="discount_amount form-control " type="hidden" name="items['+t1+'][discount_amount]" value="0">').appendTo(cell5);
+      $('<input type="text" class="form-control tax_amount" name="items['+t1+'][tax_amount]" readonly><input class="form-control form-border tax" type="hidden" name="items['+t1+'][tax]" value=""><input class="form-control form-border tax_type" readonly type="hidden" name="items['+t1+'][tax_type]">').appendTo(cell6);
+      $('<input type="hidden" class="tax_exc_amt" name="items['+t1+'][tax_exc_amt]" value="0"><input class="tax_excl" id="tax_excl'+t1+'" type="checkbox" name="items['+t1+'][tax_excl]" value="1"><label for="tax_excl'+t1+'"></label>').appendTo(cell7);
+      $('<input class="tabledit-input form-control form-border amount" type="text" name="items['+t1+'][amount]">').appendTo(cell8);
+      $('<a href="#" class="transh-icon-color item-remove" title="Remove"><i class="fa fa-trash-o"></i></a>').appendTo(cell9);
+
+      /*$('.'+id).select2({
+        minimumInputLength: 2
+      });*/
+      $('.'+id).select2({
+          placeholder: 'Select Item',
+          minimumInputLength: 3,
+          ajax: {
+              url: base_url+'searchItems?type=purchase',
+              dataType: 'json',
+              delay: 250,
+              data: function (params) {
+                  return {
+                      term: params.term
+                  };
+              },
+              processResults: function (data) {
+                var results = [];
+                $.each(data.data, function (index, obj) {
+                    results.push({
+                        id: obj.id,
+                        text: obj.item_name
+                    });
+                });
+                return {
+                    results: results
+                };
+              }
+          }
+    });
+  }
 
   /*$('.item_id-pr').select2({
     minimumInputLength: 2
@@ -179,7 +265,7 @@ $(document).on('change','.item-add',function() {
             // if(tab != undefined && tab == 'sell'){
               var tax_perc = 1.0 + parseFloat(data.tax_rate/100);
               var price = data.retail_price ? parseFloat(data.retail_price) : 0;
-              tax_amount = parseFloat(price) - (parseFloat(price) / parseFloat(tax_perc));
+              tax_amount = price - (price / parseFloat(tax_perc));
             // }
             var itemOpt = JSON.parse(res.data.item_options)
             if(itemOpt.track_serial_no != undefined && itemOpt.track_serial_no == 1 && tab != 'sell') {
@@ -234,7 +320,7 @@ function discountCalculateAmount(discount,discount_type,tax_amount){
 $(document).on('change','.rate',function() {
    
     var self = $(this);
-    var price = self.val();
+    var price = parseFloat(self.val());
     var quantity = self.parents('td').siblings('td').children('.quantity').val();
     var tax_rate = self.parents('td').siblings('td').children('.tax').val();
     var tab = self.parents('td').siblings('td').children('.item-add').attr('data-tab');
@@ -249,12 +335,11 @@ $(document).on('change','.rate',function() {
           self.parents('td').siblings('td').children('.discount_amount').val(discount_amount);
      }
     var tax_amount = 0.00;
-
     var isExcl = self.parents('td').siblings('td').children('.tax_excl');
     if(tax_rate > 0) {
       if(isExcl.is(":checked")) {
         var tax_perc = 1.0 + parseFloat(tax_rate/100); 
-        tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price) / parseFloat(tax_perc));
+        tax_amount = parseFloat(quantity*price) * parseFloat(tax_perc);
               self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         var t = self.parents('td').children('.tax_exc_amt').val(tax_amount.toFixed(2));
         
@@ -296,13 +381,13 @@ $(document).on('change','.quantity',function() {
     if(tax_rate > 0) {
       if(isExcl.is(":checked")) {
         var tax_perc = 1.0 + parseFloat(tax_rate/100); 
-        tax_amount = parseFloat(quantity*price) - (parseFloat(price) / parseFloat(tax_perc));
+        tax_amount = parseFloat(quantity*price) * parseFloat(tax_perc);
               self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         var t = self.parents('td').children('.tax_exc_amt').val(tax_amount.toFixed(2));
         
       }else{
         var tax_perc = 1.0 + parseFloat(tax_rate/100); 
-        tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price) / parseFloat(tax_perc));
+        tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price)/ parseFloat(tax_perc));
         self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         self.parents('td').children('.tax_exc_amt').val('0');
         
@@ -332,8 +417,8 @@ $(document).on('click','.tax_excl',function(){
     var total_price = parseFloat(retail_price)*parseFloat(qty);
     if(tax_rate > 0) {
       if(self.is(":checked")) {
-        var tax_perc = 1.0 + parseFloat(tax_rate/100); 
-        var tax_amount = total_price - (total_price / parseFloat(tax_perc));
+        var tax_perc = parseFloat(tax_rate/100); 
+        var tax_amount = total_price * tax_perc;
               self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         var t = self.parents('td').children('.tax_exc_amt').val(tax_amount.toFixed(2));
         if(tab == 'sell'){
@@ -578,7 +663,7 @@ function calculateAmount()
   });
 
   var total = subTotal + parseFloat(adjust) - parseFloat(discount_amount);
-  var subTotalFinal = subTotal;
+  var subTotalFinal = subTotal - tax_amount;
   if(discount > 0) {
     var subDiscount = subTotalFinal * discount /100;
     var txDiscount = tax_amount * discount /100;
@@ -590,7 +675,7 @@ function calculateAmount()
   $('#total-tax').val(tax_amount);
   if(tax_excl_amt > 0) {
     total += tax_excl_amt;
-    // subTotalFinal += tax_excl_amt;
+    subTotalFinal += tax_excl_amt;
   }
   $('#sub-total').val(subTotalFinal.toFixed(2));
   $('.subTotal').text(subTotalFinal.toFixed(2));

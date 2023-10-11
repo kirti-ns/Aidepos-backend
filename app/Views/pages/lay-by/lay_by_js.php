@@ -273,7 +273,7 @@ $("#terms").change(function(){
   $(document).on('change','.rate',function() {
    
     var self = $(this);
-    var price = self.val();
+    var price = parseFloat(self.val());
     var quantity = self.parents('td').siblings('td').children('.quantity').val();
     var tax_rate = self.parents('td').siblings('td').children('.tax').val();
     var tab = self.parents('td').siblings('td').children('.item-add').attr('data-tab');
@@ -291,7 +291,7 @@ $("#terms").change(function(){
     if(tax_rate > 0) {
       if(tax_excl.is(":checked")) {
         var tax_perc = 1.0 + parseFloat(tax_rate/100); 
-        var tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price) / parseFloat(tax_perc));
+        var tax_amount = parseFloat(quantity*price) * parseFloat(tax_perc);
       
         self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         self.parents('td').children('.tax_exc_amt').val(tax_amount.toFixed(2));
@@ -330,17 +330,18 @@ $("#terms").change(function(){
             discount_amount =  discountCalculateAmount(discount,discount_type,quantity*price);
            self.parents('td').siblings('td').children('.discount_amount').val(discount_amount);
     }
+    var tax_amount = 0.00;
     var tax_excl = self.parents('td').siblings('td').children('.tax_excl')
     if(tax_rate > 0) {
       if(tax_excl.is(":checked")) {
         var tax_perc = 1.0 + parseFloat(tax_rate/100); 
-        var tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price) / parseFloat(tax_perc));
+        tax_amount = parseFloat(quantity*price) * parseFloat(tax_perc);
       
         self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         self.parents('td').children('.tax_exc_amt').val(tax_amount.toFixed(2));
       }else{
         var tax_perc = 1.0 + parseFloat(tax_rate/100); 
-        var tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price) / parseFloat(tax_perc));
+        tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price) / parseFloat(tax_perc));
         self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         self.parents('td').children('.tax_exc_amt').val('0');
       }
@@ -372,27 +373,26 @@ $("#terms").change(function(){
   $(document).on('click','.tax_excl',function(){
   
     var self = $(this);
-    console.log(self.is(":checked"))
     var tax_rate = self.parents('td').siblings('td').children('.tax').val();
     var retail_price = self.parents('td').siblings('td').children('.rate').val();
+    var qty = self.parents('td').siblings('td').children('.quantity').val();
+    var total_price = parseFloat(retail_price)*parseFloat(qty)
     if(tax_rate > 0) {
       if(self.is(":checked")) {
-        var tax_perc = 1.0 + parseFloat(tax_rate/100); 
-        var tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price) / parseFloat(tax_perc));
-      
-              self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
+        var tax_perc = parseFloat(tax_rate/100); 
+        var tax_amount = total_price * tax_perc;
+        self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         var t = self.parents('td').children('.tax_exc_amt').val(tax_amount.toFixed(2));
         calculateLaybyAmount();
       }else{
         var tax_perc = 1.0 + parseFloat(tax_rate/100); 
-        var tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price) / parseFloat(tax_perc));
+        var tax_amount = total_price - (total_price / parseFloat(tax_perc));
         self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         self.parents('td').children('.tax_exc_amt').val('0');
         calculateLaybyAmount();
       }
     }
-
-});
+  });
 
   $('#deposit_amount').change(function(){
     var gTotal = $('.total-amount').val();
@@ -494,6 +494,7 @@ $("#terms").change(function(){
       if(value > 0)
         tax_text = 'Tax ';
     });
+    $('#tax_text').text(tax_text);
     
     var tax_amount = 0.00; 
     $('.tax_amount').each(function()
@@ -512,14 +513,10 @@ $("#terms").change(function(){
         tax_excl_amt += parseFloat(value);; 
     });
 
-    $('.taxAmount').text(tax_amount.toFixed(2));
-    $('#total-tax').val(tax_amount);
-    $('#tax_text').text(tax_text);
-
     var adjust = $('.adjustment_value').val();  
     if(adjust == "" || adjust == undefined){
       adjust = 0;
-    }
+    } 
 
     var discount_amount = 0; 
     $('.discount_amount').each(function()
@@ -528,13 +525,29 @@ $("#terms").change(function(){
       if(value > 0)
         discount_amount += parseFloat(value); 
     });
-
     $('.discountAmount').text(discount_amount.toFixed(2));
     $('#total-discount').val(discount_amount.toFixed(2));
+
+    var discount = 0; 
+    $('.discount').each(function()
+    { 
+      var value = $(this).val();
+      if(value > 0)
+        discount += parseFloat(value); 
+    });
     
     var total = subTotal + (parseFloat(adjust) - parseFloat(discount_amount));
-
     var subTotalFinal = subTotal - tax_amount;
+    
+    if(discount > 0) {
+      var subDiscount = subTotalFinal * discount /100;
+      var txDiscount = tax_amount * discount /100;
+      subTotalFinal = subTotalFinal - subDiscount;
+      tax_amount = tax_amount - txDiscount
+    }
+
+    $('.taxAmount').text(tax_amount.toFixed(2));
+    $('#total-tax').val(tax_amount);
     if(tax_excl_amt > 0) {
       total += tax_excl_amt;
       subTotalFinal += tax_excl_amt;

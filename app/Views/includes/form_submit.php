@@ -653,7 +653,7 @@ $(document).on('change','#tranferStatus',function() {
          encode: true,
       }).done(function (data) {
          alertMessage(data.status, data.message);
-         window.location.reload();
+         window.location.href = "<?= base_url('purchases#purchase-order')?>";
         
       })
    })
