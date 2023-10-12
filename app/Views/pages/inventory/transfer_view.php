@@ -80,6 +80,7 @@
                                                          <th>Selling Price</th>
                                                          <th>Inventory Qty.</th>
                                                          <th>Qty</th>
+                                                         <th>Received Qty</th>
                                                       </tr>
                                                    </thead>
                                                    <tbody>
@@ -94,6 +95,7 @@
                                                         <td><?= $row2['selling_price'] ?></td>
                                                         <td><?= $row2['inventory_quantity'] ?></td>
                                                         <td><?= $row2['quantity'] ?></td>
+                                                        <td><?= $row2['received_quantity'] != "" ? $row2['received_quantity'] :'-'; ?></td>
                                                       </tr>
                                                    <?php } } ?>
                                                    </tbody>

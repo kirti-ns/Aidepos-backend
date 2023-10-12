@@ -244,13 +244,21 @@
     $('<span class="tabledit-span" >'+t+'</span>').appendTo(cell0)
     $('<select class="form-control form-select transfer-item-add '+cls+'" name="items['+t1+'][item_id]">'+options+'</select>').appendTo(cell1);
     $('<input type="text" class="form-control sku_barcode"  name="items['+t1+'][barcode]">').appendTo(cell2);
-    $('<select class="form-control form-select manufacture_date" name="items['+t1+'][manufacture_date]"></select>').appendTo(cell3);
+    $('<select class="form-control form-select manufacture_date" name="items['+t1+'][manufacture_date]"><option value="">Select</option></select>').appendTo(cell3);
     $('<input class="form-control cost_price" type="text" name="items['+t1+'][cost_price]">').appendTo(cell4);
     $('<input class="form-control selling_price" type="number" name="items['+t1+'][selling_price]">').appendTo(cell5);
     $('<input class="form-control inventory_qty" type="number" name="items['+t1+'][inventory_qty]">').appendTo(cell6);
     $('<input class="form-control qty" type="number" name="items['+t1+'][quantity]">').appendTo(cell7);
-    $('<a href="#"  class="transh-icon-color item-remove"><i class="fa fa-trash-o"></i></a>').appendTo(cell8);
+    if($('#status').val() == "1") {
+      var cell9 = row.insertCell(9);
+      cell8.className='approve-td';
+      cell9.className='text-center';
 
+      $('<input type="text" name="items['+t1+'][received_qty]" class="form-control received_qty">').appendTo(cell8);
+      $('<a href="#"  class="transh-icon-color item-remove"><i class="fa fa-trash-o"></i></a>').appendTo(cell9);
+    } else {
+      $('<a href="#"  class="transh-icon-color item-remove"><i class="fa fa-trash-o"></i></a>').appendTo(cell8);
+    }
     $('.'+cls).select2({
       minimumInputLength: 2
     });
@@ -440,5 +448,11 @@
             }
           }
       });
+  })
+  $(document).on('keyup','.qty',function(){
+    if($('#status').val() == "1") {
+      var qty = $(this).val();
+      $(this).parents('td').siblings('td').children('.received_qty').val(qty);
+    }
   })
 </script>

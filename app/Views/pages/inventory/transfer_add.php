@@ -197,9 +197,9 @@
                                                            <option value="">Select</option>
                                                          </select></td>
                                                          <td><input class="form-control cost_price" type="text" name="items[0][cost_price]" value="" ></td>
-                                                         <td><input class="form-control selling_price" type="number" name="items[0][selling_price]" id=""></td>
+                                                         <td><input class="form-control selling_price" type="number" name="items[0][selling_price]"></td>
                                                          <td><input class="form-control inventory_qty" type="number" name="items[0][inventory_qty]"></td>
-                                                         <td><input class="form-control" type="number" name="items[0][quantity]" id="qty"  ></td>
+                                                         <td><input class="form-control qty" type="number" name="items[0][quantity]"></td>
                                                          <td class="text-center"><a href="" class="transh-icon-color"><i class="fa fa-trash-o"></i></a></td>
                                                       </tr>
                                                    <?php } ?>
