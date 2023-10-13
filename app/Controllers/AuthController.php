@@ -7,6 +7,7 @@ use App\Models\RoleModel;
 use App\Models\EmployeeModel;
 use App\Models\StoreModel;
 use App\Models\TerminalsModel;
+use App\Models\CommonModel;
 
 class AuthController extends BaseController
 {
@@ -36,8 +37,14 @@ class AuthController extends BaseController
                 $rememberme = isset($post['remember_me'])?$post['remember_me']:"";
                 
                 $data = $employeeModel->where('primary_email', $email)->first();
+
                 
                 if($data){
+                    $db = db_connect();
+                    $commonModel = new CommonModel($db);
+                    $uData = ['timezone'=>$post['timezone']];
+                    $commonModel->UpdateData('employees',$data['id'],$uData);
+                    
                     $pass = $data['password'];
                     $authenticatePassword = password_verify($password, $pass);
                     $roleModel = new RoleModel();
@@ -130,9 +137,31 @@ class AuthController extends BaseController
     {
         if ($this->request->getMethod() == "post") {
             $post = $this->request->getVar();
+            $storeDt = "";
+            $terminalDt = "";
+            if(!empty($post['store'])) {
+                $store = new StoreModel();
+                $storeDt = $store->select('store_name')->where('id',$post['store'])->first();
+
+                $h = date('H');
+                $d = date('d');
+                $m = date('m');
+                $pin = (int)$h * (int)$d + (int)$m;
+
+                $db = db_connect();
+                $commonModel = new CommonModel($db);
+                $uData = ['pin'=>$pin];
+                $commonModel->UpdateData('stores',$post['store'],$uData);
+            }
+            if(!empty($post['terminal'])){
+                $terminal = new TerminalsModel();
+                $terminalDt = $terminal->select('terminal_name')->where('id',$post['terminal'])->first();
+            }
             $ses_data = [
                 'store_id' => $post['store'],
-                'terminal_id' => isset($post['terminal'])?$post['terminal']:""
+                'terminal_id' => isset($post['terminal'])?$post['terminal']:"",
+                'store_name' => $storeDt != "" ? $storeDt['store_name'] : '',
+                'terminal_name' => $terminalDt != "" ? $terminalDt['terminal_name'] : ''
             ];
             $session = session();
             $session->set($ses_data);

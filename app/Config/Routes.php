@@ -167,6 +167,7 @@ $routes->get('/sales/add_invoice','SalesController::AddInvoice');
 $routes->get('/sales/edit_invoice/(:num)','SalesController::EditInvoice/$1');
 $routes->post('/sales/view_invoice','SalesController::ViewInvoice');
 $routes->post('/sales/view_quote','SalesController::ViewQuote');
+$routes->post('/sales/view_credit_note','SalesController::ViewCreditNote');
 $routes->get('/sales/printInvoicePDF/(:num)','SalesController::printInvoicePDF/$1');
 $routes->get('/sales/add_quote','SalesController::AddQuote');
 $routes->get('/sales/edit_quote/(:num)','SalesController::EditQuote/$1');
@@ -181,6 +182,7 @@ $routes->get('/sales/edit_payment_invoice/(:num)','SalesController::EditPaymentI
 $routes->get('/sales/view_payment/(:num)','SalesController::ViewPayment/$1');
 $routes->post('post_data_sales','SalesController::Post_Data_Sales');
 $routes->post('post_data_credits','SalesController::Post_Data_credits');
+$routes->post('post_data_refund','SalesController::Post_Data_refund');
 
 $routes->get('/layby','LayByController::index');
 $routes->post('/layby/getLaybyContract','LayByController::getLaybyContract');
@@ -199,6 +201,7 @@ $routes->get('/settings/add_role','RoleController::Add_role');
 $routes->post('post_role','RoleController::Post_role');
 $routes->post('delete_data','CommonController::Delete_data');
 $routes->post('change_password','CommonController::change_password');
+$routes->post('check_pin','CommonController::checkPin');
 
 $routes->post('/get_table_row_data','CommonController::getDataByTableName');
 $routes->post('/update_status','CommonController::updateStatus');

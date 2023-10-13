@@ -411,6 +411,11 @@
                                       <br/><br/>
                                       <b>Stock & Transaction Clearance</b>
                                       <div class="row mt-1">
+                                        <div class="col-md-3">
+                                          <input type="date" name="s_t_date" id="s-t-date" class="form-control">
+                                        </div>
+                                      </div>
+                                      <div class="row mt-1">
                                         <div class="col-md-6">
                                           <div class="media mt-1">
                                             <div class="pr-2">

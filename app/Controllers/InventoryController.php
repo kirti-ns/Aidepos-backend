@@ -378,6 +378,7 @@ class InventoryController extends BaseController
                     break;
                     case 'transfer':
                         $data = [
+                            'pos_id'=>$sessData['pos_id'],
                             'location_id'=>isset($post["location_id"])?$post["location_id"]:"0",
                             'supply_store_id' => isset($post["supply_store_id"])?$post["supply_store_id"]:"0",
                             'receive_location_id'=>isset($post['rec_location_id'])?$post['rec_location_id']:"",

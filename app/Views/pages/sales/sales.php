@@ -760,3 +760,162 @@
         </div>
     </div>
 </div>
+<div class="customizr border-left-blue-grey border-left-lighten-4 d-none d-xl-block">
+    <div class="cloading" style="display: none; position: fixed; left: 50%; top: 60%; z-index: 999999;">
+        <img src="<?php echo base_url();?>/public/app-assets/images/loading-gif.gif" style="height: 50px; width: 50px;" alt="loader" title="loader.gif" />
+    </div>
+
+    <!-- <a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a> -->
+    <!-- <a class="customizer-toggle box-shadow-3" href="#"><i class="ft-settings font-medium-3 spinner white"></i></a> -->
+    <div class="customizr-content p-2">
+        <h4 class="text-uppercase mb-0">
+            <span id="c-heading"><!-- Heading --></span>
+        </h4>
+        <a class="customizr-close" href="#"><i class="ft-x font-medium-3"></i></a>
+        <hr />
+        <ul class="details-menu-bar font-small nav flex-nowrap" id="c-opt-header">
+            
+        </ul>
+        <br />
+        <div class="row mb-1" id="c-func-section">
+            
+        </div>
+        <div class="card" id="c-print-area">
+            <!-- <div class="p-badge">
+               <div class="p-badge-inner"></div>
+            </div> -->
+            <div class="card-body" id="c-area">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><b>AIDEPOS</b></h5>
+                        <p>
+                            Company ID : 90605<br />
+                            Tax ID : 100900800<br />
+                            Goldcrest Mall<br />
+                            Lusaka Zambia
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-right m-details">
+                        <span style="font-size: 30px;" class="module">CREDIT NOTE</span><br/>
+
+                    </div>
+                </div>
+                <hr/>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 id="module-title" style="text-transform: uppercase;"></h3>
+                        <p>Invoice# INV-<span id="c-receipt-no"></span></p>
+                    </div>
+                </div>
+
+                <div class="row pt-1">
+                    <div class="col-md-8">
+                        <h6><b>Bill To</b></h6>
+                        <span id="c-cust-name"></span><br />
+                        <span id="c-cust-address"></span>
+                    </div>
+                    <div class="col-md-4 pl-1 pb-1 account-summary account-summary-div text-right">
+                        <span id="c-module-date"> </span>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="col-md-12">
+                        <table class="table table-striped" id="c-module-items-tbl">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Item Name</th>
+                                    <th>Qty</th>
+                                    <th>Rate</th>
+                                    <th>Discount</th>
+                                    <th style="text-align: right;">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div style="padding: 10px 10px 3px 3px;" class="total-number-section">
+      
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div style="width: 70%;" class="float-right">
+                            <table class="pcs-bdr-bottom" id="citemTable" cellspacing="0" border="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" style="padding: 10px 7px 5px;">
+                                            Discount<br />
+                                        </td>
+                                        <td id="c-disc" valign="middle" style="width: 110px; padding: 10px 7px 10px;" class="text-align-right"></td>
+                                    </tr>
+                                    <tr style="height: 10px;" class="pcs-bdr-top">
+                                        <td valign="middle" style="padding: 5px 7px;">Tax</td>
+                                        <td valign="middle" style="width: 110px; padding: 10px 7px;" id="c-tax" class="text-align-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" style="padding: 10px 7px 5px;">
+                                            Sub Total <br />
+                                        </td>
+                                        <td id="c-sub-total" valign="middle" style="width: 110px; padding: 10px 7px 10px;" class="text-align-right"></td>
+                                    </tr>
+                                    <tr style="height: 10px;" class="pcs-balance">
+                                        <td valign="middle" style="padding: 10px 7px;" class="total-section-label pcs-bdr-top"><b>Total</b></td>
+                                        <td id="c-total-amount" valign="middle" style="width: 110px; padding: 10px 7px;" class="text-align-right total-section-value pcs-bdr-top"><b></b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade text-left" id="refund-cn-amt-mdl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel19" aria-hidden="true" style="z-index:1054">
+  <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel19">Refund Amount</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                        <span>Customer Name: </span> <span id="c-customer-name"></span>
+                      </div>
+                      <div class="col-md-12 pt-1">
+                          <div class="form-floating">
+                              <select class="form-control form-select" name="payment_type" id="c-payment-type" />
+                                <option value="">Select Payment Type</option>
+                                <?php foreach($data['payment_type'] as $v) { ?>
+                                <option value="<?=$v['id'];?>" <?= $v['id'] == 1 ? 'selected' : '' ?>><?=$v['payment_type'];?></option>
+                                <?php } ?>
+                              </select>
+                              <label>Payment Type</label>
+                          </div>
+                      </div>
+                      <div class="col-md-12 pt-1">
+                          <div class="form-floating">
+                              <input type="text" class="form-control" name="refund_amount" id="c-refund-amt" placeholder="Refund Amount" value="" />
+                              <label>Amount</label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default_new" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i> Cancel</button>
+                  <button id="btnSubmitRefund" type="submit" class="btn btn-info"><i class="fa fa-file-o"></i> Save</button>
+              </div>
+      </div>
+  </div>
+</div>

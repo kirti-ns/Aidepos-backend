@@ -36,6 +36,7 @@ use App\Models\Quote;
 use App\Models\SellordersModel;
 use App\Models\SellOrderEditNote;
 use App\Models\TransferModel;
+use App\Models\StoreItemsModel;
 
 class SettingsController extends BaseController
 {
@@ -834,16 +835,17 @@ class SettingsController extends BaseController
    {
         $post = $this->request->getVar();
         $sessData = getSessionData();
+        $date = $post['date'];
 
         if($post['type'] == "1") {
-            $this->clearStock($sessData);
+            $this->clearStock($sessData, $date);
 
             return json_encode([
                 "status" => "true",
                 "message" => "Stock cleared successfully"
             ]);
         } elseif($post['type'] == "2") {
-            $this->clearTransactions($sessData);
+            $this->clearTransactions($sessData, $date);
 
             return json_encode([
                 "status" => "true",
@@ -851,7 +853,7 @@ class SettingsController extends BaseController
             ]);
         } elseif($post['type'] == "3") {
             $this->clearStock($sessData);
-            $this->clearTransactions($sessData);
+            $this->clearTransactions($sessData, $date);
 
             return json_encode([
                 "status" => "true",
@@ -861,122 +863,125 @@ class SettingsController extends BaseController
         
    }
 
-   public function clearStock($sessData)
+   public function clearStock($sessData, $date)
    {
         $db = db_connect();
         $commonModel = new CommonModel($db);
 
         $uInventoryData = array('quantity' => 0);
-        $commonModel->UpdateDataByField('current_inventory','pos_id',$sessData['pos_id'],$uInventoryData);
+        $commonModel->UpdateDataByField('current_inventory','pos_id',$sessData['pos_id'],$date,$uInventoryData);
 
         $uInventoryDetailData = array('qty'=> 0);
-        $commonModel->UpdateDataByField('current_inventory_details','pos_id',$sessData['pos_id'],$uInventoryDetailData);
+        $commonModel->UpdateDataByField('current_inventory_details','pos_id',$sessData['pos_id'],$date,$uInventoryDetailData);
 
         $uItemsPriceInventory = array('current_inventory'=> 0,'inventory_value'=> 0);
         $items = new ItemModel();
-        $itemData = $items->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $itemData = $items->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($itemData, 'id');
 
         $itemsPrice = new ItemsPriceModel();
         $itemsPrice->whereIn("items_id", $ids)->set($uItemsPriceInventory)->update();
 
+        $storeItm = new StoreItemsModel();
+        $storeItm->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
+
         return true;
    }
 
-   public function clearTransactions($sessData)
+   public function clearTransactions($sessData,$date)
    {
         $db = db_connect();
         $commonModel = new CommonModel($db);
 
         $boMdl = new BackOrderModel();
-        $boData = $boMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $boData = $boMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=', $date)->findAll();
         $ids = array_column($boData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('back_order_item','b_o_id',$ids);
+            $commonModel->DeleteMultipleDataByField('back_order_item','b_o_id',$ids,$date);
         }
-        $boMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $boMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         $cnMdl = new CreditNote();
-        $cnData = $cnMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $cnData = $cnMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($cnData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('credit_notes_items','crn_id',$ids);
+            $commonModel->DeleteMultipleDataByField('credit_notes_items','crn_id',$ids,$date);
         }
-        $cnMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $cnMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
-        $commonModel->DeleteMultipleDataByField('credits','pos_id',[$sessData['pos_id']]);
+        $commonModel->DeleteMultipleDataByField('credits','pos_id',[$sessData['pos_id']],$date);
         
         $dGoodsRecMdl = new DirectGoodsReceived();
-        $dgData = $dGoodsRecMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $dgData = $dGoodsRecMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($dgData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('direct_goods_received_item','direct_received_id',$ids);
+            $commonModel->DeleteMultipleDataByField('direct_goods_received_item','direct_received_id',$ids,$date);
         }
-        $dGoodsRecMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $dGoodsRecMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         $goodsRecMdl = new GoodsReceivedModel();
-        $gData = $goodsRecMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $gData = $goodsRecMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($gData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('goods_received_items','goods_received_id',$ids);
+            $commonModel->DeleteMultipleDataByField('goods_received_items','goods_received_id',$ids,$date);
         }
-        $goodsRecMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $goodsRecMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         $goodsRetMdl = new GoodsReceivedModel();
-        $returnData = $goodsRetMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $returnData = $goodsRetMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($returnData, 'id');
         // $commonModel->DeleteMultipleDataByField('goods_returned_items','goods_received_id',$ids);
-        $goodsRetMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $goodsRetMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         $contractMdl = new ContractModel();
-        $contData = $contractMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $contData = $contractMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($contData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('layby_contract_items','contract_id',$ids);
-            $commonModel->DeleteMultipleDataByField('layby_contract_transactions','contract_id',$ids);
+            $commonModel->DeleteMultipleDataByField('layby_contract_items','contract_id',$ids,$date);
+            $commonModel->DeleteMultipleDataByField('layby_contract_transactions','contract_id',$ids,$date);
         }
-        $contractMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $contractMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         $prodMdl = new ProductionModel();
-        $prodData = $prodMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $prodData = $prodMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($prodData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('production_items','production_id',$ids);
+            $commonModel->DeleteMultipleDataByField('production_items','production_id',$ids,$date);
         }
-        $prodMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $prodMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         $purchaseMdl = new PurchaseModel();
-        $purchaseData = $purchaseMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $purchaseData = $purchaseMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($purchaseData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('purchase_order_item','p_o_id',$ids);
+            $commonModel->DeleteMultipleDataByField('purchase_order_item','p_o_id',$ids,$date);
         }
-        $purchaseMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $purchaseMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         $qtMdl = new Quote();
-        $qtData = $qtMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $qtData = $qtMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($qtData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('quote_items','quote_id',$ids);
+            $commonModel->DeleteMultipleDataByField('quote_items','quote_id',$ids,$date);
         }
-        $qtMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $qtMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         $sellMdl = new SellordersModel();
-        $sellData = $sellMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $sellData = $sellMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($sellData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('sell_items','s_o_id',$ids);
-            $commonModel->DeleteMultipleDataByField('sell_order_editnote','s_o_id',$ids);
+            $commonModel->DeleteMultipleDataByField('sell_items','s_o_id',$ids,$date);
+            $commonModel->DeleteMultipleDataByField('sell_order_editnote','s_o_id',$ids,$date);
         }
-        $sellMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $sellMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         $transferMdl = new TransferModel();
-        $transferData = $transferMdl->select('id')->where('pos_id',$sessData['pos_id'])->findAll();
+        $transferData = $transferMdl->select('id')->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->findAll();
         $ids = array_column($transferData, 'id');
         if(!empty($ids)) {
-            $commonModel->DeleteMultipleDataByField('transfer_items','transfer_id',$ids);
+            $commonModel->DeleteMultipleDataByField('transfer_items','transfer_id',$ids,$date);
         }
-        $transferMdl->where('pos_id',$sessData['pos_id'])->delete();
+        $transferMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 
         return true;
    }

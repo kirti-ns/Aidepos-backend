@@ -23,6 +23,9 @@ use App\Models\CreditsModel;
 use App\Models\Quote;
 use App\Models\QuoteItem;
 use App\Models\CreditNote;
+use App\Models\CreditNoteItem;
+use App\Models\Location;
+use App\Models\RefundInvoice;
 
 class SalesController extends BaseController
 {
@@ -57,6 +60,9 @@ class SalesController extends BaseController
             $storeModel->where('pos_id',$sessData['pos_id']);
         }
         $data['stores'] = $storeModel->findAll();
+
+        $pmTypeMdl = new PaymentMasterModel();
+        $data['payment_type'] = $pmTypeMdl->select('id, payment_type')->findAll();
         return $this->template->render('pages/sales/sales', $data); 
     }
 
@@ -245,6 +251,37 @@ class SalesController extends BaseController
         return json_encode([
             "status" => "true",
             "message" => "Quote details get successfully",
+            "data" => $data
+        ]);
+    }
+    public function ViewCreditNote()
+    {
+        $data = [];
+        /*$data['title'] = 'View Invoice'; 
+        $data['main_menu'] = 'Sales'; 
+        $data['main_menu_url'] = base_url('sales');*/
+        $post = $this->request->getVar();
+        $sessData = getSessionData();
+
+        $cnMdl = new CreditNote();
+        $data['module'] = $cnMdl->select('credit_notes.*,customers.registerd_name,customers.address')->join('customers','credit_notes.customer_id = customers.id','left')->where("credit_notes.id",$post['id'])->first();
+
+        $cnItemMdl = new CreditNoteItem();
+        $data['items'] = $cnItemMdl->select('credit_notes_items.*, items.item_name')->join('items','items.id = credit_notes_items.item_id')->where("crn_id",$post['id'])->findAll();
+
+        $rMdl = new RefundInvoice();
+        $rData = $rMdl->where('crn_id',$post['id'])->first();
+
+        $data['is_refund'] = false;
+        $data['refund_amt'] = 0;
+        if(!empty($rData)){
+            $data['is_refund'] = true;
+            $data['refund_amt'] = $rData['refund_amount'];
+        }
+
+        return json_encode([
+            "status" => "true",
+            "message" => "Credit Note details get successfully",
             "data" => $data
         ]);
     }
@@ -510,7 +547,34 @@ class SalesController extends BaseController
             "message" => 'Credits Applied successfully'
         ]);
     }
+    public function Post_Data_refund()
+    {
+        $post = $this->request->getVar();
 
+        $db = db_connect();
+        $commonModel = new CommonModel($db);
+
+        $cnMdl = new CreditNote();
+        $cnData = $cnMdl->where('id',$post['crn_id'])->first(); 
+        $data = [
+            'invoice_id' => $cnData['invoice_id'],
+            'crn_id' => $post['crn_id'],
+            'customer_id' => $cnData['customer_id'],
+            'payment_type_id' => $post['type_id'],
+            'payment_type' => $post['type'],
+            'refund_amount' => $post['amt']
+        ];
+
+        $result = $commonModel->AddData('refund_invoice_amount',$data);  
+
+        $uCData = ['credits_available' => 0.00];
+        $commonModel->UpdateData('credit_notes',$post['crn_id'],$uCData);
+
+        return json_encode([
+            "status" => "true",
+            "message" => 'Refund Amount added successfully'
+        ]); 
+    }
     public function AddQuote()
     {
         $data = [];
@@ -779,6 +843,7 @@ class SalesController extends BaseController
                         ];
                     break;*/
                     case 'credit_notes':
+
                         $total_credits = $post['total_amount'];
                         $credits_available = 0.00;
                         $paymentModel = new SalesPaymentModel(); 
@@ -809,6 +874,25 @@ class SalesController extends BaseController
 
                                 $credits_available = abs($amtToPay - $post['total_amount']);
                             }
+                        } else {
+                            $amtToPay = $post['pre_total_amount'];
+
+                            $creditstoinv = [
+                                'pos_id' => $sessData['pos_id'],
+                                'invoice_id' => $post['invoice_id'],
+                                'customer_id' => $post['customer_id'],
+                                'credit_date' => $post['credit_date'],
+                                'credit_applied' => number_format($amtToPay,2),
+                                'store_id' => $post['store_id']
+                            ];
+                            $applyCR = $commonModel->AddData('credits',$creditstoinv);
+
+                            $balDue = abs($post['pre_total_amount'] - ($amtToPay));
+                            $invoiceBal = ['balance_due' => number_format($balDue,2)];
+                            $commonModel->UpdateData('sell_orders',$post['invoice_id'],$invoiceBal);
+
+                            $credits_available = $amtToPay;
+
                         }
 
                         $data = [
@@ -846,14 +930,24 @@ class SalesController extends BaseController
                     break;
                     case 'sell_orders':
                         foreach($post['items'] as $item) {
+                            $location = new Location();
+                            $locData = $location->select('id')->where('location_type',1)->where('store_id',$post['store_id'])->first();
                             $inventory = new CurrentInventory();
-                            $itemData = $inventory->select('current_inventory.quantity,items.item_name')->join('items','items.id = current_inventory.item_id')->where('current_inventory.store_id',$post['store_id'])->where('current_inventory.item_id',$item['item_id'])->where('location_id',1)->first();
-
-                            if($item['quantity'] > $itemData['quantity']) {
+                            $itemData = $inventory->select('current_inventory.quantity,items.item_name')->join('items','items.id = current_inventory.item_id')->where('current_inventory.store_id',$post['store_id'])->where('current_inventory.item_id',$item['item_id'])->where('location_id',$locData['id'])->first();
+                            if(!empty($itemData)){
+                                if($item['quantity'] > $itemData['quantity']) {
+                                    return json_encode([
+                                            "status" => "false",
+                                            "message" => $itemData['item_name']." quantity available: ".$itemData['quantity'],
+                                    ]);
+                                }
+                            } else {
+                                $itemD = new ItemModel();
+                                $itemDt = $itemD->select('item_name')->where('id',$item['item_id'])->first();
                                 return json_encode([
-                                        "status" => "false",
-                                        "message" => $itemData['item_name']." quantity available: ".$itemData['quantity'],
-                                ]);
+                                            "status" => "false",
+                                            "message" => "No quantity available for ".$itemDt['item_name']
+                                    ]);
                             }
                         }
                         // $terminalModel = new TerminalsModel();
@@ -1013,6 +1107,29 @@ class SalesController extends BaseController
                                 'total_amount' => $item['tax_amount'] + $item['amount'] ,
                                 'item_amount' => $item['amount'],
                             );
+                            if($item['quantity'] > 0) {
+                                $location = new Location();
+                                $locData = $location->select('id')->where('location_type',1)->where('store_id',$post['store_id'])->first();
+
+                                $storeItemModel = new StoreItemsModel();
+                                $store_data = [
+                                    'pos_id'=>$sessData['pos_id'],
+                                    'item_id'=>$item['item_id'],
+                                    'store_id'=>$post['store_id'],
+                                    'qty'=>$item['quantity'],
+                                    'location_id'=>$locData['id'],
+                                    'type'=>'received'
+                                ];
+                                $lot_data = [
+                                    'p_o_id'=>"",
+                                    'p_item_id'=>"",
+                                    'lot_no' => isset($item['lot_no'])?$item['lot_no']:"",
+                                    'dom' => isset($item['dom'])?$item['dom']:"",
+                                    'expiry_date' => isset($item['expiry_date'])?$item['expiry_date']:"",
+                                    'qty'=>$item['quantity']
+                                ];
+                                $store_item = $storeItemModel->directReceivedItem($store_data,$lot_data);
+                            }
                             $commonModel->AddData('credit_notes_items',$items);       
                         }
                     break;
@@ -1523,6 +1640,9 @@ class SalesController extends BaseController
         $status = "Draft";
         if($is_sent == "0" || $is_sent == "1" && $payments['total_sum'] == "" && $due_balance > 0) {
             $status = "<span class='text-bold-500 grey'>Draft</span>";
+            if($is_sent = "1") {
+                $status = "<span class='text-bold-500 grey'>Sent</span>";
+            }
         }
         else if($due_balance > 0 && $today < $due_date && $payments['total_sum'] != "") {
             $status = "<span class='text-bold-500 success'>Partially Paid</span>";

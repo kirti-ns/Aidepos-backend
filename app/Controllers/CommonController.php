@@ -132,6 +132,29 @@ class CommonController extends BaseController
             echo json_encode(['status'=>"true","message"=>"Data Fetch Successfully",'data'=>$html]);
         }
     }
+    public function checkPin()
+    {
+        $post = $this->request->getVar();
+
+        $sessData = getSessionData();
+
+        $sMdl = new StoreModel();
+        $storeDt = $sMdl->select('pin')->where('id',$sessData['store_id'])->first();
+
+        $pin = $storeDt['pin'];
+
+        if($pin > 0 && $pin == $post['pin']) {
+            return json_encode([
+                "status" => "true"
+            ]);
+        } else {
+            return json_encode([
+                "status" => "false"
+            ]);
+        }
+
+        
+    }
 
     public function Delete_data()
     {

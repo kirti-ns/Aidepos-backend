@@ -740,9 +740,14 @@ $(document).on('change','#tranferStatus',function() {
       });
     });
 
-    $('.clear-s-t').on('click',function(){
+    /*$('.clear-s-t').on('click',function(){
       var type = $(this).attr('data-type');
       var msg = 'Are you sure you wat to clear the data?';
+      var date = $('#s-t-date').val();
+      if(date == "") {
+        alert('Please select date till which you want to clear stock');
+        return false;
+      }
       if(type == "1") {
         msg = 'Are you sure you want to clear the stock?';
       } else if(type == "2") {
@@ -776,7 +781,8 @@ $(document).on('change','#tranferStatus',function() {
                  type: "POST",
                  url: '<?=base_url()?>'+'/settings/clear-stock-transaction',
                  data: {
-                    type: type
+                    type: type,
+                    date: date
                  },
                  dataType: "json",
                  encode: true,
@@ -791,6 +797,67 @@ $(document).on('change','#tranferStatus',function() {
             $('.swal-overlay').removeClass('swal-overlay--show-modal');
           }
       });
+    });*/
+
+    $('.clear-s-t').on('click',function(){
+        var type = $(this).attr('data-type');
+        var msg = 'Are you sure you want to clear the data?';
+        var date = $('#s-t-date').val();
+        if(date == "") {
+          alert('Please select date till which you want to clear stock');
+          return false;
+        }
+
+        if(type == "1") {
+          msg = 'Are you sure you want to clear the stock? If Yes, then please enter Pin';
+        } else if(type == "2") {
+          msg = 'Are you sure you want to clear the transactions? If Yes, then please enter Pin';
+        } else if(type =="3") {
+          msg = 'Are you sure you want to clear the stock & transactions? If Yes, then please enter Pin';
+        }
+
+        swal(msg, {
+                content: "input",
+            })
+            .then((value) => {
+              if (value === false) return false;
+              if (value === "") {
+                  swal("You need to add Pin!", "", "error");
+                  return false;
+              }
+              $.ajax({
+                 type: "POST",
+                 url: '<?=base_url()?>'+'/check_pin',
+                 data: {
+                    pin: value
+                 },
+                 dataType: "json",
+                 encode: true,
+              }).done(function (data) {
+                 if(data.status == 'true'){
+                    $.ajax({
+                       type: "POST",
+                       url: '<?=base_url()?>'+'/settings/clear-stock-transaction',
+                       data: {
+                          type: type,
+                          date: date
+                       },
+                       dataType: "json",
+                       encode: true,
+                    }).done(function (data) {
+                       if(data.status == 'true'){
+                          swal("Cleared!", data.message, "success");
+                       } else {
+                          swal("Error", "Something went wrong", "error");
+                       }
+                    });
+                 } else {
+                    swal("Error", "Incorrect pin", "error");
+                 }
+              });
+              
+            })
+
     });
 
     $(document).on('click','.is_admin_role',function(){

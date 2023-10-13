@@ -24,10 +24,11 @@ class CommonModel extends Model {
                 ->set($data)
                 ->update();
 	}
-	public function UpdateDataByField($table,$field,$field_value,$data) {
+	public function UpdateDataByField($table,$field,$field_value, $field_value2,$data) {
 		return $this->db
                 ->table($table)
                 ->where([$field => $field_value])
+                ->where(['created_at' => $field_value2])
                 ->set($data)
                 ->update();
 	}
@@ -37,9 +38,10 @@ class CommonModel extends Model {
                 ->where(["id" => $id])
                 ->delete();
 	}
-	public function DeleteMultipleDataByField($table,$field,$field_value) {
+	public function DeleteMultipleDataByField($table,$field,$field_value,$date) {
 		return $this->db
                 ->table($table)
+                ->where('created_at <=',$date)
                 ->whereIn($field,$field_value)
                 ->delete();
 	}

@@ -67,13 +67,14 @@
                         </a>
                      </li>
                      <li class="nav-item vertical-border" ></li>
-                     <!--  <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li> -->
-                     <!-- <li class="nav-item nav-search">
-                        <a class="nav-link nav-link-search" href="#" style="padding-top:30px;padding-right: 0px;"><i class="ficon ft-search"></i></a>
-                        <div class="search-input open">
-                           <input class="input search-input-div border-bottom-0" type="text" placeholder="Search Everything...">
-                        </div>
-                     </li> -->
+                     <?php if(session()->get('store_name')) { ?>
+                     <li class="nav-item">
+                      <span class="navbar-brand" style="padding-top: 30px;margin-left: 10px;">Logged In Store: <b><?=session()->get('store_name')?></b></span>
+                     </li>
+                     <?php } ?>
+                     <li class="nav-item">
+                        
+                     </li>
                   </ul>
                   <?php //$user = GetUserProfile(); ?>
                   <ul class="nav navbar-nav float-right">

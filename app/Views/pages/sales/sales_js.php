@@ -625,8 +625,7 @@ $(document).on('click','.mark-as-sent',function(){
       $(".customizer").removeClass("open");
       viewModule(id,tab);
     });
-  
-})
+});
 $(document).on('click','#v-record-payment',function() {
     var id = $(this).attr('data-id');
 
@@ -884,7 +883,110 @@ $(document).on('click','#add-payment-received',function(){
          }
     });*/
 });
+$(document).on('click','.view-cn',function(){
+  $('#creditNoteTbl tbody tr').removeClass('selected-tr');
+  $(".customizer").removeClass("open");
 
+    var self = $(this);
+    var id = self.attr("data-id");
+    $('.loading').css('display','block');
+    viewCNModule(id);
+});
+function viewCNModule(id){
+  $.ajax({
+        type: "POST",
+        url: '<?= base_url() ?>'+'/sales/view_credit_note',
+        data: {id:id},
+        success: function (res) { 
+            res = JSON.parse(res);
+            var data = res.data.module,
+            items = res.data.items,
+            date = data.credit_date;
+
+            $("#c-heading").text('CN-000'+data.id);
+            $("#c-receipt-no").text('000'+data.id);
+            $("#c-cust-name").text(data.registerd_name);
+            $("#c-cust-address").text(data.address);
+            $("#c-module-date").html('<h6 style="text-transform:capitalize">Credit Note Date: <span class="summary-amount" id="" style="font-weight: 500;">'+date+'</span></h6>');
+            $("#c-module-date").html('<h6>Credit Note Date: <span class="summary-amount" style="font-weight: 500;">'+date+'</span></h6>');
+
+            $('.m-details').html('<span style="font-size: 30px;text-transform:uppercase" class="module">Credit Note</span><br/><p>'+'Credit Note-<span id="v-receipt-no">000'+data.id+'</span></p>');
+
+            $('#c-module-items-tbl tbody').html('');
+            var i = 1;
+            $.each(items,function(k,v) {
+              var disc = v.discount != "" ? v.discount+' '+v.discount_type:'-';
+              var html = '<tr>'+
+                          '<td class="storeColor">'+i+'</td>'+
+                           '<td>'+v.item_name+'</td>'+
+                           '<td>'+v.qty+'</td>'+
+                           '<td>'+v.rate+'</td>'+
+                           '<td>'+disc+'</td>'+
+                           '<td style="text-align:right">'+v.total_amount+'</td>'+
+                        '</tr>';
+              $('#c-module-items-tbl tbody').append(html);
+              i++;
+            });
+
+            $('#c-disc').text(data.total_discount)
+            $("#c-sub-total").text(data.sub_total);
+            $("#c-tax").text(data.total_tax);
+            $("#c-total-amount").html('<b>'+data.total_amount+'</b>');
+            $("#c-total-amount").attr('data-amt',data.total_amount);
+
+            $('#c-func-section').html('');
+            if(!res.data.is_refund) {
+              $('#c-func-section').html('<div class="col-md-12">'+
+                      '<div class="bs-callout-primary callout-border-left callout-bordered p-1 d-flex">'+
+                      '<p class="pr-5">You can click on the following button to<br/> refund back the amount.</p>'+
+                      '<button class="btn btn-info flex-end refund-cn-amt" data-id="'+data.id+'" data-tab="credit-note">Refund Amount</button>'+
+                  '</div>'+
+              '</div>');
+            } else {
+              $('#c-func-section').html('<div class="col-md-12">'+
+                      '<div class="bs-callout-primary callout-border-left callout-bordered p-1 d-flex">'+
+                      '<p class="pr-5">Refunded amount: </p>'+
+                      '<span class="flex-end" data-id="'+data.id+'">'+res.data.refund_amt+'</span>'+
+                  '</div>'+
+              '</div>');
+            }
+
+            $('#c-opt-header').show();
+            
+            $('.credit-id-'+id).parent('td').parent('tr').addClass('selected-tr');
+            $(".customizr").toggleClass("open");
+            $('.loading').css('display','none');
+        }
+    });
+}
+$(document).on('click','.refund-cn-amt',function(){
+  $('#btnSubmitRefund').attr('data-id',$(this).attr('data-id'));
+  $('#c-refund-amt').val($('#c-total-amount').attr('data-amt'));
+  $('#refund-cn-amt-mdl').modal('show');
+})
+$(document).on('click','#btnSubmitRefund',function(){
+  var id = $(this).attr('data-id');
+  var type_id = $('#c-payment-type').val();
+  var type = $('#c-payment-type option:selected').text();
+  var amt = $('#c-refund-amt').val();
+
+  $.ajax({
+      type: "POST",
+      url: '<?= base_url() ?>'+'/post_data_refund',
+      data: {crn_id:id, type_id:type_id, type:type,amt:amt},
+      dataType: "json",
+      encode: true,
+    }).done(function (data) {
+      if(data.status == "true") {
+        $(".customizer").removeClass("open");
+        $('#refund-cn-amt-mdl').modal('hide');
+        viewCNModule(id);
+      }
+    });
+});
+$(document).on('click','.nav-tabs > .nav-item',function(){
+  $(".customizr").removeClass("open");
+});
 $(document).on('click','#add-credit-note',function(){
     var invoice_id = $('#invoice_id').val();
     var formData = $('#credit-note-form').serialize();

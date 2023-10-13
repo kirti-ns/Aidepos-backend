@@ -192,6 +192,10 @@ function form_submit(formid, event) {
    var form = $('#' + form_id)[0];
    var formData = new FormData(form)
 
+   if(form_id == 'login_form') {
+      formData.append('timezone',Intl.DateTimeFormat().resolvedOptions().timeZone);
+   }
+
    $.ajax({
       type: "POST",
       url: form_url,
