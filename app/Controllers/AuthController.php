@@ -16,7 +16,7 @@ class AuthController extends BaseController
         $session = session();
         $session_set_value = $session->get('remember_me');
        
-        if (isset($session_set_value) && $session_set_value == 1) {
+        if (isset($session) && session()->get('isLoggedIn')) {
             return redirect()->to(base_url('dashboard'));
         } else {
             $data = [];
