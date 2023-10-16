@@ -138,10 +138,10 @@ class CommonController extends BaseController
 
         $sessData = getSessionData();
 
-        $sMdl = new StoreModel();
-        $storeDt = $sMdl->select('pin')->where('id',$sessData['store_id'])->first();
+        /*$sMdl = new StoreModel();
+        $storeDt = $sMdl->select('pin')->where('id',$sessData['store_id'])->first();*/
 
-        $pin = $storeDt['pin'];
+        $pin = getEmployeePin();
 
         if($pin > 0 && $pin == $post['pin']) {
             return json_encode([

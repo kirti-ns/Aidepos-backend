@@ -108,6 +108,44 @@ function getSessionData()
 
 	return $sessionData;
 }
+function getEmployeePin()
+{
+	$session = session();
+	$id = $session->get('id');
+
+	$pin = "";
+	$date = date('Y-m-d H:i:s');
+	$getDefault = date_default_timezone_get();
+    $dfDate = new DateTime($date, new DateTimeZone($getDefault));
+    
+	if(isset($id) && $id != "") {
+		$empModel = new EmployeeModel();
+		$emp = $empModel->where('id',$id)->first();
+
+		$eTimezone = $emp['timezone'];
+		if(!empty($eTimezone)) {
+
+		    $dfDate->setTimezone(new DateTimeZone($eTimezone));
+		    $H = $dfDate->format('H');
+		    $D = $dfDate->format('d');
+		    $M = $dfDate->format('m');
+
+		    $pin = $H * $D + $M; // Hour * day + month e.g. (13 * 9 + 10) At 1:30PM, 9th of October
+
+		    return $pin;
+
+		} else {
+    		$H = $dfDate->format('H');
+    		$D = $dfDate->format('d');
+    		$M = $dfDate->format('m');
+
+    		$pin = $H * $D + $M;
+
+		    return $pin;
+		}
+	}
+	
+}
 function getCurrencies()
 {
 	$array = array(
