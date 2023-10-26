@@ -1638,11 +1638,11 @@ class SalesController extends BaseController
         $payments = $paymentModel->select('SUM(amount_received) as total_sum')->where('invoice_id',$id)->first();
 
         $status = "Draft";
-        if($is_sent == "0" || $is_sent == "1" && $payments['total_sum'] == "" && $due_balance > 0) {
+        if($is_sent == "0" && $payments['total_sum'] == "" && $due_balance > 0) {
             $status = "<span class='text-bold-500 grey'>Draft</span>";
-            if($is_sent = "1") {
+            
+        } else if($is_sent = "1" && $payments['total_sum'] == "" && $due_balance > 0) {
                 $status = "<span class='text-bold-500 grey'>Sent</span>";
-            }
         }
         else if($due_balance > 0 && $today < $due_date && $payments['total_sum'] != "") {
             $status = "<span class='text-bold-500 success'>Partially Paid</span>";
