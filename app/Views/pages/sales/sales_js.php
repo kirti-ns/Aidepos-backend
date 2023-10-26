@@ -54,6 +54,15 @@
     });
   }
 
+  var url_string = this.location.href; 
+  var url = new URL(url_string);
+  var id = url.searchParams.get("id");
+
+  if(id != null) {
+    setTimeout(function(){
+      $('.invoice-id-'+id).click();
+    },2500)
+  }
   function addQuoteItem (argument) {
     var table = document.getElementById("quoteItemTable");
     var t1=(table.rows.length);

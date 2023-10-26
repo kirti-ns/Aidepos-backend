@@ -52,9 +52,10 @@ class SalesPaymentModel extends Model
     //View Payment
     public function GetSalesInvoiceDataById($id)
     {
-        $this->select('sales_payment.*,customers.registerd_name,sell_orders.invoice_date,sell_orders.total_amount');
+        $this->select('sales_payment.*,customers.registerd_name,sell_orders.invoice_date,sell_orders.total_amount,payment_type_master.payment_type');
         $this->join('customers', 'customers.id = sales_payment.customer_id');
         $this->join('sell_orders', 'sell_orders.id = sales_payment.invoice_id');
+        $this->join('payment_type_master', 'sales_payment.payment_id = payment_type_master.id');
         $this->where('sales_payment.id',$id);
         return $this->first();
 

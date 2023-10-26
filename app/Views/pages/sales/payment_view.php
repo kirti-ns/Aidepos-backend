@@ -7,7 +7,7 @@
                   <div class="breadcrumb-wrapper col-12">
                      <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                           <a href="index.html">
+                           <a href="<?=base_url()?>/sales#payments">
                               <p style="color:red;">Payment</p>
                            </a>
                         </li>
@@ -65,7 +65,7 @@
                               <div class="account-summary">
                                  <h6>Payment Date:  <span class="summary-val"><?= isset($value['payment_date'])?date('d M, Y', strtotime($value['payment_date'])):""; ?></span></h6>
                                  <!-- <h6>Reference Number: <span class="summary-val">55</span></h6> -->
-                                 <h6>Payment Mode: <span class="summary-val "><?= isset($value['payment_mode'])?$value['payment_mode']:""; ?></span></h6>
+                                 <h6>Payment Mode: <span class="summary-val "><?= isset($value['payment_type'])?$value['payment_type']:""; ?></span></h6>
                               </div>
                            </div>
                         </div>
@@ -97,7 +97,7 @@
                               </tr>
                            </thead>
                            <tbody>
-                              <td class="storeColor"><?= isset($value['invoice_id'])?$value['invoice_id']:"" ?></td>
+                              <td><a href="<?=base_url()?>sales?id=<?=$value['invoice_id']?>#invoice-list" class="storeColor"><?= isset($value['invoice_id'])?$value['invoice_id']:"" ?></a></td>
                               <td><?= isset($value['invoice_date'])?$value['invoice_date']:"" ?></td>
                               <td><?= isset($value['total_amount'])?$value['total_amount']:"" ?></td>
                               <td><?= isset($value['amount_received'])?$value['amount_received']:"" ?></td>

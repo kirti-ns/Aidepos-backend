@@ -37,6 +37,7 @@ use App\Models\SellordersModel;
 use App\Models\SellOrderEditNote;
 use App\Models\TransferModel;
 use App\Models\StoreItemsModel;
+use App\Models\SalesPaymentModel;
 
 class SettingsController extends BaseController
 {
@@ -972,6 +973,8 @@ class SettingsController extends BaseController
         if(!empty($ids)) {
             $commonModel->DeleteMultipleDataByField('sell_items','s_o_id',$ids,$date);
             $commonModel->DeleteMultipleDataByField('sell_order_editnote','s_o_id',$ids,$date);
+            $sPays = new SalesPaymentModel();
+            $sPays->whereIn('invoice_id',$ids)->delete();
         }
         $sellMdl->where('pos_id',$sessData['pos_id'])->where('created_at <=',$date)->delete();
 

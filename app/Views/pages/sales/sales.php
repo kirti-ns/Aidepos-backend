@@ -543,7 +543,7 @@
                                                                foreach($data['payment_invoice'] as $row){
                                                             ?>
                                                             <tr>
-                                                                <td class="storeColor <?= RowStatus($row['status']) ?>">PAY-0000<?= $row['id'] ?></td>
+                                                                <td class="<?= RowStatus($row['status']) ?>"><a class="storeColor" href="<?=base_url()?>/sales/view_payment/<?=$row['id']?>">PAY-0000<?= $row['id'] ?></a></td>
                                                                 <td><?= $row['payment_date'] ?></td>
                                                                 <!-- <td><?= $row['reference_id'] ?></td> -->
                                                                 <td><?= $row['registerd_name'] ?></td>
