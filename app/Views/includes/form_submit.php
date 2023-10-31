@@ -834,7 +834,7 @@ $(document).on('change','#tranferStatus',function() {
                           value: "cancel",
                           visible: true,
                           className: "",
-                          closeModal: false,
+                          closeModal: true,
                       },
                       confirm: {
                           text: "OK",
@@ -848,7 +848,10 @@ $(document).on('change','#tranferStatus',function() {
             .then((value) => {
               console.log(value)
               if(value == "cancel") {
-                $('.swal-overlay').removeClass('swal-overlay--show-modal');
+                swal("Cancel successfully!", "", "error");
+                setTimeout(function(){
+                  window.location.reload();
+                },500)
               } else {
                 if (value === false) return false;
                 if (value === "") {

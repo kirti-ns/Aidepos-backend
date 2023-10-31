@@ -395,7 +395,7 @@
                              <div class="row ">
                                 <div class="col-md-6">
                                    <div class="form-group">
-                                      <input type="checkbox" name="item_option[stockable]" id="stockable" <?= isset($item_option->stockable) && ($item_option->stockable == 1)?"checked":""; ?> value="1"  >
+                                      <input type="checkbox" name="item_option[stockable]" id="stockable" <?= isset($item_option->stockable) && ($item_option->stockable == 1)?"checked":""; ?> value="1" >
                                       <label for="stockable">Stockable</label>
                                       <span data-toggle="tooltip" data-placement="right" title="Mark Item"> <i class="fa fa-info-circle"></i></span>
                                    </div>

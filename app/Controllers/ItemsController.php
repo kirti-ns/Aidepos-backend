@@ -151,7 +151,7 @@ class ItemsController extends BaseController
                 $data = [];
                 foreach ($itemsData as $key=>$val){
                     $options = json_decode($val['item_options']);
-                    if($options->weighing_scale == 1) {
+                    if(isset($options->weighing_scale) && $options->weighing_scale == 1) {
                         $salesMode = 0;
                         if($options->weighing_scale == 1 && $options->weight_item == 1) {
                             $salesMode = 0;
@@ -204,7 +204,7 @@ class ItemsController extends BaseController
                 foreach ($itemsData as $key=>$val){
                     $options = json_decode($val['item_options']);
                     $options = json_decode($val['item_options']);
-                    if($options->weighing_scale == 1) {
+                    if(isset($options->weighing_scale) && $options->weighing_scale == 1) {
                         $salesMode = 0;
                         if($options->weighing_scale == 1 && $options->weight_item == 1) {
                             $salesMode = 0;
