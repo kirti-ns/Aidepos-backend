@@ -11,6 +11,19 @@ class CommonModel extends Model {
 		$this->db =& $db;
 	}
 
+    public function getLastID($table) {
+        $query = $this->db->table($table)->select('id')->orderby('ID','DESC')
+                      ->get();
+        $row = $query->getRow();
+
+        if($row){
+            $idPostfix = (int)$row->id+1;
+            $nextId = $idPostfix;
+        }
+        else{$nextId = 1;}
+        return $nextId;
+    }
+
 	function AddData($table,$data) {		
 		$this->db
                 ->table($table)

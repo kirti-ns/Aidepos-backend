@@ -585,8 +585,13 @@ class SalesController extends BaseController
         $sessData = getSessionData();
 
         $quote = new Quote();
-        $lastID = $quote->getInsertID();
-        $data['quote_number'] = $lastID + 1;
+        // $lastID = $quote->where('pos_id',$sessData['pos_id'])->orderBy('id','DESC')->first();
+        
+        $db = db_connect();
+        $c = new CommonModel($db);
+        $lastID = $c->getLastID('quotes');
+
+        $data['quote_number'] = $lastID;
 
         $customerModel = new CustomersModel();
         $customerModel->where('status',1);
