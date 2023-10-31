@@ -129,7 +129,7 @@ class AuthController extends BaseController
         if(!empty($empTerminal)) {
             $data['modal-title'] .= ' '.'and Terminal';
             $terminalModel = new TerminalsModel();
-            $data['terminals'] = $terminalModel->select('id, terminal_name')->whereIn('id',$empTerminal)->findAll();
+            $data['terminals'] = $terminalModel->select('id, terminal_name')/*->whereIn('id',$empTerminal)*/->findAll();
         }
         $data['modal-title'] .= ' '.'to continue';
         return view('store-popup',['data'=>$data]);

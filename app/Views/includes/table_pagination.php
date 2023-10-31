@@ -3101,7 +3101,7 @@
             createdRow: function(row, data, dataIndex ) {
              
               var c0 = data.id;
-              var c1 = "<span class=\"storeColor view-module quote-id-"+data.id+"\" data-id=\""+data.id+"\" data-tab=\"quote\">QUOT-000"+data.id+"</span>";
+              var c1 = "<span class=\"storeColor view-module quote-id-"+data.id+"\" data-id=\""+data.id+"\" data-tab=\"quote\">"+data.quote_number+"</span>";
               var c2 = data.customer_name;
               var c3 = data.date;
               var c4 = data.due_date;

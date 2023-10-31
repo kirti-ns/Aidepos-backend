@@ -166,6 +166,16 @@ function readURL(input) {
 
 $("#imageUpload").change(function () {
    readURL(this);
+});
+
+$("ul#main-menu-navigation > li > a").each(function () {
+  var currentURL = document.location.href;
+  var thisURL = $(this).attr("href");
+  if (currentURL.indexOf(thisURL) != -1) {
+    $("li.nav-item").removeClass("active");
+    $(this).parents("li.nav-item").addClass('active');
+    $(this).parents("li.has-sub").addClass('open');
+  }
 }); 
 
 $(function () {
@@ -818,43 +828,64 @@ $(document).on('change','#tranferStatus',function() {
 
         swal(msg, {
                 content: "input",
+                buttons: {
+                      cancel: {
+                          text: "Cancel",
+                          value: "cancel",
+                          visible: true,
+                          className: "",
+                          closeModal: false,
+                      },
+                      confirm: {
+                          text: "OK",
+                          value: true,
+                          visible: true,
+                          className: "",
+                          closeModal: false
+                      }
+                }
             })
             .then((value) => {
-              if (value === false) return false;
-              if (value === "") {
-                  swal("You need to add Pin!", "", "error");
-                  return false;
+              console.log(value)
+              if(value == "cancel") {
+                $('.swal-overlay').removeClass('swal-overlay--show-modal');
+              } else {
+                if (value === false) return false;
+                if (value === "") {
+                    swal("You need to add Pin!", "", "error");
+                    return false;
+                }
+                $.ajax({
+                   type: "POST",
+                   url: '<?=base_url()?>'+'/check_pin',
+                   data: {
+                      pin: value
+                   },
+                   dataType: "json",
+                   encode: true,
+                }).done(function (data) {
+                   if(data.status == 'true'){
+                      $.ajax({
+                         type: "POST",
+                         url: '<?=base_url()?>'+'/settings/clear-stock-transaction',
+                         data: {
+                            type: type,
+                            date: date
+                         },
+                         dataType: "json",
+                         encode: true,
+                      }).done(function (data) {
+                         if(data.status == 'true'){
+                            swal("Cleared!", data.message, "success");
+                         } else {
+                            swal("Error", "Something went wrong", "error");
+                         }
+                      });
+                   } else {
+                      swal("Error", "Incorrect pin", "error");
+                   }
+                });
               }
-              $.ajax({
-                 type: "POST",
-                 url: '<?=base_url()?>'+'/check_pin',
-                 data: {
-                    pin: value
-                 },
-                 dataType: "json",
-                 encode: true,
-              }).done(function (data) {
-                 if(data.status == 'true'){
-                    $.ajax({
-                       type: "POST",
-                       url: '<?=base_url()?>'+'/settings/clear-stock-transaction',
-                       data: {
-                          type: type,
-                          date: date
-                       },
-                       dataType: "json",
-                       encode: true,
-                    }).done(function (data) {
-                       if(data.status == 'true'){
-                          swal("Cleared!", data.message, "success");
-                       } else {
-                          swal("Error", "Something went wrong", "error");
-                       }
-                    });
-                 } else {
-                    swal("Error", "Incorrect pin", "error");
-                 }
-              });
               
             })
 

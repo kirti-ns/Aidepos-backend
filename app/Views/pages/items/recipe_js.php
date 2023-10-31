@@ -68,6 +68,7 @@
       var tagsInput1 = [];
       var tagsInput2 = [];
       var tagsInput3 = [];
+      var del = [];
       var href = window.location.href;
       if(href.includes('edit_item')) {
         var tag1 = '<?= isset($data['tags1'])?$data['tags1']:''; ?>'
@@ -80,6 +81,7 @@
       $(document).on('itemAdded', '.st-tags', function(e) {
         var tagInput = e.item;
         var tag = tagInput;
+        del.push(tagInput);
         if (tag !== '') {
           createTableRow(tag);
           tagsInput1.push(tag);
@@ -89,6 +91,7 @@
 
       $(document).on('itemAdded', '.st-tags-dynamic', function(e) {
         var tagInput = e.item;
+        del.push(tagInput);
         var tag = tagInput;
         if (tag !== '') {
           tagsInput2.push(tag);
@@ -100,6 +103,7 @@
 
       $(document).on('itemAdded', '.st-tags-3', function(e) {
         var tagInput = e.item;
+        del.push(tagInput);
         var tag = tagInput;
         if (tag !== '') {
           tagsInput3.push(tag);
@@ -134,14 +138,14 @@
         });
 
         var html = '<tr class="item new-row">'+
-        '<td style="padding-left:10px;"><input type="hidden" name="items['+t1+'][name]" value="'+tag+'"><span class="exploder fa fa-angle-right" data-toggle="collapse" data-id="'+t1+'" data-target="#cat'+t1+'" class="accordion-toggle"></span> <span class="variant">'+tag+'</span></td>'+
+        '<td style="padding-left:10px;"><input type="hidden" class="v_name" name="items['+t1+'][name]" value="'+tag+'"><span class="exploder fa fa-angle-right" data-toggle="collapse" data-id="'+t1+'" data-target="#cat'+t1+'" class="accordion-toggle"></span> <span class="variant">'+tag+'</span></td>'+
         '<td><input type="text" class="form-control" name="items['+t1+'][sku]" value="" placeholder="SKU"></td>'+
         '<td><input type="text" class="form-control" name="items['+t1+'][supply_price]" placeholder="Supply Price"></td>'+
         '<td><input type="text" class="form-control" name="items['+t1+'][mrp_percent]" placeholder="Markup(%)"></td>'+
         '<td><input type="text" class="form-control" name="items['+t1+'][retail_price]" placeholder="Retail Price"></td>'+
         '<td><input type="text" class="form-control" name="items['+t1+'][mrp]" placeholder="MRP"></td>'+
         '<td class="text-center"><input type="checkbox" checked value="1" data-size="sm" data-color="danger" name="items['+t1+'][status]" class="switchery" id="sw-'+t1+'"/></td>'+
-        '<td class="text-center"><a href="javascript:void(0);" data-id="" class="transh-icon-color deleteRow" data-table="brandmasters"><i class="fa fa-trash-o"></i></a></td></tr>'+
+        '<td class="text-center"><a href="javascript:void(0);" data-id="" class="transh-icon-color deleteVariant" data-table="variant_items"><i class="fa fa-trash-o"></i></a></td></tr>'+
         '<tr id="cat'+t1+'" class="collapse">'+
           '<td colspan="8" style="padding: 1rem 1rem">'+
             '<table class="table table-striped table-bordered variant-item-pr">'+
@@ -212,6 +216,7 @@
         var tbody = $('.tag-table-body').children().remove().clone();
         var href = window.location.href;
         if(href.includes('edit_item')) {
+          $("#pr-variance-tbl tbody").html('');
           $("#pr-variance-tbl tbody").append(tbody);
         }
         $('.tag-table-body').empty();
@@ -221,14 +226,14 @@
           var flg = 0;
           var mainTr = '';
           var storeTr = '';
-          $('tr.item').each(function(){
+          $('tr.item').each(function(k,v){
               var table = document.querySelector(".variant-item-tbl");
               var t1 = table.rows.length;
 
               var self = $(this);
-              var item = self.children('td').children('span.variant').text();
-              if(item == combination) {
+              var item = self.children('td').children('span.variant').text().trim();
 
+              if(item == combination) {
                 flg = 1;
                 mainTr = self;
                 var i = 0;
@@ -354,10 +359,16 @@
             $('.tag-table-body').append(mainTr);
             $('.tag-table-body').append(storeTr);
           }
-        });      
+
+        });
+        if(!del.includes(e.item)) {      
+          setIsDeleteVariantItems()
+        } else {
+          $('#pr-variance-tbl').children('tbody').html('');
+        }  
       });
 
-        $(document).on('itemRemoved','.st-tags-3',function(e){
+      $(document).on('itemRemoved','.st-tags-3',function(e){
         var index = tagsInput3.indexOf(e.item);
         if (index >= 0) {
           tagsInput3.splice( index, 1 );
@@ -367,7 +378,7 @@
         updateTagTable(combinations);        
       });
 
-       $(document).on('itemRemoved','.st-tags-dynamic',function(e){
+      $(document).on('itemRemoved','.st-tags-dynamic',function(e){
         var index = tagsInput2.indexOf(e.item);
         if (index >= 0) {
           tagsInput2.splice( index, 1 );
@@ -378,6 +389,7 @@
 
         var href = window.location.href;
         if(href.includes('edit_item')) {
+          $("#pr-variance-tbl tbody").html('');
           $("#pr-variance-tbl tbody").append(tbody);
         }
         $('.tag-table-body').empty();
@@ -389,15 +401,15 @@
           var flg = 0;
           var mainTr = '';
           var storeTr = '';
-          $('tr.item').each(function(){
+          var a = 0;
+          $('tr.item').each(function(k1,v1){
               var table = document.querySelector(".variant-item-tbl");
               var t1 = table.rows.length;
 
               var self = $(this);
               var item = self.children('td').children('span.variant').text().trim();
-
+              
               if(item == combination) {
-
                 flg = 1;
                 mainTr = self;
                 var i = 0;
@@ -407,7 +419,7 @@
                   idl.attr('name',nl.replace(/\d+/,t1));
                   idl.val('0')
                 }*/
-                mainTr.children('td').each(function(){ 
+                mainTr.children('td').each(function(k,v){
                   if(i == 0) {
                     var id = $(this).find('.v_id');
                     var n1 = id.attr('name');
@@ -440,12 +452,18 @@
                 storeTr = next;
                 return;
               }
+              a++
           })
           if(flg == 1) {
             $('.tag-table-body').append(mainTr);
             $('.tag-table-body').append(storeTr);
           }
-        });      
+        });
+        if(!del.includes(e.item)) {      
+          setIsDeleteVariantItems()
+        } else {
+          $('#pr-variance-tbl').children('tbody').html('');
+        }
       });
 
       $(document).on('itemRemoved','.st-tags-3',function(e){
@@ -457,13 +475,50 @@
         var combinations = getAllTagCombinations(tagsInput1, tagsInput2, tagsInput3);
         updateTagTable(combinations);        
       });
+
+      $(document).on('click','.deleteVariant',function(){
+        var id = $(this).attr('data-id')
+        var ids = [];
+        var pId = $('#delVariants').val();
+        if(pId != "") {
+          ids = pId.split(',')
+        }
+        console.log(ids)
+        var cat = $(this).parents('td').siblings('td').children('span.exploder').attr('data-target');
+        if(id != "") {
+          ids.push(id);
+          var str = ids.join(',')
+          $('#delVariants').val(str)
+        }
+        $(this).parents('td').parents('tr.item').remove();
+        $('tr'+cat).remove();
+      })
   });
 
-  $('#variant-item-tbl').on('click', '.exploder', function (e) {
+  function setIsDeleteVariantItems()
+  {
+    var items = $('#pr-variance-tbl').children('tbody').find('tr.item');
+    var ids = [];
+    var pId = $('#delVariants').val();
+    if(pId != "") {
+      ids = pId.split(',')
+    }
+    console.log(ids)
+    $.each(items, function(k, v) {
+      var id = $(this).children('td').find('.v_id').val();
+      ids.push(id);
+    })
+
+    var str = ids.join(',')
+    $('#delVariants').val(str)
+    $('#pr-variance-tbl').children('tbody').html('');
+  }
+
+  $('#variant-item-tbl').on('click','.exploder', function (e) {
       var tr = $(this).closest('tr').next('tr');
       console.log(tr)
       $(this).toggleClass("fa-angle-right fa-angle-up");
-    });
+  });
 
   function addCompositeItem(argument){
       var table = document.getElementById("composite-item-table");
@@ -478,7 +533,7 @@
       row.className = "new-row";
       cell0.className='text-center';
       cell1.className='text-left';
-      cell3.className ='text-center form-group';
+      cell3.className='text-center form-group';
       cell5.className='text-center';
 
       $.ajax({

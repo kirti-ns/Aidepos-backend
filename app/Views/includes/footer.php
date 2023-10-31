@@ -244,7 +244,7 @@ $url = explode('/',$current_url);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="<?= base_url()?>/public/app-assets/vendors/js/vendors.min.js"></script>
 <script src="<?= base_url()?>/public/app-assets/vendors/js/extensions/sweetalert.min.js?v=1.2"></script>
-<script src="<?= base_url()?>/public/app-assets/js/core/app-menu.min.js?v=1.3"></script>
+<script src="<?= base_url()?>/public/app-assets/js/core/app-menu.min.js?v=1.4"></script>
 <script src="<?= base_url()?>/public/app-assets/js/core/app.min.js"></script>
 <script src="<?= base_url()?>/public/bootstrap-tagsinput.min.js"></script>
 
@@ -527,7 +527,7 @@ function showTabByHash() {
 
     $('ul.nav > li > a[href="'+tabName+'"]').addClass('active');
     $(tabName).addClass("active show");
-    var top = document.getElementById("main").offsetTop;
+    var top = document.getElementById("tab-bottom-line-drag").offsetTop;
     if(window.scrollTop != top) 
         window.scrollTo(0, top);
     // window.scrollTo({ top: 0, behavior: 'smooth' });

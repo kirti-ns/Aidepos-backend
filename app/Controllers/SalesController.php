@@ -414,7 +414,7 @@ class SalesController extends BaseController
         $sellerItemsModel = new SellItemsModel();
         $data['sell_items'] = $sellerItemsModel->select('sell_items.*, items_master.item_name')->join('items','items.id = sell_items.item_id')->join('items_master','items_master.id = items.item_master_id')->where("s_o_id",$post['id'])->findAll();
 
-        if(!empty($getFromMail) && $getFromMail['from_email'] != "") {
+        // if(!empty($getFromMail) && $getFromMail['from_email'] != "") {
 
                 $mailData = array(
                     'id' => $data['invoice']['id'],
@@ -432,32 +432,32 @@ class SalesController extends BaseController
                 $dompdf->render();
                 $pdf = $dompdf->output();
 
-                /*$email = \Config\Services::email();
-                $email->setTo($to);
-                $email->setFrom($getFromMail['from_email'], $data['invoice']['store_name']);
+                $email = \Config\Services::email();
+                $email->setTo('kirtisharma.bluepixel@gmail.com');
+                $email->setFrom('pmt@bluepixeltech.com', $data['invoice']['store_name']);
                 $email->setSubject('Invoice for INV-000'.$data['invoice']['id']);
                 $email->setMessage(view('pages/sales/invoice_mail', $mailData));
-                $email->attach($pdf,'application/pdf',$filename);
+                // $email->attach($pdf,'application/pdf',$filename);
 
                 if ($email->send()) 
-                {*/
+                {
                     return json_encode([
                         "status" => "true",
                         "message" => "Email Sent successfully"
                     ]);
-                // } 
-                /*else 
+                } 
+                else 
                 {
                     $data = $email->printDebugger(['headers']);
                     print_r($data);
-                }*/
+                }
 
-        } else {
+        /*} else {
             return json_encode([
                 "status" => "false",
                 "message" => "Please set from email in your General settings for <strong>".$data['invoice']['store_name']."</strong>"
             ]);
-        }
+        }*/
     }
 
     public function recordNewPayment()
@@ -1383,6 +1383,7 @@ class SalesController extends BaseController
 
             $data[] = array( 
                "id"=>$record['id'],
+               "quote_number"=>$record['quote_number'],
                "store_name"=>$record['store_name'],
                "customer_name"=>$record['customer_name'],
                "date"=>dateFormat($record['quote_date']),

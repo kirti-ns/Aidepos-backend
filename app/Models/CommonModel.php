@@ -45,6 +45,12 @@ class CommonModel extends Model {
                 ->whereIn($field,$field_value)
                 ->delete();
 	}
+    public function DeleteMultipleData($table,$field,$field_value) {
+        return $this->db
+                ->table($table)
+                ->whereIn($field,$field_value)
+                ->delete();
+    }
 	public function GetTableDataByIDwithQty($table,$where) {
         $query = $this->db->table($table)->select("*")
         		->where('store_id',$where['store_id'])

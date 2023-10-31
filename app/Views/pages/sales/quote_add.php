@@ -24,7 +24,7 @@
             <h6>Store Name</h6>
             <h5><b><?= isset($data['s_name']['store_name'])?$data['s_name']['store_name']:''?></b></h5>
             <div class="row g-4">
-              <div class="col-md">
+              <div class="col-md-3">
                 <div class="form-floating">
                   <select class="form-select customer_list" name="customer_id" id="customer_id" aria-label="Floating label select example" >
                     <option value="">Select</option>
@@ -38,47 +38,41 @@
                   <label for="floatingSelectGrid">Customer Name*</label>
                 </div>
               </div>
-              <div class="col-md">
-                 <div class="form-floating">
-                    <?php $quoteNo = isset($data['quote_number'])?$data['quote_number']:''; ?>
-                    <input type="text" class="form-control" id="quote" name="quote" placeholder="Quote" value="<?= isset($value['id'])?$value['id']:$quoteNo ;?>">
-                    <label for="floatingSelectGrid">Quote*</label>
-                 </div>
-              </div>
-              <div class="col-md">
+              <div class="col-md-3">
                  <div class="form-floating">
                     <?php
-                     $quote_number = date('Y').'AIDE0'.$quoteNo; ?>
+                     $quoteNo = isset($data['quote_number'])?$data['quote_number']:'';
+                     $quote_number = 'QOT'.date('ymd').'0000'.$quoteNo; ?>
                     <input type="text" class="form-control" id="" name="quote_number" placeholder="Quote Number" value="<?= isset($value['id'])?$value['quote_number']:$quote_number;?>">
                     <label for="floatingSelectGrid">Quote Number*</label>
                  </div>
               </div>
-              <div class="col-md">
+              <div class="col-md-3">
                  <div class="form-floating">
-                    <input type="Date" class="form-control" id="quote_date" name="quote_date" placeholder="Invoice Date" value="<?= isset($value['quote_date'])?$value['quote_date']:''?>">
+                    <input type="Date" class="form-control" id="quote_date" name="quote_date" placeholder="Invoice Date" value="<?= isset($value['quote_date'])?$value['quote_date']:date('Y-m-d')?>">
                     <label for="floatingSelectGrid">Quote Date</label>
+                 </div>
+              </div>
+              <div class="col-md-3">
+                 <div class="form-floating">
+                    <select class="form-select" id="terms" name="terms" aria-label="Floating label select example">
+                       <option selected disabled>Select Terms</option>
+                       <option value="15" <?= isset($value['terms'])&&($value['terms']=='15')?'selected':''?>>Net 15</option>
+                       <option value="30" <?= isset($value['terms'])&&($value['terms']=='30')?'selected':''?>>Net 30</option>
+                       <option value="45" <?= isset($value['terms'])&&($value['terms']=='45')?'selected':''?>>Net 45</option>
+                       <option value="60" <?= isset($value['terms'])&&($value['terms']=='60')?'selected':''?>>Net 60</option>
+                       <option value="90" <?= isset($value['terms'])&&($value['terms']=='90')?'selected':''?>>Net 90</option>
+                       <option value="120" <?= isset($value['terms'])&&($value['terms']=='120')?'selected':''?>>Net 120</option>
+                       <option value="0">Due end of the month</option>
+                       <option value="1">Due end of next month</option>
+                       <option value="2">Due on receipt</option>
+                    </select>
+                    <label for="floatingInputGrid">Terms</label>
                  </div>
               </div>
             </div>
             <br>
             <div class="row g-4">
-                <div class="col-md-3">
-                   <div class="form-floating">
-                      <select class="form-select" id="terms" name="terms" aria-label="Floating label select example">
-                         <option selected disabled>Select Terms</option>
-                         <option value="15" <?= isset($value['terms'])&&($value['terms']=='15')?'selected':''?>>Net 15</option>
-                         <option value="30" <?= isset($value['terms'])&&($value['terms']=='30')?'selected':''?>>Net 30</option>
-                         <option value="45" <?= isset($value['terms'])&&($value['terms']=='45')?'selected':''?>>Net 45</option>
-                         <option value="60" <?= isset($value['terms'])&&($value['terms']=='60')?'selected':''?>>Net 60</option>
-                         <option value="90" <?= isset($value['terms'])&&($value['terms']=='90')?'selected':''?>>Net 90</option>
-                         <option value="120" <?= isset($value['terms'])&&($value['terms']=='120')?'selected':''?>>Net 120</option>
-                         <option value="0">Due end of the month</option>
-                         <option value="1">Due end of next month</option>
-                         <option value="2">Due on receipt</option>
-                      </select>
-                      <label for="floatingInputGrid">Terms</label>
-                   </div>
-                </div>
                 <div class="col-md-3">
                    <div class="form-floating">
                       <input type="date" class="form-control" id="due_date" name="due_date" placeholder="Due Date" value="<?= isset($value['due_date'])?$value['due_date']:''?>">

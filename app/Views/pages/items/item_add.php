@@ -843,7 +843,7 @@
                                                                <td class="text-center"><?= $k+1; ?></td>
                                                                <input type="hidden" name="variant[<?= $k+1; ?>][id]" value="<?= $v['id']; ?>">
                                                                <td style="width: 20%;" class="text-left">
-                                                                  <select name="variant[<?= $k+1; ?>][variant_id]" class="form-control form-select var-1 variant_data" data-type="var-<?= $k+1 ?>" id="variant_data">
+                                                                  <select name="variant[<?= $k+1; ?>][variant_id]" class="form-control form-select var-<?= $k+1; ?> variant_data" data-type="var-<?= $k+1 ?>" id="variant_data1">
                                                                      <option value="0">Click to select item</option>
                                                                      <?php if(!empty($data['variant'])){
                                                                         foreach($data['variant'] as $row){
@@ -867,7 +867,7 @@
                                                           <tr class="new-row">
                                                                <td class="text-center">3</td>
                                                                <td style="width: 20%;">
-                                                                  <select name="variant[2][variant_id]" class="form-control form-select var-3 variant_data" data-type="var-3" id="variant_data3">
+                                                                  <select name="variant[3][variant_id]" class="form-control form-select var-3 variant_data" data-type="var-3" id="variant_data3">
                                                                      <option value="0">Click to select item</option>
                                                                      <?php if (!empty($data['variant'])) {
                                                                          foreach ($data['variant'] as $row) { ?>
@@ -879,7 +879,7 @@
                                                                </td>
                                                                <td class="text-left">
                                                                   <!-- <div class="form-control"> -->
-                                                                    <input type="text" name="variant[2][attributes]" data-num="3" class="form-control st-tags-3" id="tag-input-3" value="" data-role="tagsinput" />
+                                                                    <input type="text" name="variant[3][attributes]" data-num="3" class="form-control st-tags-3" id="tag-input-3" value="" data-role="tagsinput" />
                                                                   <!-- </div> -->
                                                                </td>
                                                                <td class="text-center">
@@ -892,7 +892,7 @@
                                                             <tr class="new-row">
                                                                <td class="text-center">1</td>
                                                                <td style="width: 20%;">
-                                                                  <select name="variant[0][variant_id]" class="form-control form-select var-1 variant_data" data-type="var-1" id="variant_data">
+                                                                  <select name="variant[0][variant_id]" class="form-control form-select var-1 variant_data" data-type="var-1" id="variant_data1">
                                                                      <option value="0">Click to select item</option>
                                                                      <?php if (!empty($data['variant'])) {
                                                                          foreach ($data['variant'] as $row) { ?>
@@ -1002,7 +1002,7 @@
                                              <td><input type="text" class="form-control" name="items[<?=$k?>][retail_price]" placeholder="Retail Price" value="<?= $v['retail_price'] ?>"></td>
                                              <td><input type="text" class="form-control" name="items[<?=$k?>][mrp]" placeholder="MRP" value="<?= $v['mrp'] ?>"></td>
                                              <td class="text-center"><input type="checkbox" checked value="1" data-size="sm" data-color="danger" name="items[<?=$k?>][status]" class="switchery"/></td>
-                                             <td class="text-center"><a href="javascript:void(0);" data-id="<?= $v['id'] ?>" class="transh-icon-color deleteRow" data-table="variant_items"><i class="fa fa-trash-o"></i></a></td>
+                                             <td class="text-center"><a href="javascript:void(0);" data-id="<?= $v['id'] ?>" class="transh-icon-color deleteVariant" data-table="variant_items"><i class="fa fa-trash-o"></i></a></td>
                                            </tr>
                                            <tr id="cat<?=$k?>" class="collapse">
                                             <td colspan="8" style="padding: 1rem 1rem">
@@ -1049,6 +1049,7 @@
                                  <table id="pr-variance-tbl" style="display: none;">
                                    <tbody></tbody>
                                  </table>
+                                 <input type="hidden" name="delVariants" id="delVariants">
                                  <div class="col-12">
                                     <div class="form-footer">
                                         <div class="row">

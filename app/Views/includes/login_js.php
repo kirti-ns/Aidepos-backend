@@ -235,7 +235,7 @@ function form_submit(formid, event) {
 
 }
 
-$('#store').change(function(){
+/*$('#store').change(function(){
     var id = $(this).val();
 
     $.ajax({
@@ -255,6 +255,6 @@ $('#store').change(function(){
             $('.terminal-row').hide();
          }
       })    
- });
+ });*/
 
      </script>

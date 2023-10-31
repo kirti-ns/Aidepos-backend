@@ -4,9 +4,8 @@
          <div class="content-wrapper">
             <div class="content-header row">
             </div>
-            <?php $value = isset($data['emp'])?$data['emp']:"";  ?>
             <div class="content-body">
-               <p class="dashboard-text"><?= $data['greeting'];?>, <?= isset($value['first_name'])?$value['first_name']:''?></p>
+               <p class="dashboard-text mb-1"><?= $data['greeting'];?>, <?= session()->get('isLoggedIn') ? session()->get('name') : ''?></p>
                <!-- start -->
                <div class="row" style="padding-top:4px;">
                   <div class="col-xl-3 col-lg-6 col-12" >

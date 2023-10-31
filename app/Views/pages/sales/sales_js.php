@@ -304,11 +304,10 @@ function viewModule(id,tab) {
             } else {
               date = data.quote_date;
               modl = 'Quote';
-              shrt = 'QUOT';
+              shrt = '';
             }
 
-            $('#v-sendmail').attr('data-id',data.id);
-            $('#v-sendmail').attr('data-store-id',data.store_id);
+            
             // $('#v-edit-module').attr('href','<?= base_url() ?>'+'/sales/edit_'+tab+'/'+data.id);
             // $('#v-credit-note').attr('data-id',data.id);
             $("#v-heading").text(shrt+'-000'+data.id);
@@ -321,6 +320,9 @@ function viewModule(id,tab) {
             }
             var head = tab == "invoice" && data.invoice_type == "2" ? 'DEBIT NOTE' : tab;
             $('.m-details').html('<span style="font-size: 30px;text-transform:uppercase" class="module">'+ head +'</span><br/><p>'+modl+'# '+shrt+'-<span id="v-receipt-no">000'+data.id+'</span></p>');
+            if(tab == "quote") {
+              $('.m-details').html('<span style="font-size: 30px;text-transform:uppercase" class="module">'+ head +'</span><br/><p>'+modl+' #<span id="v-receipt-no">'+data.quote_number+'</span></p>');
+            }
 
             $('#v-module-items-tbl tbody').html('');
             var i = 1;
@@ -414,7 +416,7 @@ function viewModule(id,tab) {
                       '</a>'+
                       '</li>'+
                       '<li class="nav-item overflow-hidden">'+
-                        '<a href="javascript:void(0);" id="v-sendmail" class="details-menu-item text-center nav-link over-flow">'+
+                        '<a href="javascript:void(0);" id="v-sendmail" data-id="'+data.id+'" data-store-id="'+data.store_id+'" class="details-menu-item text-center nav-link over-flow">'+
                           '<i class="fa fa-envelope"></i>&nbsp;&nbsp;'+
                           '<span>Send Mail</span>'+
                         '</a>'+
@@ -425,6 +427,7 @@ function viewModule(id,tab) {
                           '<span>PDF</span>'+
                         '</a>'+
                       '</li>';
+                      
               if(res.data.is_payment_flg) {
                 menu += '<li class="nav-item overflow-hidden">'+
                         '<a href="javascript:void(0);" id="v-record-payment" data-sent="'+data.is_sent+'" data-id="'+data.id+'" class="details-menu-item text-center nav-link over-flow">'+

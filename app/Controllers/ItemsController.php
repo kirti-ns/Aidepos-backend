@@ -1336,18 +1336,20 @@ class ItemsController extends BaseController
 
                     if($post['item_type'] == 2){
                         foreach($post['variant'] as $row){
-                            $new_data = array(
-                                'item_id'=>$id,
-                                'variant_id'=>$row['variant_id'],
-                                'attribute'=>$row['attributes']
-                            );
-                            if(isset($row['id']) && $row['id'] != "") {
-                                $commonModel->UpdateData('variants',$row['id'],$new_data);
-                            } else {
-                                $commonModel->AddData('variants',$new_data);
+                            if($row['variant_id'] != "" && $row['variant_id'] > 0) {
+                                $new_data = array(
+                                    'item_id'=>$id,
+                                    'variant_id'=>$row['variant_id'],
+                                    'attribute'=>$row['attributes']
+                                );
+                                if(isset($row['id']) && $row['id'] != "") {
+                                    $commonModel->UpdateData('variants',$row['id'],$new_data);
+                                } else {
+                                    $commonModel->AddData('variants',$new_data);
+                                }
                             }
                         }
-                        
+
                         if(!empty($post['items'])) {
                             foreach ($post['items'] as $key => $value) {
                                 $new_data = array(
@@ -1404,6 +1406,11 @@ class ItemsController extends BaseController
                                     }
                                 }
                             }
+                        }
+                        if($post['delVariants'] != "") {
+                            $delVariant = explode(',', $post['delVariants']);
+                            $commonModel->DeleteMultipleData('items','id',$delVariant);
+                            $commonModel->DeleteMultipleData('items_price','items_id',$delVariant);
                         }
                     }
                     if($post['item_type'] == 3){
@@ -2319,13 +2326,13 @@ class ItemsController extends BaseController
                 JOIN
                 stores s ON iv.store_id = s.id
                 WHERE
-                i.item_options LIKE '%".'track_expiry'.":1%' AND
+                i.item_options LIKE '%\"track_expiry\":1%' AND 
                 id.qty > 0
                 AND id.expiry_date >= CURDATE()
                 AND id.expiry_date <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH)";
         $query = $db->query($sql)->getResult();
 
-        $sql2 = 'SELECT
+        $sql2 = "SELECT
                 i.item_name,
                 i.sku_barcode,
                 s.store_name,
@@ -2346,8 +2353,9 @@ class ItemsController extends BaseController
             JOIN
                 location l ON iv.location_id = l.id
             WHERE
+                i.item_options LIKE '%\"track_expiry\":1%' AND 
                 id.qty > 0
-                AND id.expiry_date <= CURDATE()';
+                AND id.expiry_date <= CURDATE()";
         $query2 = $db->query($sql2)->getResult();
 
         $data = [];

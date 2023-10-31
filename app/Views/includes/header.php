@@ -23,7 +23,7 @@ $current_url =  current_url();
       <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> --><link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="<?= base_url('public/app-assets/css/vendors.min.css')?>">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/vendors/css/extensions/sweetalert.css">
-      <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/css/app.min.css?v=1.2">
+      <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/css/app.min.css?v=1.3">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/css/core/menu/menu-types/vertical-menu.min.css">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/css/core/colors/palette-gradient.min.css">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/fonts/meteocons/style.min.css">
@@ -33,7 +33,7 @@ $current_url =  current_url();
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/vendors/css/pickers/pickadate/pickadate.css">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/css/plugins/pickers/daterange/daterange.min.css">
       <!-- BEGIN Custom CSS-->
-      <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/css/menu/custom.css?v=1.2">
+      <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/css/menu/custom.css?v=1.3">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/css/menu/customers.css">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>public/app-assets/css/menu/add_purchase_order.css">
       <!-- END Custom CSS-->
@@ -130,12 +130,8 @@ $current_url =  current_url();
        <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
       </style>
-      <style type="text/css">
-          
-
-      </style>
    </head>
-   <body class="vertical-layout vertical-menu 2-columns menu-collapsed menu-open fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns" id="main">
+   <body class="vertical-layout vertical-menu 2-columns menu-expanded menu-open fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns">
       <!-- fixed-top-->
      <?= view('includes/navbar.php') ?>
      <?= view('includes/sidebar.php') ?>

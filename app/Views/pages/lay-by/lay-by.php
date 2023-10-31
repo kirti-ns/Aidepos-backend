@@ -30,7 +30,7 @@
                      <a class="nav-link active" id="linkIcon12-tab1" data-toggle="tab" href="#layby-contract" aria-controls="linkIcon12" aria-expanded="false">Contract</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" id="activeIcon12-tab1" data-toggle="tab" href="#layby-payment" aria-controls="activeIcon12" aria-expanded="true">Payment</a>
+                     <a class="nav-link" id="linkIcon13-tab1" data-toggle="tab" href="#layby-payment" aria-controls="linkIcon13" aria-expanded="true">Payment</a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link" data-toggle="tab" href="#layby-refund" aria-expanded="false">Refund</a>
@@ -120,7 +120,7 @@
                   </div>
                </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="layby-payment" aria-labelledby="activeIcon12-tab1" aria-expanded="true">
+            <div role="tabpanel" class="tab-pane" id="layby-payment" aria-labelledby="linkIcon13-tab1" aria-expanded="false">
               <section class="mb-1 filter-bar">
                   <div class="filter-bar-item" style="flex-grow:1;">
                      <span>
@@ -250,7 +250,7 @@
                   </div>
                </div>
             </div>
-            <div class="tab-pane" id="layby-cancel" role="tabpanel" aria-labelledby="dropdownOptIcon21-tab1" aria-expanded="false">
+            <div class="tab-pane" id="layby-cancel" role="tabpanel" aria-labelledby="dropdownOptIcon22-tab1" aria-expanded="false">
                <section class="mb-1 filter-bar">
                   <div class="filter-bar-item" style="flex-grow:1;">
                      <span>
@@ -321,7 +321,7 @@
                   </div>
                </div>
             </div>
-            <div class="tab-pane" id="layby-cancellation-refund" role="tabpanel" aria-labelledby="dropdownOptIcon21-tab1" aria-expanded="false">
+            <div class="tab-pane" id="layby-cancellation-refund" role="tabpanel" aria-labelledby="dropdownOptIcon23-tab1" aria-expanded="false">
                <section class="mb-1 filter-bar">
                   <div class="filter-bar-item" style="flex-grow:1;">
                      <span>
