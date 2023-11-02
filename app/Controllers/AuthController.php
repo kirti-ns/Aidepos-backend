@@ -117,6 +117,7 @@ class AuthController extends BaseController
         $data['modal-title'] = 'Please select store';
         $session = session();
         $emp_id = $session->get('id');
+        $is_super_user = $session->get('is_super_user');
         $empModel = new EmployeeModel();
         $getEmpData = $empModel->select('store_id, terminal_id')->where('id',$emp_id)->first();
 
@@ -126,10 +127,15 @@ class AuthController extends BaseController
         $storeModel = new StoreModel();
         $data['stores'] = $storeModel->select('id, store_name')->whereIn('id',$empStore)->findAll();
 
-        if(!empty($empTerminal)) {
+        $terminalModel = new TerminalsModel();
+        if($is_super_user) {
             $data['modal-title'] .= ' '.'and Terminal';
-            $terminalModel = new TerminalsModel();
-            $data['terminals'] = $terminalModel->select('id, terminal_name')/*->whereIn('id',$empTerminal)*/->findAll();
+            $data['terminals'] = $terminalModel->select('id, terminal_name')->where('pos_id',$session->get('pos_id'))->findAll();
+        } else {
+            if(!empty($empTerminal)) {
+                $data['modal-title'] .= ' '.'and Terminal';
+                $data['terminals'] = $terminalModel->select('id, terminal_name')->whereIn('id',$empTerminal)->findAll();
+            }
         }
         $data['modal-title'] .= ' '.'to continue';
         return view('store-popup',['data'=>$data]);
@@ -211,15 +217,25 @@ class AuthController extends BaseController
 
            ## Update record
            $employeeModel->update($id,$data);
-             return json_encode([
-                    "status" => "true",
-                    "message" => "Please check you email.",
-                    ]);
+
+           $config = Array(
+              'protocol' => 'smtp',
+              'smtp_host' => 'sandbox.smtp.mailtrap.io',
+              'smtp_port' => 2525,
+              'smtp_user' => 'f39c014df7b5c2',
+              'smtp_pass' => 'efe1fc66c04a2a',
+              'crlf' => "\r\n",
+              'newline' => "\r\n"
+            );
+            return json_encode([
+                "status" => "true",
+                "message" => "We have sent a link to your email for reset password. Please check your email.",
+            ]);
         }else{
-             return json_encode([
-                    "status" => "false",
-                    "message" => "Email does not exist.",
-                    ]);
+            return json_encode([
+                "status" => "false",
+                "message" => "Email does not exist.",
+            ]);
         }
     }
     public function ResetPassword($token){

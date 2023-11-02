@@ -767,7 +767,7 @@ class PurchasesController extends BaseController
                                 'phone' => isset($post["phone"])?$post["phone"]:0,
                                 'address' => isset($post["address"])?$post["address"]:0,
                                 'date' => isset($post["date"])?$post["date"]:0,
-                                'status_type' => isset($post["status_type"])?$post["status_type"]:2,
+                                // 'status_type' => isset($post["status_type"])?$post["status_type"]:2,
                                 'status' => isset($post["status"])?$post["status"]:1
                             ];
                     break;
@@ -1404,9 +1404,6 @@ class PurchasesController extends BaseController
         $draw = $dtpostData['draw'];
         $start = $dtpostData['start'];
         $rowperpage = 10; // Rows display per page
-        $columnIndex = $dtpostData['order'][0]['column']; // Column index
-        $columnName = $dtpostData['columns'][$columnIndex]['data']; // Column name
-        $columnSortOrder = $dtpostData['order'][0]['dir']; // asc or desc
         $filter = $postData['filter'];
         $sessData = getSessionData();
 
@@ -1423,8 +1420,8 @@ class PurchasesController extends BaseController
             $supplierF->where('status',$filter['status']);
         }
         if($filter['search'] != "") {
-            $supplier->orLike('registered_name',$filter['search'])
-                ->orLike('tax_amount_name',$filter['search']);
+            $supplier->Like('registered_name',$filter['search'])
+                ->Like('tax_amount_name',$filter['search']);
             $supplierF->orLike('registered_name',$filter['search'])
                 ->orLike('tax_amount_name',$filter['search']);
         }

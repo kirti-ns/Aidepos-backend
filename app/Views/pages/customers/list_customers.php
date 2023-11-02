@@ -53,17 +53,17 @@
                <div class="filter-bar-item border-side-right"></div>
                <div class="filter-bar-item filter-bar-last pl-2">
                   <span>
-                     <button type="button" class="btn btn-outline-info btn-sm import-customers mr-15" ><i class="fa fa-download"></i></button>
+                     <button type="button" class="btn btn-outline-info btn-sm import-customers mr-15" ><i class="fa fa-file-import"></i></button>
                      <a href="<?= base_url("customers/add_customer")?>" class="btn btn-info btn-sm mr-15"><i class="fa fa-plus"></i> Add New</a>
-                     <span class="dropdown">
+                     <!-- <span class="dropdown">
                         <i id="btnSearchDrop1" class="fa fa-ellipsis-h" ></i>
                         <span aria-labelledby="#btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
-                        <!-- <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a> -->
+                        <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
                         <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
                         <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
                         <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
                         </span>
-                     </span>
+                     </span> -->
                   </span>
                </div>
             </section>
@@ -112,63 +112,63 @@
             </div>
          </div>
          <div class="tab-pane" id="gift-cards" role="tabpanel" aria-labelledby="linkIcon12-tab1" aria-expanded="false">
-             <form class="filterGiftcards">
-            <section class="mb-1 filter-bar">
-                  <div class="filter-bar-item f-12">
-                     <span>
-                       
-                         <select name="equal[batch_id]" class="form-control form-select purchase-search">
-                        <option value="">Batch: All</option>
-                        <?php
-                           if(isset($data['giftcards'])){
-                              foreach($data['giftcards'] as $row){
-                                 ?>
-                           <option value="<?= $row['id']?>"><?= $row['batch_name']?></option>
+            <form class="filterGiftcards">
+               <section class="mb-1 filter-bar">
+                     <div class="filter-bar-item f-12">
+                        <span>
+                          
+                            <select name="equal[batch_id]" class="form-control form-select purchase-search">
+                           <option value="">Batch: All</option>
                            <?php
+                              if(isset($data['giftcards'])){
+                                 foreach($data['giftcards'] as $row){
+                                    ?>
+                              <option value="<?= $row['id']?>"><?= $row['batch_name']?></option>
+                              <?php
+                                    }
                                  }
-                              }
-                            ?>
-                     </select>
-                     </span>
-                  </div>
-                  <div class="filter-bar-item f-12">
-                     <span>
-                          <select name="equal[status]" class="form-control form-select purchase-search">
-                              <option value="">All</option>
-                              <option value="1">Active</option>
-                              <option value="2">Deactive</option>
-                           </select>
-                     </span>
-                  </div>
-                  <div class="filter-bar-item" style="flex-grow:1;">
-                     <span>
-                        <input type="text" placeholder="Search" name="match[search]" class="form-control purchase-search searchDtField" value="">
-                        <div class="form-control-position">
-                           <i class="fa fa-search"></i>
-                        </div>
-                     </span>
-                  </div>
-                  <div class="filter-bar-item">
-                     <span><button type="button" id="giftcardbtn" class="btn btn-outline-info btn-sm searchDtBtn">Search</button></span>
-                  </div>
-                  <div class="filter-bar-item border-side-right"></div>
-                  <div class="filter-bar-item filter-bar-last pl-2">
-                     <span>
-                        <button type="button" class="btn btn-outline-info btn-sm import-customers mr-15"><i class="fa fa-download"></i></button>
-                        <a href="<?= base_url("customers/add_gift_card")?>" class="btn btn-info btn-sm mr-10"><i class="fa fa-plus"></i> Add New</a>
-                        <span class="dropdown">
-                        <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-default btn-sm dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-h"></i></button>
-                           <span aria-labelledby="#btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right" style="top:185px;">
-                           <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
-                           <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
-                           <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
-                           <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
+                               ?>
+                        </select>
+                        </span>
+                     </div>
+                     <div class="filter-bar-item f-12">
+                        <span>
+                             <select name="equal[status]" class="form-control form-select purchase-search">
+                                 <option value="">All</option>
+                                 <option value="1">Active</option>
+                                 <option value="2">Deactive</option>
+                              </select>
+                        </span>
+                     </div>
+                     <div class="filter-bar-item" style="flex-grow:1;">
+                        <span>
+                           <input type="text" placeholder="Search" name="match[search]" class="form-control purchase-search searchDtField" value="">
+                           <div class="form-control-position">
+                              <i class="fa fa-search"></i>
+                           </div>
+                        </span>
+                     </div>
+                     <div class="filter-bar-item">
+                        <span><button type="button" id="giftcardbtn" class="btn btn-outline-info btn-sm searchDtBtn">Search</button></span>
+                     </div>
+                     <div class="filter-bar-item border-side-right"></div>
+                     <div class="filter-bar-item filter-bar-last pl-2">
+                        <span>
+                           <button type="button" class="btn btn-outline-info btn-sm import-customers mr-15"><i class="fa fa-download"></i></button>
+                           <a href="<?= base_url("customers/add_gift_card")?>" class="btn btn-info btn-sm mr-10"><i class="fa fa-plus"></i> Add New</a>
+                           <span class="dropdown">
+                           <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-default btn-sm dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-h"></i></button>
+                              <span aria-labelledby="#btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right" style="top:185px;">
+                              <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
+                              <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
+                              <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
+                              <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
+                              </span>
                            </span>
                         </span>
-                     </span>
-                  </div>
-            </section>
-         </form>
+                     </div>
+               </section>
+            </form>
             <div class="card card-content collapse show">
                <div class="card-body card-dashboard">
                   <section id="configuration">
@@ -263,8 +263,6 @@
             </div>
          </div>
       </div>
-      <!--  </div>
-         </div> -->
       <!-- Model Start -->         
       <div class="modal fade text-left" id="import-customers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
          <div class="modal-dialog modal-lg" role="document">
@@ -275,37 +273,39 @@
                   <span aria-hidden="true">&times;</span>
                   </button>
                </div>
-               <div class="modal-body">
-                  <div class="uploadOuter-2">
-                     <div class="uploadOuter">
-                        <div class="row">
-                           <div class="col-md-5">
-                              <span class="dragBox" >
-                              <span><i class="fa fa-cloud-upload"></i></span>
-                              <span>Drag and Drop Files Here</span>
-                              <input type="file" onChange="dragNdrop(event)"  ondragover="drag()" ondrop="drop()" id="uploadFile"  />
-                              </span>
-                           </div>
-                           <div class="col-md-2 pt-2">
-                              <strong>OR</strong>
-                           </div>
-                           <div class="col-md-5">
-                              <label for="uploadFile" class="btn btn-outline-info"><i class="fa fa-plus"></i>  Browse Files</label>
-                              <p>Supported upto to 25 MB</p>
+               <form method="POST" action="#" id="import_customer_form" name="import_customer_form" enctype="multipart/form-data">
+                  <div class="modal-body">
+                     <div class="uploadOuter-2">
+                        <div class="uploadOuter">
+                           <div class="row">
+                              <div class="col-md-5">
+                                 <span class="dragBox" style="line-height: 35px;">
+                                 <span><i class="fa fa-cloud-upload" style="font-size: 30px;color: #a2a2a2"></i></span><br/>
+                                 <span>Drag and Drop Files Here</span>
+                                 <input type="file" name="file" onChange="dragNdrop(event)" ondragover="drag()" ondrop="drop()" id="uploadFile"/>
+                                 </span>
+                              </div>
+                              <div class="col-md-2 pt-2">
+                                 <strong>OR</strong>
+                              </div>
+                              <div class="col-md-5">
+                                 <label for="uploadFile" class="btn btn-outline-info"><i class="fa fa-plus"></i>Browse Files</label>
+                                 <p>Supported upto to 25 MB</p>
+                              </div>
                            </div>
                         </div>
+                        <!-- <div id="preview"></div> -->
                      </div>
-                     <!-- <div id="preview"></div> -->
+                     <div class="row p-1">
+                        <div class="col-md-6">
+                           <a href="javascript:void(0);" id="downloadFormat" class="text-left storeColor"><i class="fa fa-cloud-arrow-down"></i> Download Format</a>
+                        </div>
+                        <div class="col-md-6 text-right">
+                           <button type="submit" class="btn btn-sm btn-info"> <i class="fa fa-file-o"></i> Submit</button>
+                        </div>
+                     </div>
                   </div>
-                  <div class="row p-1">
-                     <div class="col-md-6">
-                        <a href="" class="text-left"><i class="fa fa-download"></i> Download Format</a>
-                     </div>
-                     <div class="col-md-6 text-right">
-                        <button type="button" class="btn btn-sm btn-info"> <i class="fa fa-file-o"></i> Submit</button>
-                     </div>
-                  </div>
-               </div>
+               </form>
             </div>
          </div>
       </div>

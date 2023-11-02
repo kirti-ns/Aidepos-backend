@@ -209,7 +209,7 @@ dl.dropdown dt span:nth-child(3) {
   margin: 0 auto;
   position: relative;
   text-align: center;
-  font-weight: bold;
+  font-weight: 500;
   line-height: 95px;
   color: #222222;
   display: inline-block;

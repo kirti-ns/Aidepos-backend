@@ -343,7 +343,7 @@ class SettingsController extends BaseController
                 break;
                 case 'currencies':
                     $data = [
-                        'pos_id' => $post['pos_id'],
+                        'pos_id' => isset($sessData['pos_id'])?$sessData['pos_id']:'',
                         'currency_code' => $post["currency_code"],
                         'currency_symbol' => isset($post["currency_symbol"])?$post["currency_symbol"]:"0",
                         'currency_name' => isset($post["currency_name"])?$post["currency_name"]:0,
@@ -356,6 +356,7 @@ class SettingsController extends BaseController
                 break;
                 case 'terminals':
                     $data = [
+                        'pos_id'=>isset($sessData['pos_id'])?$sessData['pos_id']:'',
                         'terminal_name' => isset($post["terminal_name"])?$post["terminal_name"]:0,
                         'type' => isset($post["type"])?$post["type"]:0,
                         'store_id' => isset($post["store_id"])?$post["store_id"]:"0",

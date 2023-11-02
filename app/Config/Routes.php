@@ -60,6 +60,7 @@ $routes->get('/customers/add_gift_card','CustomersController::Add_GiftCard');
 $routes->get('/customers/edit_gift_card/(:num)','CustomersController::Edit_gift_card/$1');
 $routes->get('/customers/add_loyalty_points','CustomersController::Add_LoyaltyPoints');
 $routes->post('post_data','CustomersController::Post_Customers_Data');
+$routes->post('/customers/importCustomers','CustomersController::importCustomers');
 
 $routes->get('/items','ItemsController::index');
 $routes->post('/items/itemExportOptions','ItemsController::itemExportOptions');

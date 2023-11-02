@@ -98,10 +98,10 @@
                </div>
             </div>
          </div>
-         <div class="" style="padding: 14px;">
-            <a href="">Forgot Password?</a>
-            <button  type="button" class="btn btn-default_new" style="margin-left: 130px"><i class="fa fa-close"></i> Cancel</button>
-            <button type="button" class="btn btn-info float-right phone_number_model"> <i class="fa fa-file-o"></i> Continue</button>
+         <div style="padding: 14px;">
+            <a href="<?=base_url()?>/forgot_password" target="_blank">Forgot Password?</a>
+               <button  type="button" class="btn btn-default_new"><i class="fa fa-close"></i> Cancel</button>
+               <button type="button" class="btn btn-info float-right phone_number_model"> <i class="fa fa-file-o"></i> Continue</button>   
          </div>
       </div>
    </div>

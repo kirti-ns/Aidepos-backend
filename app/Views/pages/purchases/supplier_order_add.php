@@ -59,21 +59,21 @@
                         <div class="row pt-1">
                            <div class="col-md-3">
                               <div class="form-floating">
-                                 <input type="date" class="form-control" id="floatingInputGrid" placeholder="Date" name="date" value="<?= isset($value['date'])?$value['date']:''?>" >
-                                 <label for="floatingSelectGrid">Select Created Date</label>
+                                 <input type="date" class="form-control" id="floatingInputGrid" placeholder="Date" name="date" value="<?= isset($value['date'])?$value['date']:date('Y-m-d')?>" readonly>
+                                 <label for="floatingSelectGrid">Created Date</label>
                               </div>
                            </div>
-                           <div class="col-md-3">
+                           <!-- <div class="col-md-3">
                               <div class="form-floating">
                                  <select class="form-select" id="status_type" name="status_type" aria-label="Floating label select example">
-                                    <option>Select</option>
+                                    <option value="">Select</option>
                                     <option <?= isset($value['status_type']) && ($value['status_type'] == 1)?'selected':''?> value="Approved">Approved</option>
                                     <option <?= isset($value['status_type']) && ($value['status_type'] == 2)?'selected':''?> value="Pending">Pending</option>
                                     <option  <?= isset($value['status_type']) && ($value['status_type'] == 3)?'selected':''?>value="Cancelled">Cancelled</option>
                                  </select>
                                  <label for="floatingSelectGrid">Status</label>
                               </div>
-                           </div>
+                           </div> -->
                         </div>
                         <div class="form-footer pt-1">
                            <div class="row">

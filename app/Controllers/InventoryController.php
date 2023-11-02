@@ -756,7 +756,7 @@ class InventoryController extends BaseController
                "barcode"=>$record['sku_barcode'],
                "current_inventory"=>$record['quantity'],
                "unit"=>$record['uom'],
-               "inventory_amount"=>$record['quantity']*$record['retail_price'],
+               "inventory_amount"=>(int)$record['quantity']*(int)$record['retail_price'],
                "cost_price"=>$record['retail_price'],
             ]; 
         }

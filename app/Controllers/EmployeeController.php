@@ -115,7 +115,7 @@ class EmployeeController extends BaseController
                 }else{
                     $imagename = $post['profile_image_old'];
                 }
-               
+                
                 $data = [
                    'first_name' => $post["first_name"],
                     'last_name' => $post["last_name"],
@@ -139,6 +139,7 @@ class EmployeeController extends BaseController
             $result = $commonModel->UpdateData($post['table_name'],$id,$data);
             $session = session();
             if($post['id'] == $session->get('id')){
+                $session->set('name',$post['first_name'].' '.$post['last_name']);
                 $session->set('profile', $imagename);
             }
             return json_encode([
@@ -148,78 +149,73 @@ class EmployeeController extends BaseController
     }
     public function PostEmployeeData()
     {
-       /* if($this->request->getMethod() == "post")
-        { 
-          */
+        $employeeModel = new EmployeeModel();
+        $post = $this->request->getVar();
+           
+        if(!empty($post['profile_image_name'])){
+            if($imageFile = $post['profile_image_name']){
+                $base64 = $post['profile_image_name']; 
+                $img = explode(";base64,", $base64);
+                $imagetype = explode("image/", $img[0]);
+                $imagetype = $imagetype[1];
+                $imagebase64 = base64_decode($img[1]);
+                $imagename = time().'.'.'png';  
+                $file = FCPATH."public/uploads/employees/" . $imagename;
+                file_put_contents($file, $imagebase64);
+            }
+        }else{
+            $imagename = $post['profile_image_old'];
+        }
+            
+        $data = [
+           'first_name' => $post["first_name"],
+            'last_name' => $post["last_name"],
+            'profile' => $imagename,
+            'role_id' => $post["role_id"],
+            'primary_email' => $post["primary_email"],
+            'country_code' =>isset($post["country_code"])?$post["country_code"]:"0",
+            'phone' => $post["phone"],
+            'secondary_email' => $post["secondary_email"],
+            'address' => $post["address"],
+            'zip' => $post["zip"],
+            'city' => $post["city"],
+            // 'password' => password_hash($post["employee_password"],PASSWORD_DEFAULT),
+            'store_id' =>isset($post["store_id"])?json_encode($post["store_id"]):"0",
+            'terminal_id' => isset($post['terminal_id'])?json_encode($post["terminal_id"]):"",
+            'state' => isset($post["state"])?$post["state"]:0,
+            'country' => isset($post["country"])?$post["country"]:0,
+            'gender' => isset($post["gender"])?$post["gender"]:0,
+            'status' => isset($post["status"])?$post["status"]:0
+        ];
+                
+        if(isset($post['id']) && empty($post['id']))
+        {
+
+            $password = password_hash($post["employee_password"],PASSWORD_DEFAULT);
+            $data['password'] = $password;
 
             $employeeModel = new EmployeeModel();
-            $post = $this->request->getVar();
-               
-            if(!empty($post['profile_image_name'])){
-                if($imageFile = $post['profile_image_name']){
-                    $base64 = $post['profile_image_name']; 
-                    $img = explode(";base64,", $base64);
-                    $imagetype = explode("image/", $img[0]);
-                    $imagetype = $imagetype[1];
-                    $imagebase64 = base64_decode($img[1]);
-                    $imagename = time().'.'.'png';  
-                    $file = FCPATH."public/uploads/employees/" . $imagename;
-                    file_put_contents($file, $imagebase64);
-                }
-            }else{
-                $imagename = $post['profile_image_old'];
+            $employeeModel->save($data);
+            return json_encode([
+                "status" => "true",
+                "message" => "New Data Created successfully",
+            ]);
+        }
+        else{
+            
+            if($post['employee_password'] != "") {
+                $password = password_hash($post["employee_password"],PASSWORD_DEFAULT);
+                $data['password'] = $password;
             }
-                
-            $data = [
-               'first_name' => $post["first_name"],
-                'last_name' => $post["last_name"],
-                'profile' => $imagename,
-                'role_id' => $post["role_id"],
-                'primary_email' => $post["primary_email"],
-                'country_code' =>isset($post["country_code"])?$post["country_code"]:"0",
-                'phone' => $post["phone"],
-                'secondary_email' => $post["secondary_email"],
-                'address' => $post["address"],
-                'zip' => $post["zip"],
-                'city' => $post["city"],
-                // 'password' => password_hash($post["employee_password"],PASSWORD_DEFAULT),
-                'store_id' =>isset($post["store_id"])?json_encode($post["store_id"]):"0",
-                'terminal_id' => isset($post['terminal_id'])?json_encode($post["terminal_id"]):"",
-                'state' => isset($post["state"])?$post["state"]:0,
-                'country' => isset($post["country"])?$post["country"]:0,
-                'gender' => isset($post["gender"])?$post["gender"]:0,
-                'status' => isset($post["status"])?$post["status"]:0
-            ];
-                
-            // echo "<pre>";print_r($data);die;
-                if(isset($post['id']) && empty($post['id']))
-                {
 
-                    $password = password_hash($post["employee_password"],PASSWORD_DEFAULT);
-                    $data['password'] = $password;
-
-                    $employeeModel = new EmployeeModel();
-                    $employeeModel->save($data);
-                    return json_encode([
-                        "status" => "true",
-                        "message" => "New Data Created successfully",
-                    ]);
-                }
-                else{
-                    
-                    if($post['employee_password'] != "") {
-                        $password = password_hash($post["employee_password"],PASSWORD_DEFAULT);
-                        $data['password'] = $password;
-                    }
-
-                    $id = $post['id'];
-                    $employeeModel = new EmployeeModel();
-                    $employeeModel->UpdateData($post['table_name'],$id,$data);
-                    return json_encode([
-                        "status" => "true",
-                        "message" => "Data updated successfully",
-                    ]);
-                } 
+            $id = $post['id'];
+            $employeeModel = new EmployeeModel();
+            $employeeModel->UpdateData($post['table_name'],$id,$data);
+            return json_encode([
+                "status" => "true",
+                "message" => "Data updated successfully",
+            ]);
+        } 
     }
     
     public function getEmployee()

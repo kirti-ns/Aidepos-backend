@@ -171,11 +171,11 @@
                                  </div>
                                  <div>
                                     <h2 class="mrg-h2">
-                                       <b>Reset Passwords</b>
+                                       <b>Reset Password</b>
                                     </h2>
                                  </div>
                                  <div class="card-subtitle text-muted font-small-4 pt-2 mrg-left log" style="    padding-top: 1.5rem!important;">
-                                    <p>Please enter your Email</p><p><b>Reset Password</b></p>
+                                    <!-- <p>Please enter your Email</p><p><b>Reset Password</b></p> -->
                                  </div>
                               </div>
                               <div class="card-content mrg-left">
@@ -212,9 +212,9 @@
                                           <div class="col-md-6 checkbox-left">
                                              <!-- <input type="checkbox" class="" name="Remember_me"> Remember me -->
                                           </div>
-                                          <div class="col-md-6 check-left">
+                                          <!-- <div class="col-md-6 check-left">
                                             <a href="<?= base_url('login')?>" class="rec-pwd">Login Here</a>
-                                          </div>
+                                          </div> -->
                                        </div>
                                        <button type="submit" id="btnSubmit" class="btn btn-lg btn-block btn-col">
                                        SEND OTP </button>

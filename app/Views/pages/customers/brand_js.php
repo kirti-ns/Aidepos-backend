@@ -114,4 +114,5 @@ $(document).on("click",".add-new-batch",function (e) {
   $('#model_gift_card_form')[0].reset();
   $('#add-new-batch').modal('show')
 });
+
 </script>

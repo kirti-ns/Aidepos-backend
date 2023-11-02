@@ -62,6 +62,85 @@ class CustomersController extends BaseController
 
         return $this->template->render('pages/customers/view_customers', $data); 
     }
+    public function importCustomers()
+    {
+      $sessData = getSessionData();
+
+      $file = $this->request->getFile('file');
+      $path = FCPATH . 'public/uploads/csvfile/';
+
+      $input = $this->validate([
+            'file' => 'uploaded[file]|ext_in[file,csv],'
+        ]);
+        if (!$input) {
+            $err = $this->validator;
+
+            return json_encode([
+              'status'=>'false',
+              'msg'=>\Config\Services::validation()->getErrors()
+            ]);
+        }else{
+            if($file = $this->request->getFile('file')) {
+              if ($file->isValid() && ! $file->hasMoved()) {
+                  $newName = $file->getRandomName();
+
+                  $file->move($path,$newName);
+                  
+                  $file = fopen($path.$newName,"r");
+                  $i = 0;
+                  $numberOfFields = 10;
+                  $csvArr = array();
+                  
+                  while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+                      $num = count($filedata);
+                      if($i > 0 && $num == $numberOfFields){
+                          $csvArr[$i]['pos_id'] = $sessData['pos_id'];
+                          $csvArr[$i]['account_id'] = $filedata[0];
+                          $csvArr[$i]['tpin_no'] = $filedata[1];
+                          $csvArr[$i]['lpo_no'] = $filedata[2];
+                          $csvArr[$i]['id_no'] = $filedata[3];
+                          $csvArr[$i]['registerd_name'] = $filedata[4];
+                          $csvArr[$i]['tax_account_name'] = $filedata[5];
+                          $csvArr[$i]['address'] = $filedata[6];
+                          $csvArr[$i]['email'] = $filedata[7];
+                          $csvArr[$i]['country_code'] = $filedata[8];
+                          $csvArr[$i]['phone'] = $filedata[9];
+                      }
+                      $i++;
+                  }
+                  fclose($file);
+                  $count = 0;
+                  foreach($csvArr as $v){
+                      $customer = new CustomersModel();
+                      $findRecord = $customer->where('email', $v['email'])->countAllResults();
+                      if($findRecord == 0){
+                          if($customer->insert($v)){
+                              $count++;
+                          }
+                      }
+                  }
+
+                  unlink($path.$newName);
+
+                  return json_encode([
+                    'status'=>'true',
+                    'msg'=>$count.' rows successfully added.'
+                  ]);
+              }
+              else{
+                  return json_encode([
+                    'status'=>'false',
+                    'msg'=>'CSV file coud not be imported.'
+                  ]);
+              }
+            }else{
+                return json_encode([
+                  'status'=>'false',
+                  'msg'=>'CSV file coud not be imported.'
+                ]);
+            }
+        }
+    }
 
     public function Add_GiftCard_Master()
     {
@@ -212,9 +291,6 @@ class CustomersController extends BaseController
       $draw = $dtpostData['draw'];
       $start = $dtpostData['start'];
       $rowperpage = $dtpostData['length']; // Rows display per page
-      $columnIndex = $dtpostData['order'][0]['column']; // Column index
-      $columnName = $dtpostData['columns'][$columnIndex]['data']; // Column name
-      $columnSortOrder = $dtpostData['order'][0]['dir']; // asc or desc
       //$searchValue = $dtpostData['search']['value']; // Search value
       $advancesearchValue = $dtpostData['advFilter']; // Search value
       $searchValue = $advancesearchValue['match']['search'];
@@ -236,7 +312,11 @@ class CustomersController extends BaseController
             $searchValue = $advancesearchValue['match']['search']; 
             //$cm->Like('registerd_name', $searchValue);
             $cm->like('email', $searchValue);
+            $cm->orLike('account_id', $searchValue);
+            $cm->orLike('registerd_name', $searchValue);
             $cmfilter->like('email', $searchValue);
+            $cmfilter->orLike('account_id', $searchValue);
+            $cmfilter->orLike('registerd_name', $searchValue);
         }
         if(!empty($advancesearchValue['equal']['status'])){
             $searchStatus = $advancesearchValue['equal']['status']; 
@@ -249,7 +329,7 @@ class CustomersController extends BaseController
             }
         }
         $cm->where('pos_id',$sessData['pos_id']);
-        $cm->orderBy($columnName,$columnSortOrder);
+        $cm->orderBy('id','DESC');
         $records = $cm->findAll($rowperpage, $start);
 
         $cmfilter->where('pos_id',$sessData['pos_id']);
@@ -267,8 +347,8 @@ class CustomersController extends BaseController
         );
 
         return $this->response->setJSON($response);
-   }
-   public function getGiftCards(){
+    }
+    public function getGiftCards(){
 
        $request = service('request');
        $postData = $request->getPost();

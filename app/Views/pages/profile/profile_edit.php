@@ -66,7 +66,11 @@
                          $stores_array = [];
                           if(!empty($value)){
                             $stores_array = json_decode($value['store_id']);
-                            }
+                          }
+                          $terminal_array = [];
+                          if(!empty($value) && $value['terminal_id'] != ""){
+                            $terminal_array = json_decode($value['terminal_id']);
+                          }
                          ?>
                         <form method="post" enctype="multipart/form-data" action="<?= base_url('post-profile-data') ?>" id="employee_form">
                            <input type="hidden" name="action" id="action" value="post-profile-data">
@@ -169,49 +173,52 @@
 
                                  <div class="col-md-3">
                                     <div class="form-floating" >
-                                    <select class="select2 form-control store_id" name="store_id[]" id="store_id" multiple="multiple" disabled >
-
+                                    <select class="select2 form-control store_id" name="store_id[]" id="store_id" multiple="multiple" disabled>
                                     <?php 
                                     if(!empty($stores_array)){
-
-                                    if(!empty($data['stores']))
-                                    {
-                                       foreach($data['stores'] as $row)
-                                          { ?>
-                                             <option <?= isset($stores_array) && in_array($row['id'],$stores_array)? 'selected="selected"':"" ?> value="<?=$row['id']?>"><?=$row['store_name']?></option>
-                                          <?php
-                                          }
-                                     } 
-                                  }else{
-                                    if(!empty($stores_array)){
-                                    if(!empty($data['stores'])){
-                                    foreach($data['stores'] as $row)
-                                    { ?>
-                                       <option <?= isset($stores_array) && in_array($row['id'],$stores_array)? 'selected="selected"':"" ?>  value="<?=$row['id']?>"><?=$row['store_name']?></option>
-                                    <?php
-                                    }
-                                       }
-                                  }
-                               }
-                                    ?>
+                                      if(!empty($data['stores']))
+                                      {
+                                         foreach($data['stores'] as $row)
+                                            { ?>
+                                               <option <?= isset($stores_array) && in_array($row['id'],$stores_array)? 'selected="selected"':"" ?> value="<?=$row['id']?>"><?=$row['store_name']?></option>
+                                            <?php
+                                            }
+                                       } 
+                                    } else {
+                                      if(!empty($stores_array)){
+                                        if(!empty($data['stores'])){
+                                          foreach($data['stores'] as $row) { ?>
+                                            <option <?= isset($stores_array) && in_array($row['id'],$stores_array)? 'selected="selected"':"" ?>  value="<?=$row['id']?>"><?=$row['store_name']?></option>
+                                          <?php }
+                                        }
+                                      }
+                                    } ?>
                                  </select>
                                  <label for="floatingSelectGrid">Store</label>
                                     </div>
                                  </div>
                                  <div class="col-md-3">
                                     <div class="form-floating">
-                                      <select class="form-select terminal_id" id="terminal_id" name="terminal_id" aria-label="Floating label select example" disabled>
-                                          <option value="" >Select Terminals</option>
-                                           <?php 
-                                             if(!empty($data['terminals']))
-                                             {
-                                                foreach($data['terminals'] as $row)
+                                      <select class="select2 form-select terminal_id" id="terminal_id" multiple="multiple" name="terminal_id" aria-label="Floating label select example" disabled>
+                                        <?php 
+                                        if(!empty($terminal_array)){
+                                          if(!empty($data['terminals']))
+                                          {
+                                             foreach($data['terminals'] as $row)
                                                 { ?>
-                                                <option <?= isset($value['terminal_id']) && ($value['terminal_id'] == $row['id'])?'selected':''?> value="<?= $row['id']?>"><?= $row['terminal_name']?></option>
-                                             <?php
+                                                   <option <?= isset($terminal_array) && in_array($row['id'],$terminal_array)? 'selected="selected"':"" ?> value="<?=$row['id']?>"><?=$row['terminal_name']?></option>
+                                                <?php
                                                 }
-                                              } 
-                                             ?>
+                                           } 
+                                        } else {
+                                          if(!empty($terminal_array)){
+                                            if(!empty($data['terminals'])){
+                                              foreach($data['terminals'] as $row) { ?>
+                                                <option <?= isset($terminal_array) && in_array($row['id'],$terminal_array)? 'selected="selected"':"" ?>  value="<?=$row['id']?>"><?=$row['terminal_name']?></option>
+                                              <?php }
+                                            }
+                                          }
+                                        } ?>
                                        </select>
                                        <label for="floatingSelectGrid">Terminal</label>
                                     </div>

@@ -314,6 +314,97 @@ $(document).on('change','#tranferStatus',function() {
 
  $(document).ready(function () {
 
+  $(document).on('click','#downloadFormat',function(){
+    
+    let fHead = ["Account_ID","Tpin_No","LPO_No","ID_No","Registered_Name","Tax_Account_Name","Address","Email","Country_Code","Phone"];
+
+    let fRow = [
+      ["PRT001","100200300","LOP07486","ID78562","Amrut Distilleries Pvt Ltd","Amrut Distilleries","Lusaka Africa","amrutdist@gmail.com","+1","84848484"],
+      ["TWA002","789200300","LOP78412","ID71220","Diageo India Pvt Ltd","Diageo India Pvt Ltd","Lusaka Africa","diageo@gmail.com","+1","478512365"],
+      ["TSG004","789500300","LOP71220","ID74123","Godavari Biorefineries","Godavari Biorefineries","Lusaka Africa","godavari.biorefineries@gmail.com","+1","478542685"],
+      ["HLI098","100200300","LOP07486","ID78562","N.S.L Sugars Ltd","N.S.L Sugars Ltd","Lusaka Africa","nslsugars12@gmail.com","+1","478542685"],
+      ["TSG004","8714700300","LOP74123","ID07486","United Spirits Ltd","Prganicum","US","prganicum@gmail.com","+1","478542685"]
+    ];
+
+    let head = Object.values(fHead).join(',') + '\n'; // header row
+    let body = fRow.map(row => Object.values(row).join(',')).join('\n');
+
+    var e = document.createElement('a');
+    e.href = 'data:text/csv;charset=utf-8,' + encodeURI(head + body);
+    e.target = '_blank';
+    e.download = 'Customers.csv';
+    e.click();
+
+    $('#import-customers').modal('hide');
+  })
+
+  $("form[name='import_customer_form']").validate({
+         rules: {
+            file: {
+              required:true
+            }
+         },
+         messages: {
+            file: "Please select file"
+         },
+         errorElement: "div",
+         errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback");
+            error.insertAfter(element);
+         },
+         highlight: function (element) {
+            $(element).removeClass('is-valid').addClass('is-invalid');
+         },
+         unhighlight: function (element) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+         },
+         submitHandler: function (form) {
+            importFormSubmit('import_customer_form',event);
+            return false;
+         }
+  });
+
+  function importFormSubmit(formid,event){
+       event.preventDefault();
+       if (formid) {
+          var form_id = formid;
+       } else {
+          var form_id = $("form").attr("id");
+       }
+       
+       var form = $('#' + form_id)[0];
+       var formData = new FormData(form)
+
+       formData.append('_token','{{csrf_token()}}')
+       
+       $.ajax({
+          type: "POST",
+          url: '<?=base_url()?>'+'/customers/importCustomers',
+          data: formData,
+          cache: false,
+          processData: false,
+          contentType: false,
+          dataType: "json",
+          encode: true,
+       }).done(function (data) {
+
+        if (data.status == 'true') {
+            toastr.success(data.msg, "Success", {
+                closeButton: !0
+            })
+            setTimeout(function(){
+              window.location.reload();
+            },500)
+        } else {
+            toastr.error(data.msg.file, "Error", {
+             closeButton: !0
+            })
+        }
+          
+       });
+
+  }
+
   $('.set-modifiers').click(function() {
       var formData = $('#set-modifier-form').serializeArray();
       var modifierArr = [];

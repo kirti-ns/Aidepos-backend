@@ -579,6 +579,7 @@
       var customerTbl = $('#customer-tbl').DataTable({
           'processing': true,
           'serverSide': true,
+          'ordering': false,
           'serverMethod': 'post',
           dom: "<'row'<'col-sm-12'tr>>" +
           "<'row rowDt'<'col-sm-6 colDt'l><'col-sm-4'i><'col-sm-2'p>>",
