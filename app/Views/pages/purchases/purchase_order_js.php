@@ -44,7 +44,7 @@
 
       $('<span class="tabledit-span" >'+t1+'</span>').appendTo(cell0)
       $('<select class="form-control form-border form-select item-add '+id+'" name="items['+t1+'][item_id]" data-row="'+t1+'">'+options+'</select>').appendTo(cell1);
-      $('<input class="form-control form-border quantity" type="number" name="items['+t1+'][quantity]" value="1"><div style="margin: 5px;" class="uom-v">kg</div><input class="uom form-control form-border " type="hidden" name="items['+t1+'][uom]" value=""><input class="uomid form-control form-border " type="hidden" name="items['+t1+'][uomid]">').appendTo(cell2);
+      $('<input class="form-control form-border quantity" type="number" name="items['+t1+'][quantity]" value="1" min="1"><div style="margin: 5px;" class="uom-v">kg</div><input class="uom form-control form-border " type="hidden" name="items['+t1+'][uom]" value=""><input class="uomid form-control form-border " type="hidden" name="items['+t1+'][uomid]">').appendTo(cell2);
       $('<input class="form-control form-border rate" type="text" name="items['+t1+'][rate]" value=""  >').appendTo(cell3);
       $('<input class="discount form-control form-border " type="number" name="items['+t1+'][discount]" value="">&nbsp;<select class="form-control form-border discount_type form-select" name="items['+t1+'][discount_type]"><option value="%">%</option><option value="ZMW">ZMW</option></select><input class="discount_amount form-control " type="hidden" name="items['+t1+'][discount_amount]" value="0">').appendTo(cell4);
       $('<input type="text" class="form-control tax_amount" name="items['+t1+'][tax_amount]" readonly><input class="form-control form-border tax" type="hidden" name="items['+t1+'][tax]" value=""><input class="form-control form-border tax_type" readonly type="hidden" name="items['+t1+'][tax_type]">').appendTo(cell5);
@@ -130,7 +130,7 @@
       $('<span class="tabledit-span" >'+t1+'</span>').appendTo(cell0)
       $('<select class="form-control form-border form-select item-add '+id+'" name="items['+t1+'][item_id]" data-row="'+t1+'">'+options+'</select>').appendTo(cell1);
       $('<input class="uom form-control form-border" type="text" name="items['+t1+'][uom]" value=""><input class="uomid form-control form-border " type="hidden" name="items['+t1+'][uomid]">').appendTo(cell2);
-      $('<input class="form-control form-border quantity" type="number" name="items['+t1+'][quantity]" value="1">').appendTo(cell3)
+      $('<input class="form-control form-border quantity" type="number" name="items['+t1+'][quantity]" value="1" min="1">').appendTo(cell3)
       $('<input class="form-control form-border rate" type="text" name="items['+t1+'][rate]" value="">').appendTo(cell4);
       $('<input class="discount form-control form-border " type="number" name="items['+t1+'][discount]" value="">&nbsp;<select class="form-control form-border discount_type form-select" name="items['+t1+'][discount_type]"><option value="%">%</option><option value="ZMW">ZMW</option></select><input class="discount_amount form-control " type="hidden" name="items['+t1+'][discount_amount]" value="0">').appendTo(cell5);
       $('<input type="text" class="form-control tax_amount" name="items['+t1+'][tax_amount]" readonly><input class="form-control form-border tax" type="hidden" name="items['+t1+'][tax]" value=""><input class="form-control form-border tax_type" readonly type="hidden" name="items['+t1+'][tax_type]">').appendTo(cell6);

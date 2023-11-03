@@ -200,37 +200,50 @@ class AuthController extends BaseController
         $post = $this->request->getVar();
         $employeeModel = new EmployeeModel();
         $email = $post['email'];
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                $charactersLength = strlen($characters);
-                $length = 20;
-                $token = '';
-                for ($i = 0; $i < $length; $i++) {
-                    $token .= $characters[rand(0, $charactersLength - 1)];
-                }       
-        $emp_data = $employeeModel->where('primary_email', $email)->first();
-        if($emp_data){
-              $data = [
+
+        $emp = $employeeModel->where('primary_email', $email)->first();
+        if($emp){
+
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $length = 20;
+            $token = '';
+            for ($i = 0; $i < $length; $i++) {
+                $token .= $characters[rand(0, $charactersLength - 1)];
+            }  
+
+            $data = [
               'forgot_password_token' => $token,
            ];
            
-           $id = $emp_data['id'];
+           $id = $emp['id'];
 
-           ## Update record
            $employeeModel->update($id,$data);
 
-           $config = Array(
-              'protocol' => 'smtp',
-              'smtp_host' => 'sandbox.smtp.mailtrap.io',
-              'smtp_port' => 2525,
-              'smtp_user' => 'f39c014df7b5c2',
-              'smtp_pass' => 'efe1fc66c04a2a',
-              'crlf' => "\r\n",
-              'newline' => "\r\n"
-            );
-            return json_encode([
-                "status" => "true",
-                "message" => "We have sent a link to your email for reset password. Please check your email.",
-            ]);
+            $mail = \Config\Services::email();
+            $mail->setTo('k.kirtisharma1838@gmail.com');
+            $mail->setFrom('kirtisharma.bluepixel@gmail.com', 'Aidepos');
+            
+            $eData = [
+                'name'=>$emp['first_name'].' '.$emp['last_name'],
+                'token'=>$token
+            ];
+            $mail->setSubject('Reset Password');
+            $mail->setMessage(view('pages/mail/reset_password_mail',$eData));
+
+            if ($mail->send()) 
+            {
+                return json_encode([
+                    "status" => "true",
+                    "message" => "We have sent a link to the given email ID for reset password. Please check your mail.",
+                ]);
+            } 
+            /*else 
+            {
+                $data = $email->printDebugger(['headers']);
+                print_r($data);
+            }*/
+            
         }else{
             return json_encode([
                 "status" => "false",

@@ -25,40 +25,25 @@
                      </div>
                      <div class="col-md-3">
                         <div class="form-floating">
-                           <select class="form-select" id="store_id" name="store_id" aria-label="Floating label select example">
-                                 <option value="">Select Store</option>
-                                 <?php if(!empty($data['stores'])){
-                                    foreach($data['stores'] as $row){
-                                 ?>
-                                 <!--<option value="<?=$row['id']?>" <?php if(isset($value['store_id']) && $row['id'] == $value['store_id']){echo'selected';}?>><?=$row['store_name']?></option>-->
-                                  <option <?= isset($value['store_id']) && ($value['store_id'] == $row['id']) || (isset($data['store_id']) && $data['store_id'] == $row['id'])?'selected':''?> value="<?= $row['id']?>"><?=$row['store_name']?> </option>
-                                 <?php }} ?>
-                              </select>
-                              <label for="floatingSelectGrid">Store Name*</label>
+                           <fieldset class="form-view">
+                            <span>Store Name</span>
+                            <input type="hidden" name="store_id" class="store_id">
+                            <p class="form-control-static" id="store_id">-</p>
+                          </fieldset>
                         </div>
                      </div>
                      <div class="col-md-3">
                         <div class="form-floating">
-                            <select class="form-select" id="supplier_id" name="supplier_id" aria-label="Floating label select example">
-                                 <option value="" >Select Supplier</option>
-                                <?php 
-                                    if(!empty($data['supplier']))
-                                    {
-                                       foreach($data['supplier'] as $row)
-                                          { ?>
-                                             <option <?= isset($value['supplier_id']) && ($value['supplier_id'] == $row['id'])?'selected':''?> value="<?= $row['id']?>"><?= $row['registered_name']?></option>
-                                    <?php
-                                          }
-                                     } 
-                                    ?>                              
-                                 </select>
-                           <label for="floatingSelectGrid">Supplier Name*</label>
+                          <fieldset class="form-view">
+                            <span>Supplier Name</span>
+                            <p class="form-control-static" id="supplier_id">-</p>
+                          </fieldset>
                         </div>
                      </div>
                      <div class="col-md-3">
                         <div class="form-floating">
-                           <input type="date" class="form-control" id="date" name="date" placeholder="Date" value="<?= isset($value['date'])?$value['date']:''?>">
-                           <label for="floatingInputGrid">Purchase Order Date</label>
+                           <input type="date" class="form-control" id="date" name="date" placeholder="Date" value="<?=date('Y-m-d');?>">
+                           <label for="floatingInputGrid">Goods Received Date</label>
                         </div>
                      </div>
                   </div>
@@ -66,49 +51,35 @@
                   <div class="row g-3">
                      <div class="col-md-3">
                         <div class="form-floating">
-                           <select class="form-select" id="terms" name="terms" aria-label="Floating label select example">
-                                   <option selected disabled>Select Terms</option>
-                                   <option value="15" <?= isset($value['terms'])&&($value['terms']=='15')?'selected':''?>>Net 15</option>
-                                   <option value="30" <?= isset($value['terms'])&&($value['terms']=='30')?'selected':''?>>Net 30</option>
-                                   <option value="45" <?= isset($value['terms'])&&($value['terms']=='45')?'selected':''?>>Net 45</option>
-                                   <option value="60" <?= isset($value['terms'])&&($value['terms']=='60')?'selected':''?>>Net 60</option>
-                                   <option value="90" <?= isset($value['terms'])&&($value['terms']=='90')?'selected':''?>>Net 90</option>
-                                   <option value="120" <?= isset($value['terms'])&&($value['terms']=='120')?'selected':''?>>Net 120</option>
-                                   <option value="0">Due end of the month</option>
-                                   <option value="1">Due end of next month</option>
-                                   <option value="2">Due on receipt</option>
-                                </select>
-                                <label for="floatingInputGrid">Terms</label>
+                          <fieldset class="form-view">
+                            <span>Terms</span>
+                            <p class="form-control-static" id="terms">-</p>
+                          </fieldset>
                         </div>
                      </div>
                      <div class="col-md-3">
                         <div class="form-floating">
-                           <input type="date" class="form-control" id="due_date" name="due_date" placeholder="Due Date" value="<?= isset($value['due_date'])?$value['due_date']:''?>">
-                           <label for="floatingInputGrid">Due Date</label>
+                          <fieldset class="form-view">
+                            <span>Due Date</span>
+                            <p class="form-control-static" id="due_date">-</p>
+                          </fieldset>
                         </div>
                      </div>
                      <div class="col-md-3">
                         <div class="form-floating">
-                           <select class="form-select" onchange="$('#currency_rate').val($(this).find(':selected').attr('data-rate'))" name="currency_id" data-type="purchase" id="v_currency_id" aria-label="Floating label select example">
-                              <option value="">N/A</option>
-                               <?php 
-                                 if(!empty($data['currency']))
-                                 {
-                                   foreach($data['currency'] as $row)
-                                   { ?>
-                                      <option data-rate="<?= $row['exchange_rate']?>" <?= isset($value['currency_id']) && ($value['currency_id'] == $row['id'])?'selected':''?> value="<?= $row['id']?>"><?=$row['currency_code']?> (<?=$row['currency_symbol']?>) - <?=$row['currency_name']?></option>
-                                     <?php
-                                   }
-                                 } 
-                               ?>
-                           </select>
-                           <label for="floatingSelectGrid">Exchange Currency</label>
+                          <fieldset class="form-view">
+                            <span>Exchange Currency</span>
+                            <p class="form-control-static" id="v_currency_id">-</p>
+                          </fieldset>
+                          <input type="hidden" name="base_currency_id" id="base_currency_id" value="">
                         </div>
                      </div>
                      <div class="col-md-3">
                         <div class="form-floating conv-currency" style="visibility: hidden;">
-                           <input type="text" class="form-control" name="currency_rate" id="currency_rate" value="<?= isset($value['currency_rate'])?$value['currency_rate']:''?>" data-type="purchase" placeholder="Currency Rate">
-                           <label for="floatingSelectGrid">Currency Rate</label>
+                          <fieldset class="form-view">
+                            <span>Currency Rate</span>
+                            <p class="form-control-static" id="currency_rate">-</p>
+                          </fieldset>
                         </div>
                      </div>
                   </div>
@@ -125,20 +96,11 @@
                                     <div class="row mb-2">
                                       <div class="col-md-3">
                                         <div class="form-floating">
-                                          <select class="form-select" name="location" id="location" aria-label="Floating label select example">
-                                                <option value="">Select Location</option>
-                                              <?php 
-                                                if(!empty($data['location']))
-                                                {
-                                                  foreach($data['location'] as $row)
-                                                  { ?>
-                                                     <option value="<?= $row['id']?>" <?= isset($value['location_id']) && ($value['location_id'] == $row['id'])?'selected':''?>><?=$row['location_description']?></option>
-                                                    <?php
-                                                  }
-                                                } 
-                                              ?>
-                                          </select>
-                                          <label for="floatingSelectGrid">Location</label>
+                                          <fieldset class="form-view">
+                                              <span>Location</span>
+                                              <input type="hidden" name="location" class="location">
+                                              <p class="form-control-static" id="location">-</p>
+                                          </fieldset>
                                         </div>
                                       </div>
                                     </div>

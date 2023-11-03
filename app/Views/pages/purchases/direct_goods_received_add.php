@@ -126,7 +126,7 @@
                                                                <?php } ?>
                                                             </td>
                                                             <td>
-                                                               <input class="form-control quantity" type="number" name="items[<?= $i; ?>][quantity]" value="<?= $row['qty']; ?>">
+                                                               <input class="form-control quantity" type="number" name="items[<?= $i; ?>][quantity]" value="<?= $row['qty']; ?>" min="1">
                                                                <div style="margin: 5px;" class="uom-v"><?= isset($row['uom_value'])?$row['uom_value']:'-'?></div>
                                                                <input class="uom form-control" type="hidden" name="items[<?= $i; ?>][uom]" value="<?= $row['uom_value']; ?>"><input class="uomid form-control " type="hidden" name="items[<?= $i; ?>][uomid]" value="<?= $row['uom_id']; ?>">
                                                             </td>

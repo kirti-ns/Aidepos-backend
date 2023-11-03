@@ -258,13 +258,43 @@ $(document).on('change','#tranferStatus',function() {
              if(res.status == "true") {
                data_res =  res.data;
                data = data_res.purchase_order;
-               $('#store_id').val(data.store_id);
-               $('#supplier_id').val(data.supplier_id);
+               $('#store_id').text(data.store_name);
+               $('.store_id').val(data.store_id);
+               $('#supplier_id').text(data.registered_name);
                $('#category_id').val(data.category_id);
-               $('#due_date').val(data.due_date);
-               $('#date').val(data.date);
-               $('#terms').val(data.terms);
-               $('#v_currency_id').val(data.currency_id);
+               $('#due_date').text(data.due_date);
+               // $('#date').val(data.date);
+               var terms = '';
+               switch(data.terms){
+                case "15":
+                  terms = "Net 15";
+                  break;
+                case "30":
+                  terms = "Net 30";
+                  break;
+                case "45":
+                  terms = "Net 45";
+                  break;
+                case "60":
+                  terms = "Net 60";
+                  break;
+                case "90":
+                  terms = "Net 90";
+                  break;
+                case "120":
+                  terms = "Net 120";
+                  break;
+                case "0":
+                  terms = "Due end of the month";
+                  break;
+                case "1":
+                  terms = "Due end of next month";
+                  break;
+                case "2":
+                  terms = "Due on receipt";
+                  break;
+               }
+               $('#terms').text(terms);
                $('.discountAmount').text(data.total_discount);
                $('#total-discount').val(data.total_discount)
                $('.subTotal').text(data.sub_total)
@@ -272,11 +302,13 @@ $(document).on('change','#tranferStatus',function() {
                $('.taxAmount').text(data.total_tax)
                $('#total-tax').val(data.total_tax)
                $('#total-amount').val(data.total_amount)
-               $('#location').val(data.location_id);
-               if(data.currency_id != "") {
+               $('#location').text(data.location_description);
+               $('.location').val(data.location_id);
+               if(data.currency_id != "" && data.currency_id > 0) {
+                $('#v_currency_id').text(data.currency_code + (data.currency_symbol+' - '+data.currency_name));
                 $('.conv-currency').css({'visibility':'visible'})
+                $('#currency_rate').text(data.currency_rate)
                }
-               $('#currency_rate').val(data.currency_rate)
 
                if(type == "received"){
                   item = data_res.purchase_items;

@@ -511,15 +511,6 @@ class PurchasesController extends BaseController
         $data['url'] = uri_string();
         
         $sessData = getSessionData();
-
-        $store = new StoreModel();
-        if($sessData['role_name'] == "Staff") {
-            $store->where('id',$sessData['store_id']);
-        } else if ($sessData['role_name'] == "Owner") {
-            $store->where('pos_id',$sessData['pos_id']);
-        }
-        
-        $data['stores'] = $store->findAll();
         
         $customer = new CustomersModel();
         $data['customers'] = $customer->findAll();
@@ -1309,11 +1300,11 @@ class PurchasesController extends BaseController
                 $html .= '</td>';
                 $html .= '<td><input type="text" class="form-control" name="items['.$k.'][qty]" value="'.$value['qty'].'" readonly></td>';
                 $html .= '<td>
-                <input class="form-control rec_quantity" type="number" name="items['.$k.'][received_qty]"  value="'.$remaining.'">';
+                <input class="form-control rec_quantity" type="number" name="items['.$k.'][received_qty]"  value="'.$remaining.'" min="0">';
                 $html .= '</td>';
                 $html .= '<td><input type="text" class="form-control" name="items['.$k.'][old_received_qty]" value="'.$value['received_qty'].'" readonly>';
                 $html .= '</td>';
-                $html .= '<td><input class="form-control" type="text" name="items['.$k.'][rejected_qty]" value="">';
+                $html .= '<td><input class="form-control" type="number" name="items['.$k.'][rejected_qty]" value="" min="0">';
                 $html .= '</td>';
                  $html .= '<td><input class="form-control" type="text" name="items['.$k.'][old_rejected_qty]" value="'.$value['rejected_qty'].'" readonly>';
                 $html .= '</td>';
@@ -1335,26 +1326,26 @@ class PurchasesController extends BaseController
             foreach($data['purchase_items'] as $k=>$value){
             
                 $html .= '<tr class="new-row">';
-                $html .= '<td><span class="form-control">'.($k+1).'</span></td>';
-                $html .= '<td colspan="2"><input class=" form-control" type="hidden" name="items['.$k.'][order_item_id]" value="'.$value['id'].'"><input class=" form-control" type="hidden" name="items['.$k.'][item_id]" value="'.$value['item_id'].'"><input class=" form-control" type="text" name="items['.$k.'][item_name]" value="'.$value['item_name'].'">';
+                $html .= '<td class="text-center"><span>'.($k+1).'</span></td>';
+                $html .= '<td class="text-center" colspan="2"><input class=" form-control" type="hidden" name="items['.$k.'][order_item_id]" value="'.$value['id'].'"><input class=" form-control" type="hidden" name="items['.$k.'][item_id]" value="'.$value['item_id'].'"><span>'.$value['item_name'].'</span>';
                 $html .= '</td>';
-                $html .= '<td><input class="uom form-control " type="text" name="items['.$k.'][uom]" value="'.$value['uom_value'].'"><input class="uomid form-control " type="hidden" name="items['.$k.'][uomid]" value="'.$value['uom_id'].'">';
-                $html .= '</td>';
-                $html .= '<td><input class="form-control" type="text" name="items['.$k.'][quantity]"  value="'.$value['qty'].'"></td>';
-                $html .= '<td><input class="form-control quantity" type="text" name="items['.$k.'][returned_qty]" value=""><input class="form-control received_qty" type="hidden" name="items['.$k.'][received_qty]" value="'.$value['received_qty'].'">';
+                // $html .= '<td><input class="uom form-control " type="text" name="items['.$k.'][uom]" value="'.$value['uom_value'].'"><input class="uomid form-control " type="hidden" name="items['.$k.'][uomid]" value="'.$value['uom_id'].'">';
+                // $html .= '</td>';
+                $html .= '<td class="text-center"><input class="uomid form-control " type="hidden" name="items['.$k.'][uomid]" value="'.$value['uom_id'].'"><input class="form-control" type="hidden" name="items['.$k.'][quantity]"  value="'.$value['qty'].'"><span>'.$value['qty'].' '.$value['uom_value'].'</span></td>';
+                $html .= '<td><input class="form-control quantity" type="number" name="items['.$k.'][returned_qty]" value="" min="1"><input class="form-control received_qty" type="hidden" name="items['.$k.'][received_qty]" value="'.$value['received_qty'].'">';
                 $html .= '</td>';
                 $html .= '<td><input class="form-control" type="text" name="items['.$k.'][old_returned_qty]" value="'.$value['returned_qty'].'" readonly>';
                 $html .= '</td>';
-                $html .= '<td><input class="form-control rate" type="text" name="items['.$k.'][rate]" value="'.$value['rate'].'">';
+                $html .= '<td><input class="form-control rate" type="text" name="items['.$k.'][rate]" value="'.$value['rate'].'" readonly>';
                 $html .= '</td>';
                 $disType = '-';
                 if($value['discount'] > 0) {
                     $disType = $value['discount_type'];
                 }
-                $html .= '<td><input class="discount_amt form-control" type="text" name="items['.$k.'][discount]" value="'.$value['discount'].' '.$disType.'"></td>';
+                $html .= '<td><input class="discount_amt form-control" type="text" name="items['.$k.'][discount]" value="'.$value['discount'].' '.$disType.'" readonly></td>';
                  $html .= '<td><input type="text" name="items['.$k.'][tax_amount]" value="'.$value['tax_amount'].'" class="form-control tax_amount" readonly><input class="form-control form-border tax" type="hidden" name="items['.$k.'][tax]" value="'.$value['tax_value'].'" readonly><input class="form-control form-border tax_type" type="hidden" name="items['.$k.'][tax_type]" value="'.$value['tax_name'].'" readonly></td>';
                 $html .= '</td>';
-                 $html .= '<td> <input class="tabledit-input form-control amount" type="text" name="items['.$k.'][amount]" value="'.$value['total_amount'].'">';
+                 $html .= '<td> <input class="tabledit-input form-control amount" type="text" name="items['.$k.'][amount]" value="'.$value['total_amount'].'" readonly>';
                 $html .= '</td>';
                  /*$html .= '<td><a href="#" class="transh-icon-color item-remove" title="Remove"><i class="fa fa-trash-o"></i></a>';
                 $html .= '</td>';*/
@@ -1420,10 +1411,14 @@ class PurchasesController extends BaseController
             $supplierF->where('status',$filter['status']);
         }
         if($filter['search'] != "") {
-            $supplier->Like('registered_name',$filter['search'])
-                ->Like('tax_amount_name',$filter['search']);
-            $supplierF->orLike('registered_name',$filter['search'])
-                ->orLike('tax_amount_name',$filter['search']);
+            $supplier->like('registered_name',$filter['search'])
+                ->orLike('tax_amount_name',$filter['search'])
+                ->orLike('operator',$filter['search'])
+                ->orLike('email',$filter['search']);
+            $supplierF->like('registered_name',$filter['search'])
+                ->orLike('tax_amount_name',$filter['search'])
+                ->orLike('operator',$filter['search'])
+                ->orLike('email',$filter['search']);
         }
         $supplier->where('pos_id',$sessData['pos_id']);
         $supplier->orderBy('id','desc');

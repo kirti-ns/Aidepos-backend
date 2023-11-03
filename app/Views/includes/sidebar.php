@@ -73,7 +73,7 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
                </li>
                <li><a class="menu-item" href="<?= base_url('/purchases') ?>" data-i18n="nav.purchases.received"><i class="fa fa-minus"></i> Goods Received</a>
                </li>
-               <li><a class="menu-item" href="<?= base_url('/purchases') ?>" data-i18n="nav.purchases.returned"><i class="fa fa-minus"></i> Goods Return</a>
+               <li><a class="menu-item" href="<?= base_url('/purchases') ?>" data-i18n="nav.purchases.returned"><i class="fa fa-minus"></i> Goods Returned</a>
                </li>
                <li><a class="menu-item" href="<?= base_url('/purchases') ?>" data-i18n="nav.purchases.directreceived"><i class="fa fa-minus"></i> Direct Goods Received</a>
                </li>
@@ -255,7 +255,7 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
                </li>
                <li><a class="menu-item" data-id="#goods-received" href="<?= base_url('/purchases#goods-received') ?>" data-i18n="nav.purchases.received"><i class="fa fa-minus"></i> Goods Received</a>
                </li>
-               <li><a class="menu-item" data-id="goods-returned" href="<?= base_url('/purchases#goods-returned') ?>" data-i18n="nav.purchases.returned"><i class="fa fa-minus"></i> Goods Return</a>
+               <li><a class="menu-item" data-id="goods-returned" href="<?= base_url('/purchases#goods-returned') ?>" data-i18n="nav.purchases.returned"><i class="fa fa-minus"></i> Goods Returned</a>
                </li>
                <li><a class="menu-item" data-id="#direct-goods-received" href="<?= base_url('/purchases#direct-goods-received') ?>" data-i18n="nav.purchases.directreceived"><i class="fa fa-minus"></i> Direct Goods Received</a>
                </li>

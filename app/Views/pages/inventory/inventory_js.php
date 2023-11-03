@@ -46,6 +46,9 @@
     if($(this).attr('data-act') == "edit") {
       $('#reason-id').val($(this).attr('data-id'))
       $('#reason').val($(this).attr('data-val'))
+    } else {
+      $('#reason-id').val('')
+      $('#reason').val('')
     }
     $('#add-new-reason').modal('show')
   })

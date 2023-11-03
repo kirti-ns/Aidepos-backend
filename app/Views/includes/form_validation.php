@@ -28,7 +28,6 @@
          submitHandler: function (form) {
             form_submit('login_form', event);
             return false;
-
          }
       });
       /*Login End*/
@@ -57,10 +56,8 @@
          submitHandler: function (form) {
             form_submit('forgot_password_form', event);
             return false;
-
          }
       });
-
       /*Forgot Password End*/
 
       /*Reset Password Start*/

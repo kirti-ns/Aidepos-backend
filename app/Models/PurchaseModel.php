@@ -41,8 +41,12 @@ class PurchaseModel extends Model{
 
     
     public function getOrderDataByOrderId($id){
-            $this->select('*');
-            $this->where('id',$id);
+            $this->select('purchaseorders.*, stores.store_name,registered_name,location.location_description,c.currency_code,c.currency_symbol,c.currency_name');
+            $this->join('stores','purchaseorders.store_id = stores.id','left');
+            $this->join('suppliers','purchaseorders.supplier_id = suppliers.id','left');
+            $this->join('location','purchaseorders.location_id = location.id','left');
+            $this->join('currencies c','purchaseorders.currency_id = c.id','left');
+            $this->where('purchaseorders.id',$id);
             $result = $this->first();
             
             return $result;

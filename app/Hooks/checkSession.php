@@ -3,10 +3,10 @@
 class checkSession{
 	public static function isLoggedIn()
 	{
-		if (!session()->get('isLoggedIn'))
+        $exp = explode('/',current_url());
+		if (!session()->get('isLoggedIn') && !in_array('forgot_password',$exp) && !in_array('post-forgot_password',$exp))
         {
              //header("Location: ".base_url('login'));
-            $exp = explode('/',current_url());
             if((!in_array('login',$exp)) && (!in_array('post-login',$exp))) {
                 header("Location: http://localhost/enterprolive/login");exit;
             }

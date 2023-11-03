@@ -40,7 +40,7 @@ class SellItemsModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getSaleItemsByMonths($month,$store_id,$owner_id)
+    public function getSaleItemsByMonths($month,$pos_id)
     { 
         $this->select('sell_items.item_id,items.item_name,sum(sell_items.qty) as total_qty');
         $this->join('items','items.id=sell_items.item_id');

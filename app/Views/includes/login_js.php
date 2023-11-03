@@ -225,6 +225,12 @@ function form_submit(formid, event) {
             }
             break;
          case 'forgot_password_form':
+            setTimeout(function(){
+               if (data.status == 'true') {
+                  window.location.href = base_url + "login";
+               }
+            },500);
+            break;
          case 'reset_password_form':
             if (data.status == 'true') {
                window.location.href = base_url + "login";

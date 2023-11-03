@@ -1690,7 +1690,10 @@ class SalesController extends BaseController
         return $lastWeek;
     }
     public function getGraphTopItem(){
+
         $post = $this->request->getVar();
+        $sessData = getSessionData();
+
         //0- Yearly
         //1- Monthly
         //2- Weekly
@@ -1702,7 +1705,7 @@ class SalesController extends BaseController
             $items_data = $sellItemsModel->getSaleItemsByYear($year);
         }else if($post['value'] == 1){
             $month = date('m');
-            $items_data = $sellItemsModel->getSaleItemsByMonths($month);
+            $items_data = $sellItemsModel->getSaleItemsByMonths($month,$sessData['pos_id']);
         }else{
             $days_array = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
             $startday = date('Y-m-d',strtotime('last Monday'));    

@@ -68,45 +68,45 @@ class DashboardController extends BaseController
         
         $data['top_items'] = [];
         for($i = 1; $i <=  date('t'); $i++)
-            {
-               $dates_array[] = str_pad($i, 2, '0', STR_PAD_LEFT);
+        {
+           $dates_array[] = str_pad($i, 2, '0', STR_PAD_LEFT);
+        }
+        $date = date('Y-m-01'); // first day of current month
+        $month = date('m');
+        $sales = $sellOrderModel->getSalesByMonths($month);
+        //p($sales);
+         $sale = array();
+         foreach($dates_array as $key=>$row){
+            $sale[$key]['date'] = $row;
+            $sale[$key]['current'] = "0";
+            $sale[$key]['previous'] = "0.00";
+               
+            foreach ($sales as $k => $v) {
+              if($row == $v['date']){
+                 $sale[$key]['date'] = $row;
+                 $sale[$key]['current']= number_format((float)$v['total'], 2, '.', '');
+               }
             }
-            $date = date('Y-m-01'); // first day of current month
-            $month = date('m');
-            $sales = $sellOrderModel->getSalesByMonths($month);
-            //p($sales);
-             $sale = array();
-             foreach($dates_array as $key=>$row){
-                $sale[$key]['date'] = $row;
-                $sale[$key]['current'] = "0";
-                $sale[$key]['previous'] = "0.00";
-                   
-                foreach ($sales as $k => $v) {
-                  if($row == $v['date']){
-                     $sale[$key]['date'] = $row;
-                     $sale[$key]['current']= number_format((float)$v['total'], 2, '.', '');
-                   }
-                }
-            }
+        }
 
-            $previouse_month = date("m",strtotime("-1 month"));
+        $previouse_month = date("m",strtotime("-1 month"));
 
-            $previous_sales = $sellOrderModel->getSalesByMonths($previouse_month);
-            
-            $previous_sale = array();
-                  foreach($sale as $key=>$row){ 
-                          $previous_sale[$key]['date'] = $row['date'];
-                          $previous_sale[$key]['current'] = number_format((float)$row['current'], 2, '.', '');
-                          $previous_sale[$key]['previous'] = "0.00";
-                      foreach ($previous_sales as $k => $v) {
-                        if($row['date'] == $v['date']){
-                          $previous_sale[$key]['date'] = $row['date'];
-                          $previous_sale[$key]['current'] = number_format((float)$row['current'], 2, '.', '');
-                          $previous_sale[$key]['previous'] = number_format((float)$v['total'], 2, '.', '');;
-                         }
-                       }
-                  }
-            $total_sale = '';
+        $previous_sales = $sellOrderModel->getSalesByMonths($previouse_month);
+        
+        $previous_sale = array();
+        foreach($sale as $key=>$row){ 
+                  $previous_sale[$key]['date'] = $row['date'];
+                  $previous_sale[$key]['current'] = number_format((float)$row['current'], 2, '.', '');
+                  $previous_sale[$key]['previous'] = "0.00";
+              foreach ($previous_sales as $k => $v) {
+                if($row['date'] == $v['date']){
+                  $previous_sale[$key]['date'] = $row['date'];
+                  $previous_sale[$key]['current'] = number_format((float)$row['current'], 2, '.', '');
+                  $previous_sale[$key]['previous'] = number_format((float)$v['total'], 2, '.', '');;
+                 }
+               }
+        }
+        $total_sale = '';
         
         $data['sales'] = json_encode($previous_sale);  
         $sales_text = array("Current Month","Previous Month");
@@ -114,7 +114,7 @@ class DashboardController extends BaseController
         $month = date('m');
         $data['top_items'] = [];
         $sellItemsModel = new SellItemsModel();
-        $sales_items = $sellItemsModel->getSaleItemsByMonths($month,$store_id,$pos_id);
+        $sales_items = $sellItemsModel->getSaleItemsByMonths($month,$pos_id);
         $top_items = $top_items_total = [];
         foreach($sales_items as $row){
             $top_items[] = $row['item_name'];
