@@ -136,7 +136,7 @@
             ],
             createdRow: function(row, data, dataIndex ) {
               // var c0 = data.order_number;
-              var c0 = "<span class=\"storeColor view-p-module purchase-id-"+data.id+"\" data-id=\""+data.id+"\">PO-000"+data.id+"</span>";
+              var c0 = "<span class=\"storeColor view-p-module purchase-id-"+data.id+"\" data-id=\""+data.id+"\">"+data.order_number+"</span>";
               /*if(data.order_status == 0 || data.order_status == 1 || data.order_status == 4){
                 c0 = "<a href=\" "+base_url+"/purchases/edit_purchase_order/"+data.id+" \" class=\"storeColor\">PO-000"+data.order_number+"</a>";
               }else{
@@ -249,7 +249,7 @@
               }
             ],
             createdRow: function(row, data, dataIndex ) {
-              var c0 = "<a href=\" "+base_url+"/purchases/edit_purchase_order/"+data.id+" \" class=\"storeColor\">PO-000"+data.order_number+"</a>";
+              var c0 = "<a href=\" "+base_url+"/purchases/edit_purchase_order/"+data.id+" \" class=\"storeColor\">"+data.order_number+"</a>";
               var c1 = data.store_name;
               var c2 = data.supplier_name;
               var c3 = data.date;
@@ -2700,11 +2700,12 @@
               var c0 = data.id;
               var c1 = data.reason;
               var c2 = data.store_name;
-              var c3 = data.narration;
-              var c4 = data.date;
+              var c3 = data.location_description;
+              var c4 = data.narration;
+              var c5 = data.date;
               //var c5 = displayStatus('transfer',data.status);
              /* var c5 = "<a href=\" "+base_url+"/inventory/edit_stock_adjustment/"+data.id+" \"><i class=\"fa fa-pencil\"></i></a> &nbsp;&nbsp;&nbsp; <a data-id=\""+data.id+"\" data-table=\"stockadjusts\" href=\"#\" class=\"transh-icon-color item-delete\"><i class=\"fa fa-trash-o\"></i></a>";*/
-               var c5 = "<a href=\" "+base_url+"/inventory/edit_stock_adjustment/"+data.id+" \"><i class=\"fa fa-eye\"></i></a>";
+               var c6 = "<a href=\" "+base_url+"/inventory/view_stock_adjustment/"+data.id+" \"><i class=\"fa fa-eye\"></i></a>";
              var  explore = '<span class="exploder" data-toggle="collapse" data-id="'+data.id+'"  data-target="#demo'+dataIndex+'" class="accordion-toggle"><i class="fa fa-angle-right toggle-explore"></i></span>';
               $(row).children().eq(0).addClass(displayBorder('status',data.status)).html(explore  + " " + c0);
               $(row).children().eq(1).html(c1);
@@ -2712,6 +2713,7 @@
               $(row).children().eq(3).html(c3);
               $(row).children().eq(4).html(c4);
               $(row).children().eq(5).html(c5);
+              $(row).children().eq(6).html(c6);
                                  
             }
         });
@@ -2743,7 +2745,6 @@
                // Open row.
                var total_qty = total_cost = 0;
 
-               
                 var c6 = '';
                  c6 += '<table class="table DataTable table-striped table-bordered">';
                  c6 += '<thead>';
@@ -2769,8 +2770,8 @@
                  c6 += '</tbody>';
                  c6 += '</table>';
                  c6 += '<div class="row">';
-                 c6 += '<div class="col-md-6"></div>';
-                 c6 += '<div class="col-md-6"><span style="padding-left: 70px;">Total : $'+total_qty+'</span><span style="float: right;padding-right: 105px;">Total : $'+total_cost+'</span></div>';
+                 c6 += '<div class="col-md-8"></div>';
+                 c6 += '<div class="col-md-4"><span style="">Total Qty: '+total_qty+'</span><span style="float: right;padding-right: 70px;">Total Amt: '+total_cost+'</span></div>';
                  c6 += '</div>';
                  c6 += '</table>';
                 

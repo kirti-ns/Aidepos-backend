@@ -152,6 +152,7 @@ $routes->post('/inventory/getInventoryDetails','InventoryController::getInventor
 $routes->post('/inventory/submitInventoryDetails','InventoryController::submitInventoryDetails');
 $routes->get('/inventory/add_stock_adjustment','InventoryController::AddStockAdjustment');
 $routes->get('/inventory/edit_stock_adjustment/(:num)','InventoryController::EditStockAdjustment/$1');
+$routes->get('/inventory/view_stock_adjustment/(:num)','InventoryController::ViewStockAdjustment/$1');
 $routes->get('/inventory/add_production','InventoryController::AddProduction');
 $routes->get('/inventory/add_transfer','InventoryController::AddTransfer');
 $routes->get('/inventory/edit_transfer/(:num)','InventoryController::EditTransfer/$1');

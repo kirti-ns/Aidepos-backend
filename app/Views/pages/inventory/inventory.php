@@ -164,8 +164,8 @@
                               <span>
                                  <select name="store_id" class="form-control form-select purchase-search" >
                                     <option value="">Store All</option>
-                                    <?php if(!empty($data['stores'])){
-                                       foreach($data['stores'] as $row){
+                                    <?php if(!empty($data['store'])){
+                                       foreach($data['store'] as $row){
                                           ?>
                                           <option value="<?= $row['id']?>"><?= $row['store_name']?></option>
                                           <?php
@@ -351,8 +351,8 @@
                            <span>
                               <select name="store_id" class="form-control form-select purchase-search">
                                  <option value="">Stores: All</option>
-                                 <?php if(isset($data['stores'])){
-                                    foreach($data['stores'] as $row){ 
+                                 <?php if(isset($data['store'])){
+                                    foreach($data['store'] as $row){ 
                                        ?>
                                        <option value="<?=$row['id']?>"><?=$row['store_name']?></option>
                                        <?php 
@@ -412,8 +412,9 @@
                                                       <th>S/N</th>
                                                       <th>Reason</th>
                                                       <th>Store</th>
+                                                      <th>Location</th>
                                                       <th>Narration</th>
-                                                      <th>Date & Time</th>
+                                                      <th>Date</th>
                                                       <th>Action</th>
                                                    </tr>
                                                 </thead>

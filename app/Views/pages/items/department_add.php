@@ -15,13 +15,13 @@
                                  <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department Name" value="<?= isset($value['department_name'])?$value['department_name']:''?>">
-                                       <label for="floatingSelectGrid">Department Name</label>
+                                       <label for="department_name">Department Name</label>
                                     </div>
                                  </div>
                                  <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" id="markup_percent" name="markup_percent" placeholder="Markup %" value="<?= isset($value['markup_percent'])?$value['markup_percent']:''?>">
-                                       <label for="floatingSelectGrid">Markup %</label>
+                                       <label for="markup_percent">Markup %</label>
                                     </div>
                                  </div>
                                  <div class="col-md-6 pt-1">

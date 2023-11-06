@@ -1144,6 +1144,243 @@ class StoreItemsModel extends Model
           }
             return true;   
     }
+
+    public function adjustedItem($data)
+    {
+        $result = $this->getStoreItems($data['item_id'],$data['store_id'],$data['location_id']);
+
+        $itemModel = new ItemModel();
+        $itemObj = $itemModel->getItemStock($data['item_id'],$data['store_id']);
+        // $stock =  (int) $itemObj['stock'];
+        $price =  (int) $itemObj['price'];
+
+        $invtQuery = $this->db->table('current_inventory')->where('item_id',$data['item_id'])->where('store_id',$data['store_id'])->where('location_id',$data['location_id'])->get();
+        $invtRow = $invtQuery->getRow();
+        $stock = isset($invtRow->quantity)?$invtRow->quantity:0;
+
+        if(empty($result)) {
+          $close_qty = $stock > 0 ? $stock - $data['qty'] : $data['qty'];
+          $add_data = [
+            'open_qty' => $stock,
+            'open_value' => $stock * $price,   
+            'item_id' => $data['item_id'],
+            'location_id'=>$data['location_id'],
+            'store_id' => $data['store_id'],
+            'adjustment_qty' => $data['qty'],
+            'adjustment_value' => $data['qty'] * $price,
+            'close_qty' => $close_qty,
+            'close_value' => $close_qty * $price
+          ];
+
+          $this->db->table('store_items')->insert($add_data);
+          $query =  $this->db->insertID();
+
+          $invtID = "";
+
+          if(!empty($invtRow)) {
+            $invtID = $invtRow->id;
+
+            $deduct = $this->deductStock($data['item_id'], $data['qty'],$invtID);
+
+            $qDetail = $this->db->table('current_inventory_details')->where('current_inventory_id',$invtID)->selectSum('qty')->get();
+            $qDetailRes = $qDetail->getRow();
+
+            $uQty = ['quantity'=>$qDetailRes->qty];
+            $this->db->table('current_inventory')->where('id',$invtID)->set($uQty)->update();
+
+            $qStoreQty = $this->db->table('current_inventory')->where('item_id',$data['item_id'])->where('store_id',$data['store_id'])->selectSum('quantity')->get();
+            $qStoreQtyRes = $qStoreQty->getRow();
+
+            $qPrice = $this->db->table('items_price')->where('items_id',$data['item_id'])->where('store_id',$data['store_id'])->get();
+            $qPriceRes = $qPrice->getRow();
+
+            $uPriceData = [
+                'current_inventory'=>$qStoreQtyRes->quantity,
+                'inventory_value'=>$qStoreQtyRes->quantity*$qPriceRes->retail_price
+            ];
+            $this->db->table('items_price')->where('id',$qPriceRes->id)->set($uPriceData)->update();
+               
+            
+          }
+
+        } else {
+
+          $add_data = [
+            'item_id' => $data['item_id'],
+            'store_id' => $data['store_id'],
+            'adjustment_qty' => $result['sold_qty']  +  $data['qty'],
+            'adjustment_value' => ($result['sold_qty']  +  $data['qty']) * $price
+          ];
+
+          $this->db
+                ->table('store_items')
+                ->where(["id" => $result['id']])
+                ->set($add_data)
+                ->update();
+
+          $this->table('store_items')->select('*');
+          $this->where(["id" => $result['id']]);
+          $result = $this->first();
+
+          if(!empty($invtRow)) {
+            $invtID = $invtRow->id;
+
+            $deduct = $this->deductStock($data['item_id'], $data['qty'],$invtID);
+ 
+
+              $qDetail = $this->db->table('current_inventory_details')->where('current_inventory_id',$invtID)->selectSum('qty')->get();
+              $qDetailRes = $qDetail->getRow();
+
+              $uQty = ['quantity'=>$qDetailRes->qty];
+              $this->db->table('current_inventory')->where('id',$invtID)->set($uQty)->update();
+
+              $qStoreQty = $this->db->table('current_inventory')->where('item_id',$data['item_id'])->where('store_id',$data['store_id'])->selectSum('quantity')->get();
+              $qStoreQtyRes = $qStoreQty->getRow();
+
+              $qPrice = $this->db->table('items_price')->where('items_id',$data['item_id'])->where('store_id',$data['store_id'])->get();
+              $qPriceRes = $qPrice->getRow();
+
+              $uPriceData = [
+                  'current_inventory'=>$qStoreQtyRes->quantity,
+                  'inventory_value'=>$qStoreQtyRes->quantity*$qPriceRes->retail_price
+              ];
+              $this->db->table('items_price')->where('id',$qPriceRes->id)->set($uPriceData)->update();
+ 
+          }
+
+            $remove_qty = $result['return_qty'] + $result['adjustment_qty'] + $result['transfer_qty'] + $result['sold_qty'];   
+            $add_qty = $result['open_qty'] + $result['received_qty'];
+            $close_qty = ($add_qty) - ($remove_qty);
+            
+            $close_value = $close_qty * $price;
+            
+            $this->getUpdateCloseQty($close_qty,$close_value,$result['id']);
+            return true;
+        }
+    }
+    public function productionItem($data)
+    {
+        $result = $this->getStoreItems($data['item_id'],$data['store_id'],$data['location_id']);
+
+        $itemModel = new ItemModel();
+        $itemObj = $itemModel->getItemStock($data['item_id'],$data['store_id']);
+
+        // $stock =  (int) $itemObj['stock'];
+        $price =  (int) $itemObj['price'];
+
+        $invtQuery = $this->db->table('current_inventory')->where('item_id',$data['item_id'])->where('store_id',$data['store_id'])->where('location_id',$data['location_id'])->get();
+        $invtRow = $invtQuery->getRow();
+
+        $stock = isset($invtRow->quantity)?$invtRow->quantity:$data['qty'];
+
+        if(empty($result)) {
+          $close_qty = $stock > 0 ? $stock + $data['qty'] : $data['qty'];
+          $add_data = [
+            'open_qty' => $stock,
+            'open_value' => $stock * $price,   
+            'item_id' => $data['item_id'],
+            'location_id'=>$data['location_id'],
+            'store_id' => $data['store_id'],
+            'production_qty' => $data['qty'],
+            'production_value' => $data['qty'] * $price,
+            'close_qty' => $close_qty,
+            'close_value' => $close_qty * $price
+          ];
+
+          $this->db->table('store_items')->insert($add_data);
+          $query =  $this->db->insertID();
+
+          $locationQty = $data['qty'];
+
+          $invtID = $invtRow->id;
+          $locationQty = isset($invtRow->quantity)?$locationQty + $invtRow->quantity:$locationQty;
+          $updateCurrInventory = [
+            'quantity'=>$locationQty
+          ];
+          $this->db->table('current_inventory')->where('id',$invtRow->id)
+          ->set($updateCurrInventory)
+          ->update();
+
+          $detail_data = [
+            'pos_id'=>$invtRow->pos_id,
+            'current_inventory_id'=>$invtID,
+            'qty'=>$data['qty'],
+            'lot_no'=>'',
+            'dom'=>'',
+            'expiry_date'=>''
+          ];
+
+          $this->db->table('current_inventory_details')->insert($detail_data);
+
+          $updateStock = array('current_inventory'=>$add_data['close_qty']);
+          $updateStockValue = array('inventory_value'=>$price*$close_qty);
+          $this->db->table('items_price')->where('store_id',$data['store_id'])->where('items_id',$data['item_id'])
+            ->set($updateStock)
+            ->set($updateStockValue)
+            ->update();
+
+          return $query;
+
+        } else {
+          $add_data = [
+            'item_id' => $data['item_id'],
+            'store_id' => $data['store_id'],
+            'production_qty' => $result['production_qty'] + $data['qty'],
+            'production_value' => ($result['production_qty'] + $data['qty']) * $price
+          ];
+
+          $this->db
+                ->table('store_items')
+                ->where(["id" => $result['id']])
+                ->set($add_data)
+                ->update();
+
+          $this->table('store_items')->select('*');
+          $this->where(["id" => $result['id']]);
+          $result = $this->first();
+          $locationQty = $data['qty'];
+          $locationQty = isset($invtRow->quantity)?abs($locationQty + $invtRow->quantity):$locationQty;
+          $updateCurrInventory = [
+            'quantity'=>$locationQty
+          ];
+
+          $this->db->table('current_inventory')->where('id',$invtRow->id)
+          ->set($updateCurrInventory)
+          ->update();
+
+          $detail_data = [
+            'pos_id'=>$invtRow->pos_id,
+            'current_inventory_id'=>$invtRow->id,
+            'qty'=>$data['qty'],
+            'lot_no'=>'',
+            'dom'=>'',
+            'expiry_date'=>''
+          ];
+
+          $this->db->table('current_inventory_details')->insert($detail_data);
+            
+          $qPrice = $this->db->table('items_price')->where('items_id',$data['item_id'])->where('store_id',$data['store_id'])->get();
+          $qPriceRes = $qPrice->getRow();
+
+          $qStoreQty = $this->db->table('current_inventory')->where('item_id',$data['item_id'])->where('store_id',$data['store_id'])->selectSum('quantity')->get();
+          $qStoreQtyRes = $qStoreQty->getRow();
+
+          $uPriceData = [
+              'current_inventory'=>$qStoreQtyRes->quantity,
+              'inventory_value'=>$qStoreQtyRes->quantity*$qPriceRes->retail_price
+          ];
+          $this->db->table('items_price')->where('id',$qPriceRes->id)->set($uPriceData)->update();
+
+            $remove_qty = $result['return_qty'] + $result['adjustment_qty'] + $result['transfer_qty'] + $result['sold_qty'];   
+            $add_qty = $result['open_qty'] + $result['received_qty'] + $result['production_qty'];
+            $close_qty = ($add_qty) - ($remove_qty);
+            $close_value = $close_qty * $price;
+                
+            $this->getUpdateCloseQty($close_qty,$close_value,$result['id']);
+
+            return true;
+        }
+    }
     public function GetStoreItemId($data,$lot_data = [])
     {
            $this->table('store_items')->select('*');

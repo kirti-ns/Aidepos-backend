@@ -2,6 +2,15 @@
    $(document).ready(function () {
     
       /*Login Start*/
+      $.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+          var re = new RegExp(regexp);
+          return this.optional(element) || re.test(value);
+        },
+        "Please check your input."
+      );
+
       $("form[name='login_form']").validate({
          // Specify validation rules
          rules: {
@@ -451,31 +460,85 @@
       $("form[name='customer_form']").validate({
          // Specify validation rules
          rules: {
-            account_id: "required",
-            // lpo_no: "required",
-            tpin_no: "required",
-            email: "required",
-            id_no: "required",
-            registerd_name: "required",
-            tax_account_name: "required",
-            address: "required",
-            phone: "required",
-            // receivables: "required",
-            // loyalty: "required"
+            account_id: {
+               required: true,
+               maxlength: 30,
+               regex: "^[A-Za-z0-9_-]*$"
+            },
+            tpin_no: {
+               required: true,
+               maxlength: 30,
+               regex: "^[A-Za-z0-9]*$"
+            },
+            id_no: {
+               required: true,
+               maxlength: 50,
+               regex: "^[A-Za-z0-9]*$"
+            },
+            registerd_name: {
+               required: true,
+               maxlength: 80,
+               regex: "^[A-Za-z ]*$"
+            },
+            tax_account_name: {
+               required: true,
+               maxlength: 80,
+               regex: "^[A-Za-z ]*$"
+            },
+            email: {
+               required: true,
+               maxlength: 30
+            },
+            address: {
+               required: true,
+               maxlength: 150
+            },
+            phone: {
+               required: true,
+               maxlength: 16,
+               regex: "^[0-9]*$"
+            },
          },
 
          messages: {
-            account_id: "Please enter account id",
-            lpo_no: "Please enter lpo no",
-            tpin_no: "Please enter tpin no",
-            email: "Please enter email id",
-            id_no: "Please enter id no",
-            registerd_name: "Please enter registerd name",
-            tax_account_name: "Please enter tax account name",
-            address: "Please enter address",
-            phone: "Please enter phone",
-            receivables: "Please enter receivables",
-            loyalty: "Please enter loyalty",
+            account_id: {
+               required: "Please enter account id",
+               maxlength: "Maximum 30 characters allowed",
+               regex: "Please enter alphabets, numbers & underscores only"
+            },
+            tpin_no: {
+               required: "Please enter tpin no",
+               maxlength: "Maximum 30 characters allowed",
+               regex: "Please enter alphabets and numbers only"
+            },
+            id_no: {
+               required: "Please enter id no",
+               maxlength: "Maximum 80 characters allowed",
+               regex: "Please enter alphabets and numbers only"
+            },
+            registerd_name: {
+               required: "Please enter registered name",
+               maxlength: "Maximum 80 characters allowed",
+               regex: "Please enter alphabets only"
+            },
+            tax_account_name: {
+               required: "Please enter tax account name",
+               maxlength: "Maximum 80 characters allowed",
+               regex: "Please enter alphabets only"
+            },
+            email: {
+               required: "Please enter email id",
+               maxlength: "Maximum 30 characters allowed"
+            },
+            address: {
+               required: "Please enter address",
+               maxlength: "Maximum 150 characters allowed"
+            },
+            phone: {
+               required: "Please enter phone number",
+               maxlength: "Maximum 16 digits allowed",
+               regex: "Please enter numbers only"
+            },
          },
          errorElement: "div",
          errorPlacement: function (error, element) {
@@ -568,16 +631,32 @@
          // Specify validation rules
          rules: {
             batch_id: "required",
-            voucher_card_no: "required",
+            voucher_card_no: {
+               required: true,
+               maxlength: 80,
+               regex: "^[A-Za-z0-9_-]*$"
+            },
             expiry_date: "required",
-            amount: "required",
+            amount: {
+               required: true,
+               maxlength: 20,
+               regex: "^[0-9]*$"
+            },
          },
 
          messages: {
             batch_id: "Please select batch name",
-            voucher_card_no: "Please enter voucher card no",
+            voucher_card_no: {
+               required: "Please enter voucher card no",
+               maxlength: "Maximum 80 characters allowed",
+               regex: "Please enter alphabets, numbers & underscores only"
+            },
             expiry_date: "Please enter expiry date",
-            amount: "Please enter amount",
+            amount: {
+               required: "Please enter amount",
+               maxlength: "Maximum 20 digits allowed",
+               regex: "Please enter numbers only"
+            },
          },
          errorElement: "div",
          errorPlacement: function (error, element) {
@@ -833,10 +912,21 @@
       $("form[name='department_form']").validate({
          // Specify validation rules
          rules: {
-            department_name: "required"
+            department_name: {
+               required: true,
+               maxlength: 80,
+               regex: "^[A-Za-z ]*$"
+            },
+            /*markup_percent: {
+               maxlength: 10,
+            }*/
          },
          messages: {
-            subcategory_name: "Please enter Department name",
+            department_name: {
+               required: "Please enter department name",
+               maxlength: "Maximum 80 characters allowed",
+               regex: "Please enter alphabets only"
+            },
          },
          errorElement: "div",
          errorPlacement: function (error, element) {
@@ -855,21 +945,38 @@
          }
       });
       /*category Start*/
-     
+      
       $("form[id='category_form']").validate({
          // Specify validation rules
          rules: {
-            category_name: "required",
-            prefix: "required",
-            description: "required",
-            custom_report: "required",
+            category_name: {
+               required: true,
+               maxlength: 80,
+               regex: "^[A-Za-z ]*$"
+            },
+            prefix: {
+               required: true,
+               maxlength: 50,
+            },
+            custom_report: {
+               required: true,
+               maxlength: 50,
+            },
          },
-
          messages: {
-            category_name: "Please enter category name",
-            prefix: "Please enter prefix for SKU",
-            description: "Please enter description",
-            custom_report: "Please enter custom report",
+            category_name: {
+               required: "Please enter category name",
+               maxlength: "Maximum 80 characters allowed",
+               regex: "Please enter alphabets only"
+            },
+            prefix: {
+               required: "Please enter prefix for SKU",
+               maxlength: "Maximum 50 characters allowed"
+            },
+            custom_report: {
+               required: "Please enter customer report",
+               maxlength: "Maximum 50 characters allowed"
+            }
          },
          errorElement: "div",
          errorPlacement: function (error, element) {
@@ -1851,13 +1958,13 @@
          rules: {
             reason: "required",
             store_id: "required",
-            narration: "required",
+            location_id: "required",
          },
 
          messages: {
             reason: "Please select reason",
             store_id: "Please select store",
-            narration: "Please enter narration",
+            location_id: "Please select location",
          },
          errorElement: "div",
          errorPlacement: function (error, element) {
@@ -1954,6 +2061,7 @@
             // item_id: "required",
             quantity: "required",
             store_id: "required",
+            location_id: "required",
             date: "required",
          },
 
@@ -1961,6 +2069,7 @@
             // item_id: "Please select item",
             quantity: "Please enter quantity",
             store_id: "Please select store",
+            location_id: "Please select location",
             date: "Please enter date",
          },
          errorElement: "div",

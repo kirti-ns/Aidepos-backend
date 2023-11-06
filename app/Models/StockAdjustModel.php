@@ -14,7 +14,7 @@ class StockAdjustModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['store_id','reason','narration'];
+    protected $allowedFields    = ['store_id','location_id','reason','narration'];
 
     // Dates
     protected $useTimestamps = false;

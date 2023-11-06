@@ -910,8 +910,8 @@ function viewPurchaseModule(id) {
             var data = res.data.goods_purchase,
             items = res.data.purchase_items;
             
-            $("#v-heading").text('PO-000'+data.id);
-            $('#v-receipt-no').text('PO-000'+data.id);
+            $("#v-heading").text(data.order_number);
+            $('#v-receipt-no').text(data.order_number);
             $('#v-supplier').html(data.supplier_name+'<br/>'+data.address);
             $('#v-module-date').text(data.date);
             $('#v-pay-terms').text(terms(data.terms));

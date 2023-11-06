@@ -121,8 +121,9 @@ class PurchasesController extends BaseController
 
         $purchaseModel = new PurchaseModel();
         $purchaseModel->where('pos_id',$sessData['pos_id']);
-        $orderNo = $purchaseModel->findAll();
-        $data['order_number'] = count($orderNo) + 1;
+        $getCount = $purchaseModel->findAll();
+        $orderNo = count($getCount) + 1;
+        $data['order_number'] = 'PO-'.date('ymd').'000'.$orderNo;
 
         $data['s_name'] = $store->select('store_name')->where('id',$sessData['store_id'])->first();
         $currencyModel->where('id !=',$data['base_currency_id']);
@@ -1732,7 +1733,7 @@ class PurchasesController extends BaseController
         $totalRecords = $goodsReturn->select('id')->countAllResults();
 
        // $purchaseF = new SupplierModel();
-        $goodsReturn->select('goods_returned.*,purchaseorders.date,purchaseorders.due_date,purchaseorders.due_date, suppliers.registered_name as supplier_name,stores.store_name')
+        $goodsReturn->select('goods_returned.*,purchaseorders.date,purchaseorders.due_date,purchaseorders.order_number, suppliers.registered_name as supplier_name,stores.store_name')
         ->join('purchaseorders', 'purchaseorders.id = goods_returned.p_o_id','left')
         ->join('suppliers', 'purchaseorders.supplier_id = suppliers.id','left')
         ->join('stores', 'purchaseorders.store_id = stores.id','left');
@@ -1766,7 +1767,7 @@ class PurchasesController extends BaseController
             $qty = $goodsReturn->GetTotalReturnQty($record['p_o_id']);
             $data[] = array( 
                "id"=>$record['id'],
-               "order_number"=>$record['p_o_id'],
+               "order_number"=>$record['order_number'],
                "store_name"=>$record['store_name'],
                "supplier_name"=>$record['supplier_name'],
                "status"=>1,

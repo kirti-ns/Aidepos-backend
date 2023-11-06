@@ -21,7 +21,7 @@
                                  <div class="col-md-6">
                                     <div class="form-floating">
                                        <input type="text" class="form-control" id="prefix" name="prefix" placeholder="SKU Prefix"  value="<?= isset($value['prefix'])?$value['prefix']:''?>">
-                                       <label for="custom_report">SKU Prefix</label>
+                                       <label for="prefix">SKU Prefix</label>
                                     </div>
                                     <!-- <div class="form-floating">
                                        <input type="text" class="form-control" id="description" name="description" placeholder="Description" value="<?= isset($value['description'])?$value['description']:''?>">

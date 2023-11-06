@@ -48,7 +48,7 @@
                 <div class="row mt-2">
                   <div class="col-md-4">
                      <div class="form-floating">
-                        <select  class="form-select" name="store_id" id="store" aria-label="Floating label select example" value="">
+                        <select  class="form-select store_id" name="store_id" id="store" aria-label="Floating label select example" value="">
                            <option value="">Select</option>
                            <?php 
                               if(!empty($data['store'])) {
@@ -61,11 +61,20 @@
                   </div>
                   <div class="col-md-4">
                      <div class="form-floating">
-                        <input type="date" class="form-control" id="date" name="date" placeholder="Date">
-                        <label for="floatingInputGrid">Date</label>
+                        <select  class="form-select" name="location_id" id="location_id" aria-label="Floating label select example" value="">
+                           <option value="">Select</option>
+                           
+                        </select>
+                        <label for="floatingInputGrid">Location</label>
                      </div>
                   </div>
                   <div class="col-md-4">
+                     <div class="form-floating">
+                        <input type="date" class="form-control" id="date" value="<?=date('Y-m-d')?>" name="date" placeholder="Date">
+                        <label for="floatingInputGrid">Date</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
                      <div class="form-floating">
                         <input type="narration" class="form-control" id="narration" name="narration" placeholder="Narration">
                         <label for="floatingInputGrid">Narration</label>

@@ -44,12 +44,12 @@ class InventoryController extends BaseController
 
         $data['permission'] = $sessData['permissions'];
         $store = new StoreModel();
-        if($sessData['role_name'] == "Staff") {
+        /*if($sessData['role_name'] == "Staff") {
             $store->where('id',$sessData['store_id']);
 
         } else if ($sessData['role_name'] == "Owner") {
             $store->where('pos_id',$sessData['pos_id']);
-        }
+        }*/
         $data['store'] = $store->findAll();
         
         $category = new CategoryModel();
@@ -81,12 +81,12 @@ class InventoryController extends BaseController
         $sessData = getSessionData();
 
         $storeModel = new StoreModel();
-        if($sessData['role_name'] == "Staff") {
+        /*if($sessData['role_name'] == "Staff") {
             $storeModel->where('id',$sessData['store_id']);
         } else if ($sessData['role_name'] == "Owner") {
             $storeModel->where('owner_id',$sessData['id']);
-        }
-        $data['store'] = $storeModel->findAll();
+        }*/
+        $data['store'] = $storeModel->where('pos_id',$sessData['pos_id'])->findAll();
 
         $items = new ItemModel();
         $itemlist = $items->getItemList($sessData['pos_id']);
@@ -107,11 +107,11 @@ class InventoryController extends BaseController
         $sessData = getSessionData();
         
         $storeModel = new StoreModel();
-        if($sessData['role_name'] == "Staff") {
+        /*if($sessData['role_name'] == "Staff") {
             $storeModel->where('id',$sessData['store_id']);
         } else if ($sessData['role_name'] == "Owner") {
             $storeModel->where('pos_id',$sessData['pos_id']);
-        }
+        }*/
         $data['store'] = $storeModel->findAll();
 
         $stockadjustModel = new StockAdjustModel();
@@ -128,6 +128,31 @@ class InventoryController extends BaseController
         $data['stocks_item'] = $aiModel->GetStockSubItemData($id);
        
         return $this->template->render('pages/inventory/stock_adjustment_add', $data); 
+    }
+
+    public function ViewStockAdjustment($id)
+    {
+        $data = [];
+        $data['title'] = 'View Stock Adjustments';
+        $data['main_menu'] = 'Inventory';
+        $data['main_menu_url'] = base_url('inventory'); 
+        $sessData = getSessionData();
+
+        $stockadjustModel = new StockAdjustModel();
+        $data['stock_adjust'] = $stockadjustModel->select('stockadjusts.*,stores.store_name,location.location_description,stock_adjustments_reason.reason')
+            ->join('stores','stockadjusts.store_id = stores.id')
+            ->join('location','stockadjusts.location_id = location.id')
+            ->join('stock_adjustments_reason','stockadjusts.reason_id = stock_adjustments_reason.id')
+            ->where("stockadjusts.id",$id)->first();
+
+        $items = new ItemModel();
+        $itemlist = $items->getItemList($sessData['pos_id']);
+        $data['items'] = json_encode($itemlist);
+
+        $aiModel = new AdjustmentItemModel();
+        $data['stocks_item'] = $aiModel->GetStockSubItemData($id);
+       
+        return $this->template->render('pages/inventory/stock_adjustment_view', $data);
     }
 
     public function AddTransfer()
@@ -334,11 +359,6 @@ class InventoryController extends BaseController
         $data['production_no'] = $newID + 1;
 
         $store = new StoreModel();
-        if($sessData['role_name'] == "Staff") {
-            $store->where('id',$sessData['store_id']);
-        } else {
-            $store->where('pos_id',$sessData['pos_id']);
-        }
         $data['store'] = $store->findAll();
 
         $items = new ItemModel();
@@ -361,7 +381,9 @@ class InventoryController extends BaseController
                 {
                     case 'stockadjusts':
                         $data = [
+                            'pos_id'=>$sessData['pos_id'],
                             'store_id' => isset($post["store_id"])?$post["store_id"]:"0",
+                            'location_id'=> isset($post['location_id'])?$post['location_id']:"",
                             'reason_id' => isset($post["reason"])?$post["reason"]:"",
                             'narration' => isset($post["narration"])?$post["narration"]:"",
                             'total_cost' => isset($post["total_cost"])?$post["total_cost"]:"0",
@@ -396,6 +418,7 @@ class InventoryController extends BaseController
                             'item_id' => isset($post["item_id"])?$post["item_id"]:"",
                             'quantity' => isset($post["quantity"])?$post["quantity"]:"",
                             'store_id' => isset($post["store_id"])?$post["store_id"]:"",
+                            'location_id' => isset($post["location_id"])?$post["location_id"]:"",
                             'date' => isset($post["date"])?$post["date"]:"",
                             'narration' => isset($post["narration"])?$post["narration"]:""
                         ];
@@ -412,14 +435,16 @@ class InventoryController extends BaseController
                 {
                     case 'stockadjusts':
                         foreach($post['item'] as $row){
-                            /*$storeItemModel = new StoreItemsModel();
-                                        $store_data = [
-                                            'item_id'=>$row['item_id'],
-                                            'store_id'=>$post['store_id'],
-                                            'qty'=>$row['quantity'],
-                                            'type'=>'adjustment'
-                                        ];
-                            $store_item = $storeItemModel->GetStoreItemId($store_data);*/
+                            $storeItemModel = new StoreItemsModel();
+                            $store_data = [
+                                'pos_id'=>$sessData['pos_id'],
+                                'item_id'=>$row['item_id'],
+                                'store_id'=>$post['store_id'],
+                                'qty'=>$row['quantity'],
+                                'location_id'=>$post['location_id'],
+                                'type'=>'adjustment'
+                            ];
+                            $store_item = $storeItemModel->adjustedItem($store_data);
 
                             $new_data = array(
                                 'stock_adjust_id'=>$result,
@@ -495,15 +520,15 @@ class InventoryController extends BaseController
                         }
                     break;
                     case 'production':
-                        /*$storeItemModel = new StoreItemsModel();
+                        $storeItemModel = new StoreItemsModel();
                         $store_data = [
                             'item_id'=>$post['item_id'],
                             'store_id'=>$post['store_id'],
+                            'location_id'=>$post['location_id'],
                             'qty'=>$post['quantity'],
-                            'type'=>'production',
-                            'is_mainItem'=>true
+                            'type'=>'production'
                         ];
-                        $storeItemModel->GetStoreItemId($store_data);*/
+                        $storeItemModel->productionItem($store_data);
                         
                         foreach($post['items'] as $row){
 
@@ -1027,15 +1052,16 @@ class InventoryController extends BaseController
         $samF = new StockAdjustModel();
         $totalRecords = $stockadjustModel->select('id')
                 ->countAllResults();
-        $stockadjustModel->select('stockadjusts.*,stores.store_name,stock_adjustments_reason.reason');
-        $stockadjustModel->join('stores', 'stores.id = stockadjusts.store_id');
+        $stockadjustModel->select('stockadjusts.*,stores.store_name,stock_adjustments_reason.reason,location.location_description');
+        $stockadjustModel->join('stores', 'stockadjusts.store_id = stores.id');
+        $stockadjustModel->join('location', 'stockadjusts.location_id = location.id');
         $stockadjustModel->join('stock_adjustments_reason', 'stock_adjustments_reason.id = stockadjusts.reason_id');
 
-        if($sessData['role_name'] == "Staff") {
+        /*if($sessData['role_name'] == "Staff") {
             $stockadjustModel->where('stockadjusts.store_id',$sessData['store_id']);
         } else if ($sessData['role_name'] == "Owner") {
             $stockadjustModel->where('stores.owner_id',$sessData['id']);
-        }
+        }*/
       
         if($filter['reason_id'] != "") {
             $stockadjustModel->where('reason_id',$filter['reason_id']);
@@ -1057,6 +1083,7 @@ class InventoryController extends BaseController
             $data[] = array( 
                "reason"=>$record['reason'],
                "store_name"=>$record['store_name'],
+               "location_description"=>$record['location_description'],
                "narration"=>$record['narration'],
                "date"=>dateFormat($record['created_at']),
                "id"=>$record['id'],

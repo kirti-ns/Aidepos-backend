@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-md">
                            <div class="form-floating">
-                              <select class="form-select" id="store_id" name="store_id" aria-label="Floating label select example">
+                              <select class="form-select store_id" id="store_id" name="store_id" aria-label="Floating label select example">
                                  <option value="">Select</option>
                                  <?php 
                                     if(!empty($data['store']))
@@ -48,6 +48,16 @@
                                     ?>
                               </select>
                               <label for="floatingSelectGrid">Store*</label>
+                           </div>
+                        </div>
+
+                        <div class="col-md">
+                           <div class="form-floating">
+                              <select class="form-select" id="location_id" name="location_id" aria-label="Floating label select example">
+                                 <option value="">Select</option>
+                                 
+                              </select>
+                              <label for="floatingSelectGrid">Location*</label>
                            </div>
                         </div>
                         <div class="col-md">

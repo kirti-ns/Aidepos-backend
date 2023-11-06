@@ -33,7 +33,7 @@
                           <div class="col-md-6">
                              <div class="form-floating">
                                  <input type="text" class="form-control" id="voucher_card_no" placeholder="Voucher Card No" name="voucher_card_no" value="<?= isset($value['voucher_card_no'])?$value['voucher_card_no']:''?>" >
-                                <label for="floatingSelectGrid">Voucher Card No*</label>
+                                <label for="voucher_card_no">Voucher Card No*</label>
                              </div>
                           </div>
                         </div>
@@ -42,14 +42,14 @@
                       <div class="row">
                         <div class="col-md-3">
                            <div class="form-floating">
-                               <input type="date" class="form-control pickadate-format" id="expiry_date" placeholder="Expiry Date" name="expiry_date" value="<?= isset($value['expiry_date'])?$value['expiry_date']:''?>" >
-                              <label for="floatingSelectGrid">Expiry Date*</label>
+                               <input type="date" class="form-control" id="expiry_date" placeholder="Expiry Date" name="expiry_date" value="<?= isset($value['expiry_date'])?$value['expiry_date']:''?>" >
+                              <label for="expiry_date">Expiry Date*</label>
                            </div>
                         </div>
                         <div class="col-md-3">
                            <div class="form-floating">
                                <input type="text" class="form-control" id="amount" placeholder="amount" name="amount" value="<?= isset($value['amount'])?$value['amount']:''?>" >
-                              <label for="floatingSelectGrid">Amount*</label>
+                              <label for="amount">Amount*</label>
                            </div>
                         </div>
                       </div>

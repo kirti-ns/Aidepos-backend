@@ -458,4 +458,22 @@
       $(this).parents('td').siblings('td').children('.received_qty').val(qty);
     }
   })
+  $(document).on('change','.store_id',function(){
+    var id = $(this).val();
+    $.ajax({
+          type: "POST",
+          url: '<?= base_url() ?>'+'/get_location_by_store',
+          data: {id:id},
+          success: function (res) {
+            res = JSON.parse(res);
+            if(res.status == "true") {
+              var data = res.data;
+              $('#location_id').html(data);
+            } else {
+              alertMessage('false','No Location added in the selected store');
+              $('#location_id').html('<option value="">Location</option>');
+            }
+          }
+      });    
+  })
 </script>
