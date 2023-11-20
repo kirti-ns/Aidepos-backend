@@ -257,16 +257,10 @@ $(document).on('change','.item-add',function() {
             var data = res.data;
             var tax_amount = 0;
 
-            /*if($('#is_include_tax').prop('checked')==true){
-              var tax_perc = 1.0 + parseFloat(data.tax_rate/100); 
-              tax_amount = parseFloat(data.retail_price) - (parseFloat(data.retail_price) / parseFloat(tax_perc));
-            }*/
-
-            // if(tab != undefined && tab == 'sell'){
-              var tax_perc = 1.0 + parseFloat(data.tax_rate/100);
-              var price = data.retail_price ? parseFloat(data.retail_price) : 0;
-              tax_amount = price - (price / parseFloat(tax_perc));
-            // }
+            var tax_perc = 1.0 + parseFloat(data.tax_rate/100);
+            var price = data.retail_price ? parseFloat(data.retail_price) : 0;
+            tax_amount = price - (price / parseFloat(tax_perc));
+            
             var itemOpt = JSON.parse(res.data.item_options)
             if(itemOpt.track_serial_no != undefined && itemOpt.track_serial_no == 1 && tab != 'sell') {
               self.parents('td').append('<textarea class="form-control serial_no" name="items['+i+'][serial_no]" placeholder="Add Serial Number"></textarea>');
@@ -276,8 +270,7 @@ $(document).on('change','.item-add',function() {
             self.parents('td').siblings('td').children('.uomid').val(data.uom_id);
             self.parents('td').siblings('td').children('.rate').val(data.retail_price);
             self.parents('td').siblings('td').children('.tax').val(data.tax_rate);
-            //self.parents('td').siblings('td').children('.tax_type').val(data.tax_type);
-            self.parents('td').siblings('td').children('.tax_type').val(data.tax_type);//.prop('selected', true);
+            self.parents('td').siblings('td').children('.tax_type').val(data.tax_type);
             self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
             /*transfer start*/
             self.parents('td').siblings('td').children('.sku_barcode').val(data.sku_barcode);
@@ -314,8 +307,14 @@ $(document).on('change','.item-add',function() {
     });
 
 });
-function discountCalculateAmount(discount,discount_type,tax_amount){
-    return parseFloat(tax_amount) * parseFloat(discount) / 100;
+function discountCalculateAmount(discount,discount_type,amount){
+    var disc = "";
+    if(discount_type == "%") {
+      disc = parseFloat(amount) * parseFloat(discount) / 100;
+    } else {
+      disc = parseFloat(amount) - discount;
+    }
+    return disc;
 }
 $(document).on('change','.rate',function() {
    
@@ -340,7 +339,7 @@ $(document).on('change','.rate',function() {
       if(isExcl.is(":checked")) {
         var tax_perc = 1.0 + parseFloat(tax_rate/100); 
         tax_amount = parseFloat(quantity*price) * parseFloat(tax_perc);
-              self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
+        self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
         var t = self.parents('td').children('.tax_exc_amt').val(tax_amount.toFixed(2));
         
       }else{
@@ -410,11 +409,13 @@ $(document).on('change','.quantity',function() {
 $(document).on('click','.tax_excl',function(){
   
     var self = $(this);
-    var tax_rate = self.parents('td').siblings('td').children('.tax').val();
-    var retail_price = self.parents('td').siblings('td').children('.rate').val();
-    var qty = self.parents('td').siblings('td').children('.quantity').val();
-    var tab = self.parents('td').siblings('td').children('.item-add').attr('data-tab');
+    var tax_rate = self.parents('td').siblings('td').children('.tax').val(),
+    retail_price = self.parents('td').siblings('td').children('.rate').val(),
+    qty = self.parents('td').siblings('td').children('.quantity').val(),
+    tab = self.parents('td').siblings('td').children('.item-add').attr('data-tab'),
+    disc = self.parents('td').siblings('td').children('.discount_amount').val();
     var total_price = parseFloat(retail_price)*parseFloat(qty);
+
     if(tax_rate > 0) {
       if(self.is(":checked")) {
         var tax_perc = parseFloat(tax_rate/100); 
@@ -466,26 +467,6 @@ $(document).on('change','#currency_id',function(){
     } else {
       calculateAmount();
     }
-    // showCurrencyTab();
-    /*$('.rate').each(function(){
-        var inp = $(this);
-        var qty = inp.parents('td').siblings('td').children('.quantity').val();
-        var price = inp.val();
-        if(price != "") {
-          var currency_rate = (qty*price)*currency_id;
-          inp.parents('td').siblings('td').children('.currency').val(currency_rate.toFixed(2));
-        }
-    })*/
-    /*if(tab == 'sell'){
-      tax_amount = parseFloat(quantity*price) - (parseFloat(quantity*price) / parseFloat(tax_perce)); 
-      self.parents('td').siblings('td').children('.tax_amount').val(tax_amount.toFixed(2));
-      var currency_id = $('#currency_id').find(':selected').attr('data-rate');
-      var currency_rate  = 0;
-      if(currency_id != ""){
-        currency_rate = quantity*price/currency_id;
-      }
-      self.parents('td').siblings('td').children('.currency').val(currency_rate.toFixed(2));
-    }*/
 
 });
 $(document).on('keyup','#currency_rate',function(){
@@ -500,7 +481,7 @@ $(document).on('keyup','#currency_rate',function(){
         }
     }
 });
-$(document).on('change','.tax_type',function(){
+/*$(document).on('change','.tax_type',function(){
     
     var self = $(this);
     var tax_rate = $('option:selected', this).attr('data-rate');
@@ -521,22 +502,34 @@ $(document).on('change','.tax_type',function(){
     }
     calculateAmount();
    
-})
+})*/
 $(document).on('change','.discount',function(){
     
-    var self = $(this);
-    var discount = self.val();
-    var discount_type =  self.parents('td').children('.discount_type').val(); 
-    var amount = self.parents('td').siblings('td').children('.amount').val();
-    var discount_value = "";
-    discount_value = amount * discount/ 100;
-    self.parents('td').children('.discount_amount').val(discount_value); 
-    calculateAmount();
-    var tab = self.parents('td').siblings('td').children('.item-add').attr('data-tab');
-    if(tab == 'sell') {
-      calculateSellAmount();
-    }
+    var self = $(this),
+    disc = self.val(),
+    disc_type = self.parents('td').children('.discount_type').val(),
+    amt = self.parents('td').siblings('td').children('.amount').val();
+    // var disc_val = amt * disc/ 100;
+    discCommonFunc(self,disc,disc_type,amt)
 })
+$(document).on('change','.discount_type',function(){
+    
+    var self = $(this),
+    disc_type = self.val(),
+    disc = self.parents('td').children('.discount').val(),
+    amt = self.parents('td').siblings('td').children('.amount').val();
+    discCommonFunc(self,disc,disc_type,amt)
+})
+function discCommonFunc(self,disc,disc_type,amt){
+      var disc_val =  discountCalculateAmount(disc,disc_type,amt);
+      self.parents('td').children('.discount_amount').val(disc_val); 
+
+      calculateAmount();
+      var tab = self.parents('td').siblings('td').children('.item-add').attr('data-tab');
+      if(tab == 'sell') {
+        calculateSellAmount();
+      }
+}
 $(document).on('click','.item-refresh',function() {
 
     var self = $(this);
@@ -590,18 +583,6 @@ $(document).on('click','.item-remove', function() {
       calculateAmount();
     }
 });
-
-/*function showCurrencyTab()
-{
-  var curr = $("#currency_id").val();
-  if(curr == "") {
-    $(".curr-row").addClass('d-none');
-    $(".curr-th-row").addClass('d-none');
-  } else {
-    $(".curr-row").removeClass('d-none');
-    $(".curr-th-row").removeClass('d-none');
-  }
-}*/
 
 function calculateAmount()
 {
@@ -846,6 +827,23 @@ $(document).on('change','#get_category_id',function(){
 
       })
 })
+$('#store_id').change(function(){
+  var id = $(this).val();
+  $.ajax({
+      type: "POST",
+      url: '<?= base_url() ?>'+'/get_location_by_store',
+      data: {id:id},
+      success: function (res) {
+        res = JSON.parse(res);
+        if(res.status == "true") {
+          var data = res.data;
+          $('#location').html(data);
+        } else {
+          $('#location').html('<option value="">Location</option>');
+        }
+      }
+  });
+});
 $(document).on('click','#is_include_tax',function(){
     console.log($('#is_include_tax').prop('checked'));
     if($('#is_include_tax').prop('checked')==true){

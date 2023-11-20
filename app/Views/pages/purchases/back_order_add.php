@@ -54,7 +54,7 @@
                           </div>
                           <div class="col-md-3">
                             <div class="form-floating">
-                                 <input type="date" class="form-control" id="date" name="date" placeholder="Date" value="<?= isset($value['date'])?$value['date']:''?>">
+                                 <input type="date" class="form-control" id="date" name="date" placeholder="Date" value="<?= isset($value['date'])?$value['date']:date('Y-m-d')?>">
                                  <label for="floatingInputGrid">Back Order Date</label>
                               </div>
                               <!-- <div class="form-floating">

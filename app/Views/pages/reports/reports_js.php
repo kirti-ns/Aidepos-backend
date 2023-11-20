@@ -160,6 +160,77 @@
       e.preventDefault();
       sByTerminal.draw();
     });
+    var sByStore = $('#report-sales-store').DataTable({
+          'processing': true,
+          'serverSide': true,
+          'serverMethod': 'post',
+          dom: "<'row'<'col-sm-12'tr>>" +
+          "<'row rowDt'<'col-sm-6 colDtbl'><'col-sm-4'i><'col-sm-2'p>>",
+          'ajax': {
+             'url':"<?=site_url('/reports/sales-by-store')?>",
+             'data': function(data){
+                // CSRF Hash
+                var csrfName = $('.txt_csrfname').attr('name'); // CSRF Token name
+                var csrfHash = $('.txt_csrfname').val(); // CSRF hash
+                var obj = $("form.filterReport").serializeArray();
+
+                 let filter = {};
+                 $.each(obj, function(k, v){
+                   var aFName = v.name.replaceAll("]", "").split("[");;
+                   switch(aFName.length){
+                     case 1:
+                       filter[aFName[0]] = v.value;
+                       break;
+                     case 2:
+                       if(filter[aFName[0]] == undefined){
+                         filter[aFName[0]] = {};
+                       }
+                       filter[aFName[0]][aFName[1]] = v.value;
+                       break;
+                   }
+                 });
+
+                return {
+                   data: data, 
+                   // length: 5,
+                   filter: filter,
+                   [csrfName]: csrfHash
+                };
+             },
+             dataSrc: function(data){
+               $('.txt_csrfname').val(data.token);
+               return data.aaData;
+             }
+          },
+          columnDefs: [
+            {
+               "defaultContent": "-",
+               "targets": "_all"
+            }
+          ],
+          createdRow: function(row, data, dataIndex ) {
+            var c0 = data.store_id;
+            var c1 = data.store_name;
+            var c2 = data.item_name;
+            var c3 = data.sku;
+            var c4 = data.date;
+            var c5 = data.qty;
+            var c6 = data.amount;
+            
+            $(row).children().eq(0).html(c0);
+            $(row).children().eq(1).html(c1);
+            $(row).children().eq(2).html(c2);
+            $(row).children().eq(3).html(c3);
+            $(row).children().eq(4).html(c4);
+            $(row).children().eq(5).html(c5);
+            $(row).children().eq(6).html(c6);
+                             
+          }
+    });
+    $('.reportSearchBtn').click(function(e){
+      e.preventDefault();
+      sByStore.draw();
+    });
     var creditNote = $('#report-credit-notes').DataTable({
           'processing': true,
           'serverSide': true,
@@ -496,11 +567,9 @@
           ],
           createdRow: function(row, data, dataIndex ) {
 
-            var dt = new Date(data.created_at);
-
             var c0 = data.store_name;
             var c1 = data.location;
-            var c2 = dt.getFullYear()+'-'+("00" + (dt.getMonth() + 1)).slice(-2)+'-'+("0" + dt.getDate()).slice(-2);
+            var c2 = data.created_at;
             var c3 = data.sku_barcode;
             var c4 = data.item_name;
             var c5 = data.category_name;
@@ -611,6 +680,157 @@
       e.preventDefault();
       laybySales.draw();
     });
+    var transferSummary = $('#report-transfer-summary').DataTable({
+          'processing': true,
+          'serverSide': true,
+          'serverMethod': 'post',
+          dom: "<'row'<'col-sm-12'tr>>" +
+          "<'row rowDt'<'col-sm-6 colDtbl'><'col-sm-4'i><'col-sm-2'p>>",
+          'ajax': {
+             'url':"<?=site_url('/reports/transfer-summary')?>",
+             'data': function(data){
+                // CSRF Hash
+                var csrfName = $('.txt_csrfname').attr('name'); // CSRF Token name
+                var csrfHash = $('.txt_csrfname').val(); // CSRF hash
+                var obj = $("form.filterReport").serializeArray();
+
+                 let filter = {};
+                 $.each(obj, function(k, v){
+                   var aFName = v.name.replaceAll("]", "").split("[");;
+                   switch(aFName.length){
+                     case 1:
+                       filter[aFName[0]] = v.value;
+                       break;
+                     case 2:
+                       if(filter[aFName[0]] == undefined){
+                         filter[aFName[0]] = {};
+                       }
+                       filter[aFName[0]][aFName[1]] = v.value;
+                       break;
+                   }
+                 });
+
+                return {
+                   data: data, 
+                   // length: 5,
+                   filter: filter,
+                   [csrfName]: csrfHash
+                };
+             },
+             dataSrc: function(data){
+               $('.txt_csrfname').val(data.token);
+               return data.aaData;
+             }
+          },
+          columnDefs: [
+            {
+               "defaultContent": "-",
+               "targets": "_all"
+            }
+          ],
+          createdRow: function(row, data, dataIndex ) {
+            var c0 = 'TO-000'+data.id;
+            var c1 = data.supply_store;
+            var c2 = data.receive_store;
+            var c3 = data.qty;
+            var c4 = data.received_qty;
+            var c5 = data.date;
+            var c6 = displayStatus('transfer',data.status);
+            
+            $(row).children().eq(0).html(c0);
+            $(row).children().eq(1).html(c1);
+            $(row).children().eq(2).html(c2);
+            $(row).children().eq(3).html(c3);
+            $(row).children().eq(4).html(c4);
+            $(row).children().eq(5).html(c5);
+            $(row).children().eq(6).html(c6);             
+          }
+    });
+    $('.reportSearchBtn').click(function(e){
+      e.preventDefault();
+      transferSummary.draw();
+    });
+
+    var transferDetail = $('#report-transfer-details').DataTable({
+          'processing': true,
+          'serverSide': true,
+          'serverMethod': 'post',
+          dom: "<'row'<'col-sm-12'tr>>" +
+          "<'row rowDt'<'col-sm-6 colDtbl'><'col-sm-4'i><'col-sm-2'p>>",
+          'ajax': {
+             'url':"<?=site_url('/reports/transfer-details')?>",
+             'data': function(data){
+                // CSRF Hash
+                var csrfName = $('.txt_csrfname').attr('name'); // CSRF Token name
+                var csrfHash = $('.txt_csrfname').val(); // CSRF hash
+                var obj = $("form.filterReport").serializeArray();
+
+                 let filter = {};
+                 $.each(obj, function(k, v){
+                   var aFName = v.name.replaceAll("]", "").split("[");;
+                   switch(aFName.length){
+                     case 1:
+                       filter[aFName[0]] = v.value;
+                       break;
+                     case 2:
+                       if(filter[aFName[0]] == undefined){
+                         filter[aFName[0]] = {};
+                       }
+                       filter[aFName[0]][aFName[1]] = v.value;
+                       break;
+                   }
+                 });
+
+                return {
+                   data: data, 
+                   // length: 5,
+                   filter: filter,
+                   [csrfName]: csrfHash
+                };
+             },
+             dataSrc: function(data){
+               $('.txt_csrfname').val(data.token);
+               return data.aaData;
+             }
+          },
+          columnDefs: [
+            {
+               "defaultContent": "-",
+               "targets": "_all"
+            }
+          ],
+          createdRow: function(row, data, dataIndex ) {
+            var c0 = 'TO-000'+data.id;
+            var c1 = data.supply_store;
+            var c2 = data.supply_location;
+            var c3 = data.receive_store;
+            var c4 = data.rec_location;
+            var c5 = data.item_name;
+            var c6 = data.sku_barcode;
+            var c7 = data.cost_price;
+            var c8 = data.quantity;
+            var c9 = data.received_quantity;
+            var c10 = data.date;
+            var c11 = displayStatus('transfer',data.status);
+            
+            $(row).children().eq(0).html(c0);
+            $(row).children().eq(1).html(c1);
+            $(row).children().eq(2).html(c2);
+            $(row).children().eq(3).html(c3);
+            $(row).children().eq(4).html(c4);
+            $(row).children().eq(5).html(c5);
+            $(row).children().eq(6).html(c6);
+            $(row).children().eq(7).html(c7);
+            $(row).children().eq(8).html(c8);
+            $(row).children().eq(9).html(c9);
+            $(row).children().eq(10).html(c10);
+            $(row).children().eq(11).html(c11);             
+          }
+    });
+    $('.reportSearchBtn').click(function(e){
+      e.preventDefault();
+      transferDetail.draw();
+    });
     $('#store_id').change(function(){
       var id = $(this).val();
       $.ajax({
@@ -629,8 +849,9 @@
       });
     });
 
-    $('#export-to-pdf').click(function(){
+    $('.export-report').click(function(){
       var type = $(this).attr('data-type');
+      var fileType = $(this).attr('data-file');
       var obj = $("form.filterReport").serializeArray();
 
      let filter = {};
@@ -652,27 +873,32 @@
 
       var aStr = JSON.stringify(filter);
       var encoded = encodeURIComponent(aStr);
-      var url = '<?= base_url() ?>'+'/print-reports?type='+type+'&filter='+encoded;
-      console.log(url);
-      /*$('#reportLink').attr('href',url)
-      return $('#reportLink').click();*/
+      var url = '<?= base_url() ?>'+'/print-reports?type='+type+'&file-type='+fileType+'&filter='+encoded;
+      if(fileType == "pdf"){
 
-      var link = document.createElement('a');
-      link.href = url;
-      document.body.appendChild(link);
-      link.click();
-
-      /*$.ajax({
-          type: "POST",
-          url: '<?= base_url() ?>'+'/reports/print-reports',
-          data: {type:type, filter:filter},
+        var link = document.createElement('a');
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+      } else {
+        $.ajax({
+          type: "GET",
+          url: url,
           success: function (res) {
-            res = JSON.parse(res);
-            if(res.status == "true") {
-              
+            if(res.data.report_data.length > 0) {
+              if(fileType == "csv") {
+                csvExport(res.data.report_data,res.data.header,res.filename);
+              } else {
+                var header = [res.data.header];
+                xlsxExport(res.data.report_data,header,res.filename,res.data.heading);
+              }
+            } else {
+              alertMessage('false','No Data Found');
             }
           }
-      });*/
+        });
+      }
+
     });
 
   });

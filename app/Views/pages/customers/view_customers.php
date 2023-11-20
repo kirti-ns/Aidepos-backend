@@ -11,9 +11,9 @@
                            <li class="nav-item">
                               <a class="nav-link active" id="activeIcon12-tab1" data-toggle="tab" href="#transaction" aria-controls="activeIcon12" aria-expanded="true">Transactions</a>
                            </li>
-                           <li class="nav-item">
+                           <!-- <li class="nav-item">
                               <a class="nav-link" id="linkIcon12-tab1" data-toggle="tab" href="#statement" aria-controls="linkIcon12" aria-expanded="false">Statement</a>
-                           </li>
+                           </li> -->
                         </ul>
                      </div>
                   <div class="tab-content">

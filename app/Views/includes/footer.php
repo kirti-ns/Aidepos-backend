@@ -275,8 +275,6 @@ $url = explode('/',$current_url);
 <script src="<?= base_url()?>/public/app-assets/js/menu/customers.js"></script>
 <script src="<?= base_url()?>/public/app-assets/js/scripts/tooltip/tooltip.min.js"></script>
 <script src="<?= base_url()?>/public/app-assets/js/menu/item.js?v=1.2"></script>
-<!-- <script src="<?= base_url()?>/public/app-assets/js/menu/recipe.js"></script>
-   <script src="<?= base_url()?>/public/app-assets/js/menu/brand.js"></script> -->
 <script src="<?= base_url()?>/public/app-assets/vendors/js/forms/tags/tagging.min.js"></script>
 <script src="<?= base_url()?>/public/app-assets/js/scripts/forms/tags/tagging.min.js"></script>
 <!-- item End -->
@@ -301,11 +299,9 @@ $url = explode('/',$current_url);
 <!--Role End -->
 <!-- alert message start -->
 <script src="<?= base_url()?>/public/app-assets/vendors/js/extensions/toastr.min.js"></script>
-<!-- <script src="<?= base_url()?>/public/app-assets/js/scripts/extensions/toastr.min.js"></script> -->
-<!-- alert message end -->
- <!-- <script src="<?= base_url()?>/public/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.min.js"></script> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <?= view('includes/form_submit.php');?> 
+<?= view('includes/commonscripts.php');?> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script src="<?= base_url(); ?>/public/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
 <script src="<?= base_url(); ?>/public/app-assets/js/scripts/forms/select/form-select2.min.js"></script>
@@ -314,11 +310,8 @@ $url = explode('/',$current_url);
 <script>
    const phoneInputField = document.querySelector("#phone");
    const iti = intlTelInput($('#phone').get(0), {
-         separateDialCode:true,
-        // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+         separateDialCode:true
      });
-  //  alert(iti.getSelectedCountryData().iso2)
-  // alert(iti.getSelectedCountryData().dialCode)
 </script>
 <!-- Add Employee Start-->
 <script>
@@ -390,10 +383,6 @@ $url = explode('/',$current_url);
  <?php if(in_array("add_gift_card",$url)){
       echo view('pages/customers/brand_js.php');
     }
-    
-    /*if(in_array("add_purchase_order",$url) || in_array("purchases",$url) || in_array("edit_purchase_order",$url) || in_array("add_goods_received",$url) || in_array("add_goods_returned",$url)){*/
-      
-    //} 
  ?>
    <?php 
    if(in_array("sales",$url)){
@@ -537,38 +526,3 @@ function showTabByHash() {
 </script>
 </body>
 </html>
-
-<!-- <div class="card collapse-icon accordion-icon-rotate" style="box-shadow: none;border: 1px solid #e2dbdb;">
-   <div id="pay-records" class="card-header" style="background-color: #fff;">
-      <a data-toggle="collapse" href="#collapse2" aria-expanded="false" aria-controls="collapse2" class="card-title lead collapsed">Payments Received</a>
-   </div>
-   <div id="collapse2" role="tabpanel" aria-labelledby="pay-records" class="collapse" aria-expanded="false">
-      <div class="card-content">
-         <div class="card-body">
-            
-            <div class="tab-content">
-               <div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true" aria-labelledby="base-tab31">
-                  <p>Oat cake marzipan cake lollipop caramels wafer pie jelly beans. Icing halvah chocolate cake carrot cake. Jelly beans carrot cake marshmallow gingerbread chocolate cake. Gummies cupcake croissant.</p>
-               </div>
-               <div class="tab-pane" id="tab32" aria-labelledby="base-tab32">
-                  <p>Sugar plum tootsie roll biscuit caramels. Liquorice brownie pastry cotton candy oat cake fruitcake jelly chupa chups. Pudding caramels pastry powder cake soufflé wafer caramels. Jelly-o pie cupcake.</p>
-               </div>
-            </div>
-            <div class="table-responsive">
-               <table class="table" id="v-payments-tbl">
-                   <thead>
-                       <tr>
-                           <th>Date</th>
-                           <th>Payment#</th>
-                           <th>Payment Mode</th>
-                           <th>Amount</th>
-                       </tr>
-                   </thead>
-                   <tbody>
-                   </tbody>
-               </table>
-           </div>
-         </div>
-      </div>
-   </div>
-</div>

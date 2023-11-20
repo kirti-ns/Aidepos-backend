@@ -1,21 +1,3 @@
-<style type="text/css">
-   /*body.vertical-layout.vertical-menu.menu-collapsed .main-menu{
-      width: 110px;
-   }
-    body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>span{
-      display: block;
-      text-align: center;
-      padding: 10px 0px!important;
-    }
-body.vertical-layout.vertical-menu.menu-collapsed .content, body.vertical-layout.vertical-menu.menu-collapsed .footer, body.vertical-layout.vertical-menu.menu-collapsed .navbar .navbar-container {
-    margin-left: 110px;
-}
-body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
-  text-align: -webkit-center;
-  text-align: center;
-  display: block!important; 
-}*/
-</style>
 <?php 
   $sessRole = getSessionData();
   $permission = $sessRole['permissions'];
@@ -59,6 +41,8 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
                </li>
                <li><a class="menu-item" href="<?= base_url('/items') ?>" data-i18n="nav.items.variant"><i class="fa fa-minus"></i> Variant</a>
                </li>
+               <li><a class="menu-item" href="<?= base_url('/items') ?>" data-i18n="nav.items.expirationdate"><i class="fa fa-minus"></i> Expiration Date</a>
+               </li>
             </ul>
          </li>
         <?php } if(isset($permission->purchases) && $permission->purchases == 1) { ?>
@@ -69,8 +53,10 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
                </li>
                <li><a class="menu-item" href="<?= base_url('/purchases') ?>" data-i18n="nav.purchases.purchaseorder"><i class="fa fa-minus"></i> Purchase Order</a>
                </li>
+               <?php if(isset($permission->purchase_approvals) && $permission->purchase_approvals == 1) { ?>
                <li><a class="menu-item" href="<?= base_url('/purchases') ?>" data-i18n="nav.purchases.preview"><i class="fa fa-minus"></i> Purchase Order Review</a>
                </li>
+               <?php } ?>
                <li><a class="menu-item" href="<?= base_url('/purchases') ?>" data-i18n="nav.purchases.received"><i class="fa fa-minus"></i> Goods Received</a>
                </li>
                <li><a class="menu-item" href="<?= base_url('/purchases') ?>" data-i18n="nav.purchases.returned"><i class="fa fa-minus"></i> Goods Returned</a>
@@ -139,6 +125,8 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
               </li>
               <li><a class="menu-item" href="<?= base_url('/reports') ?>" data-i18n="nav.reports.sbyterminal"><i class="fa fa-minus"></i> Sales by Terminal</a>
               </li>
+              <li><a class="menu-item" href="<?= base_url('/reports') ?>" data-i18n="nav.reports.sbystore"><i class="fa fa-minus"></i> Sales by Store</a>
+              </li>
               <li><a class="menu-item" href="<?= base_url('/reports') ?>" data-i18n="nav.reports.creditnote"><i class="fa fa-minus"></i> Credit Notes</a>
               </li>
               <li><a class="menu-item" href="<?= base_url('/reports') ?>" data-i18n="nav.reports.stockonhand"><i class="fa fa-minus"></i> Stock on Hand</a>
@@ -150,6 +138,10 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
               <li><a class="menu-item" href="<?= base_url('/reports') ?>" data-i18n="nav.reports.stockwithqty"><i class="fa fa-minus"></i> Stock Take with Qty</a>
               </li>
               <li><a class="menu-item" href="<?= base_url('/reports') ?>" data-i18n="nav.reports.laybysales"><i class="fa fa-minus"></i> Layby Sales</a>
+              </li>
+              <li><a class="menu-item" href="#" data-i18n="nav.reports.transfersummary"><i class="fa fa-minus"></i> Transfer Summary</a>
+              </li>
+              <li><a class="menu-item" href="#" data-i18n="nav.reports.transferdetail"><i class="fa fa-minus"></i> Transfer Details</a>
               </li>
             </ul>
          </li>
@@ -177,8 +169,8 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
                 <li><a class="menu-item" href="<?= base_url("settings")?>" data-i18n="nav.footers.footer_dark"><i class="fa fa-minus"></i> Taxes</a>
                </li>
                <?php } ?>
-                <li><a class="menu-item" href="<?= base_url("settings")?>" data-i18n="nav.footers.footer_dark"><i class="fa fa-minus"></i> Aggregator</a>
-               </li>
+                <!-- <li><a class="menu-item" href="<?= base_url("settings")?>" data-i18n="nav.footers.footer_dark"><i class="fa fa-minus"></i> Aggregator</a>
+               </li> -->
                <?php if(isset($permission->store_terminal) && $permission->store_terminal == 1) { ?>
                 <li><a class="menu-item" href="<?= base_url("settings")?>" data-i18n="nav.footers.footer_dark"><i class="fa fa-minus"></i> Stores</a>
                 </li>
@@ -241,6 +233,8 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
                </li>
                <li><a class="menu-item" data-id="#variants" href="<?= base_url('/items#variants') ?>" data-i18n="nav.items.variant"><i class="fa fa-minus"></i> Variant</a>
                </li>
+               <li><a class="menu-item" data-id="#expiration-date" href="<?= base_url('/items#expiration-date') ?>" data-i18n="nav.items.expirationdate"><i class="fa fa-minus"></i> Expiration Date</a>
+               </li>
             </ul>
          </li>
          <?php } if(isset($permission->purchases) && $permission->purchases == 1) { ?>
@@ -251,8 +245,10 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
                </li>
                <li><a class="menu-item" data-id="purchase-order"  href="<?= base_url('/purchases#purchase-order') ?>" data-i18n="nav.purchases.purchaseorder"><i class="fa fa-minus"></i> Purchase Order</a>
                </li>
+               <?php if(isset($permission->purchase_approvals) && $permission->purchase_approvals == 1) { ?>
                <li><a class="menu-item" data-id="purchase-order-review" href="<?= base_url('/purchases#purchase-order-review') ?>" data-i18n="nav.purchases.preview"><i class="fa fa-minus"></i> Purchase Order Review</a>
                </li>
+               <?php } ?>
                <li><a class="menu-item" data-id="#goods-received" href="<?= base_url('/purchases#goods-received') ?>" data-i18n="nav.purchases.received"><i class="fa fa-minus"></i> Goods Received</a>
                </li>
                <li><a class="menu-item" data-id="goods-returned" href="<?= base_url('/purchases#goods-returned') ?>" data-i18n="nav.purchases.returned"><i class="fa fa-minus"></i> Goods Returned</a>
@@ -324,6 +320,8 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
               </li>
               <li><a class="menu-item" href="<?= base_url('/reports/sales-by-terminal') ?>" data-i18n="nav.reports.sbyterminal"><i class="fa fa-minus"></i> Sales by Terminal</a>
               </li>
+              <li><a class="menu-item" href="<?= base_url('/reports/sales-by-store') ?>" data-i18n="nav.reports.sbystore"><i class="fa fa-minus"></i> Sales by Store</a>
+              </li>
               <li><a class="menu-item" href="<?= base_url('/reports/credit-notes') ?>" data-i18n="nav.reports.creditnote"><i class="fa fa-minus"></i> Credit Notes</a>
               </li>
               <li><a class="menu-item" href="<?= base_url('/reports/stock-on-hand') ?>" data-i18n="nav.reports.stockonhand"><i class="fa fa-minus"></i> Stock on Hand</a>
@@ -335,6 +333,10 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
               <li><a class="menu-item" href="<?= base_url('/reports/stock-take-with-qty') ?>" data-i18n="nav.reports.stockwithqty"><i class="fa fa-minus"></i> Stock Take with Qty</a>
               </li>
               <li><a class="menu-item" href="<?= base_url('/reports/layby-sales') ?>" data-i18n="nav.reports.laybysales"><i class="fa fa-minus"></i> Layby Sales</a>
+              </li>
+              <li><a class="menu-item" href="<?= base_url('/reports/transfer-summary') ?>" data-i18n="nav.reports.transfersummary"><i class="fa fa-minus"></i> Transfer Summary</a>
+              </li>
+              <li><a class="menu-item" href="<?= base_url('/reports/transfer-details') ?>" data-i18n="nav.reports.transferdetail"><i class="fa fa-minus"></i> Transfer Details</a>
               </li>
             </ul>
          </li>
@@ -362,8 +364,8 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation>li>a>i{
                 <li><a class="menu-item" data-id="#tax" href="<?= base_url("settings#tax")?>" data-i18n="nav.settings.tax"><i class="fa fa-minus"></i> Taxes</a>
                </li>
                <?php } ?>
-                <li><a class="menu-item" data-id="#aggregator" href="<?= base_url("settings#aggregator")?>" data-i18n="nav.settings.aggregator"><i class="fa fa-minus"></i> Aggregator</a>
-               </li>
+                <!-- <li><a class="menu-item" data-id="#aggregator" href="<?= base_url("settings#aggregator")?>" data-i18n="nav.settings.aggregator"><i class="fa fa-minus"></i> Aggregator</a>
+               </li> -->
                <?php if(isset($permission->store_terminal) && $permission->store_terminal == 1) { ?>
                 <li><a class="menu-item" data-id="#stores" href="<?= base_url("settings#stores")?>" data-i18n="nav.settings.stores"><i class="fa fa-minus"></i> Stores</a>
                </li>

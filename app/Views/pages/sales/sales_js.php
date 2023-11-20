@@ -634,6 +634,7 @@ $(document).on('click','.mark-as-sent',function(){
       dataType: "json",
       encode: true,
     }).done(function (data) {
+      window.location.reload();
       $(".customizer").removeClass("open");
       viewModule(id,tab);
     });

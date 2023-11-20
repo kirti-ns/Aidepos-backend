@@ -498,7 +498,6 @@
                            <input type="hidden" name="id" id="id" value="<?= isset($value['id'])?$value['id']:''?>">
                            <input type="hidden" name="item_type" id="item_type" value="2">
                            <div class="row">
-                              <div class="col-md-12 pt-2"></div>
                               <div class="col-8 border-right">
                                 <h5 class="text-bold-500">Item Details</h5>
                                 <div class="row">
@@ -1702,7 +1701,7 @@
                    </div>
                    <div class="col-md-6 ">
                       <div class="form-floating">
-                         <input type="text" class="form-control" name="prefix" id="prefix" placeholder="SKU Prefix" value="" >
+                         <input type="number" class="form-control" name="prefix" id="prefix" placeholder="SKU Prefix" value="" >
                          <label for="floatingInputGrid">SKU Prefix</label>
                       </div>
                    </div>

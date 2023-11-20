@@ -34,24 +34,25 @@ class PurchasesController extends BaseController
         $data = [];
         $data['title'] = 'Purchases';
         $sessData = getSessionData();
+        $data['permission'] = $sessData['permissions'];
 
         $supplierModel = new SupplierModel();
-        $data['supplier'] = $supplierModel->findAll();
+        $data['supplier'] = $supplierModel->where('pos_id',$sessData['pos_id'])->findAll();
 
         $customerModel = new CustomersModel();
-        $data['customer'] = $customerModel->findAll();
+        $data['customer'] = $customerModel->where('pos_id',$sessData['pos_id'])->findAll();
 
         $categoryModel = new CategoryModel();
-        $data['category'] = $categoryModel->findAll();
+        $data['category'] = $categoryModel->where('pos_id',$sessData['pos_id'])->findAll();
 
         $Location = new Location();
-        $data['location'] = $Location->where('status',1)->findAll();
+        $data['location'] = $Location->where('pos_id',$sessData['pos_id'])->where('status',1)->findAll();
         
         $storeModel = new StoreModel();
-        if($sessData['role_name'] == "Staff") {
-            $storeModel->where('id',$sessData['store_id']);
-        } else if ($sessData['role_name'] == "Owner") {
+        if($sessData['role_name'] == "Admin") {
             $storeModel->where('pos_id',$sessData['pos_id']);
+        } else {
+            $storeModel->where('id',$sessData['store_id']);
         }
         $data['stores'] = $storeModel->findAll();
         
@@ -104,6 +105,9 @@ class PurchasesController extends BaseController
         $store->where('pos_id',$sessData['pos_id']);
         $currencyModel->where('pos_id',$sessData['pos_id']);
 
+        $data['base_currency_id'] = "";
+        $data['currency_symbol'] = "";
+        $data['currency_code'] = "";
         if($sessData['store_id'] != '') {
             $general = new GeneralModel();
             $generalData = $general->where('store_id',$sessData['store_id'])->join('currencies','currencies.id = general.currency_id')->first();
@@ -123,7 +127,7 @@ class PurchasesController extends BaseController
         $purchaseModel->where('pos_id',$sessData['pos_id']);
         $getCount = $purchaseModel->findAll();
         $orderNo = count($getCount) + 1;
-        $data['order_number'] = 'PO-'.date('ymd').'000'.$orderNo;
+        $data['order_number'] = 'PO-'.date('ymd').'00'.$orderNo;
 
         $data['s_name'] = $store->select('store_name')->where('id',$sessData['store_id'])->first();
         $currencyModel->where('id !=',$data['base_currency_id']);
@@ -623,6 +627,10 @@ class PurchasesController extends BaseController
         $store = new StoreModel();
         $data['stores'] = $store->findAll();
 
+        $data['base_currency_id'] = '';
+        $data['currency_symbol'] = '';
+        $data['currency_code'] = '';
+
         if($sessData['store_id'] != '') {
             $general = new GeneralModel();
             $generalData = $general->where('store_id',$sessData['store_id'])->join('currencies','currencies.id = general.currency_id')->first();
@@ -807,6 +815,7 @@ class PurchasesController extends BaseController
                         }*/
                         $data = [
                             'user_id' => $id,
+                            'pos_id'=>$sessData['pos_id'],
                             'p_o_id' => isset($post["order_number"])?$post["order_number"]:0,
                             'location_id' => isset($post["location"])?$post["location"]:0,
                             'received_note' => isset($post["received_note"])?$post["received_note"]:"",
@@ -825,6 +834,7 @@ class PurchasesController extends BaseController
                         }
                         $data = [
                             'user_id' => $id,
+                            'pos_id'=>$sessData['pos_id'],
                             'p_o_id' => isset($post["order_number"])?$post["order_number"]:0,
                             'returned_note' => isset($post["returned_note"])?$post["returned_note"]:"",
                             'total_tax' => $total_tax,
@@ -849,7 +859,8 @@ class PurchasesController extends BaseController
                     break;
                     case 'back_order':
                             $data = [
-                                'customer_id' => isset($post["customer_id"])?$post["customer_id"]:0,
+                                // 'customer_id' => isset($post["customer_id"])?$post["customer_id"]:0,
+                                'pos_id'=>$sessData['pos_id'],
                                 'category_id' => isset($post["category_id"])?$post["category_id"]:0,
                                 'supplier_id' => isset($post["supplier_id"])?$post["supplier_id"]:0,
                                 'order_number' => isset($post["order_number"])?$post["order_number"]:0,
@@ -1506,14 +1517,9 @@ class PurchasesController extends BaseController
             ->orLike('order_number',$filter['search'])
             ->orLike('registered_name',$filter['search']);
         }
-        /*$purchase->where('order_status',0);
-        $purchase->orWhere('order_status',1);
-        $purchase->orWhere('order_status',3);
-        $purchase->orWhere('order_status',4);*/
+        $purchase->where('purchaseorders.pos_id',$sessData['pos_id']);
         $purchase->orderBy('id','desc');
         $records = $purchase->findAll($rowperpage, $start);
-
-        // print_r($db->getLastQuery());die;
 
         $totalRecordwithFilter = $purchaseF->countAllResults();
 
@@ -1589,7 +1595,7 @@ class PurchasesController extends BaseController
             $purchase->orLike('stores.store_name',$filter['search'])
                 ->orLike('order_number',$filter['search']);
         }
-
+        $purchase->where('purchaseorders.pos_id',$sessData['pos_id']);
         $purchase->where('order_status',5);
         $purchase->orWhere('order_status',2);
         $purchase->orderBy('id','desc');
@@ -1654,9 +1660,6 @@ class PurchasesController extends BaseController
             ->join('location', 'goods_received.location_id = location.id','left')
             ->join('suppliers', 'purchaseorders.supplier_id = suppliers.id');
         
-        if($filter['category'] != 0 && $filter['category'] != "") {
-            $goodsReceived->where('purchaseorders.category_id',$filter['category']);
-        }
         if($sessData['role_name'] == "Staff") {
             $goodsReceived->where('purchaseorders.store_id',$sessData['store_id']);
             $goodsRecF->where('store_id',$sessData['store_id']);
@@ -1683,10 +1686,13 @@ class PurchasesController extends BaseController
             $goodsReceived->orLike('stores.store_name',$filter['search'])
                 ->orLike('order_number',$filter['search']);
         }
+        $goodsReceived->where('goods_received.pos_id',$sessData['pos_id']);
+        $goodsRecF->where('goods_received.pos_id',$sessData['pos_id']);
+
         $goodsReceived->orderBy('id','desc');
         $records = $goodsReceived->findAll($rowperpage, $start);
        
-        $totalRecordwithFilter = count($records);
+        $totalRecordwithFilter = $goodsRecF->countAllResults();;
 
         $data = array();
 
@@ -1750,13 +1756,11 @@ class PurchasesController extends BaseController
         if($filter['store'] != "") {
             $goodsReturn->where('purchaseorders.store_id',$filter['store']);
         }
-        if($filter['category'] != 0 && $filter['category'] != "") {
-            $goodsReturn->where('purchaseorders.category_id',$filter['category']);
-        }
         if($filter['search'] != "") {
             $goodsReturn->orLike('suppliers.registered_name',$filter['search'])
                 ->orLike('order_number',$filter['search']);
         }
+        $goodsReturn->where('goods_returned.pos_id',$sessData['pos_id']); 
         $goodsReturn->orderBy('goods_returned.id','desc');  
         $records = $goodsReturn->findAll($rowperpage, $start);
         $totalRecordwithFilter = $goodsReturn->countAllResults();
@@ -1840,10 +1844,12 @@ class PurchasesController extends BaseController
             $mdl->orLike('stores.store_name',$filter['search'])
                 ->orLike('supplier_name',$filter['search']);
         }
+        $flt->where('direct_goods_received.pos_id',$sessData['pos_id']);
+        $mdl->where('direct_goods_received.pos_id',$sessData['pos_id']);
         $mdl->orderBy('id','desc');
         $records = $mdl->findAll($rowperpage, $start);
        
-        $totalRecordwithFilter = count($records);
+        $totalRecordwithFilter = $flt->countAllResults();
 
         $data = array();
 
@@ -1920,14 +1926,10 @@ class PurchasesController extends BaseController
             ->orLike('order_number',$filter['search'])
             ->orLike('registered_name',$filter['search']);
         }
-        /*$purchase->where('order_status',0);
-        $purchase->orWhere('order_status',1);
-        $purchase->orWhere('order_status',3);
-        $purchase->orWhere('order_status',4);*/
+
+        $purchase->where('back_order.pos_id',$sessData['pos_id']);
         $purchase->orderBy('id','desc');
         $records = $purchase->findAll($rowperpage, $start);
-
-        // print_r($db->getLastQuery());die;
 
         $totalRecordwithFilter = $purchaseF->countAllResults();
 

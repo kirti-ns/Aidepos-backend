@@ -4,17 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CategoryModel extends Model
+class FeatureModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'categories';
+    protected $table            = 'features';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['category_name','description','classification','custom_reports','status'];
 
     // Dates
     protected $useTimestamps = false;
@@ -40,14 +39,9 @@ class CategoryModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function GetCategoryData() {
-        $sess = getSessionData();
-          $this->select('categories.id,categories.category_name,categories.status,categories.description,(select COUNT(id) from subcategories as s where s.category_id = categories.id and s.status = 1) as total_subcategories');
-    //$this->join('subcategories as s', 'c.id = s.category_id');
-    //$this->join('establishment as e', 'l.e_id = e.e_id');
-    $this->where('pos_id',$sess['pos_id']);
-    $this->orderBy('categories.id desc');
-    return $this->findAll();
+    public function GetFeatureData($pos_id) {
+        $this->select('features.*');
+        $this->where('pos_id',$pos_id);
+        return $this->first();
     }
-    
 }

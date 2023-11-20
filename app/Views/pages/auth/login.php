@@ -32,34 +32,33 @@
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/app-assets/vendors/css/extensions/toastr.css">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/app-assets/css/plugins/extensions/toastr.min.css">
       <!-- alert message end -->
-      <!-- END Custom CSS-->
    </head>
    <style>
-   body{
-      background-image: url("<?= base_url()?>/public/app-assets/images/logo/full_img.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-   }
-   .main-content {
-      width: 60%;
-      margin: 5em auto;
-   }
-   .input-icons i {
-      position: absolute;
-   }
-    
-   .input-icons {
-      width: 100%;
-      margin-bottom: 10px;
-   }
-    
-   .icon {
-      padding: 10px;
-      color: green;
-      min-width: 50px;
-      text-align: center;
-   }
+      body{
+         background-image: url("<?= base_url()?>/public/app-assets/images/logo/full_img.png");
+         background-position: center;
+         background-repeat: no-repeat;
+         background-size: cover;
+      }
+      .main-content {
+         width: 60%;
+         margin: 5em auto;
+      }
+      .input-icons i {
+         position: absolute;
+      }
+       
+      .input-icons {
+         width: 100%;
+         margin-bottom: 10px;
+      }
+       
+      .icon {
+         padding: 10px;
+         color: green;
+         min-width: 50px;
+         text-align: center;
+      }
    </style>
    <body>
       <div class="app-content content">
@@ -75,7 +74,7 @@
                                  <div>
                                     <div class="card-header border-0  mrg-left">
                                        <div class="card-title">
-                                          <img src="<?= base_url()?>/public/app-assets/images/logo/logo.jpg" alt="branding logo">
+                                          <img src="<?= base_url()?>/public/app-assets/images/logo/logo.png" alt="branding logo">
                                        </div>
                                        <div>
                                           <h2 class="mrg-h2">
@@ -91,23 +90,13 @@
                                           <form method="post" class="form-horizontal" id="login_form" name="login_form" action="<?= base_url('post-login')?>">
                                              <input type="hidden" name="action" id="action" value="post-login">
                                              <input type="hidden" name="table_name" id="table_name" value="employee">
-                                             <fieldset class="mb-1">
-                                                <label for="merchant">Merchant</label>
-                                                <input type="radio" checked name="role_id" value="2" id="merchant" class="jui-ni-radio-buttons">
-                                                <label for="staff">Staff</label>
-                                                <input type="radio" name="role_id" value="3" id="staff" class="jui-ni-radio-buttons">
-                                                <label for="agent">Agent</label>
-                                                <input type="radio" name="role_id" value="4" id="agent" class="jui-ni-radio-buttons">
-                                             </fieldset>
                                              <div class="row">
                                              <div class="col-md-12 mb-1">
                                                 <div class="form-floating">
                                                    <div class="form-control-left-position">
                                                      <i class="ft-mail prefix grey-text"></i>
                                                    </div>
-                                                
-                                                   <input type="email" class="form-control" style="padding-left: calc(2.1em + 0.75rem);" id="email" name="email" placeholder="Email" value="" >
-                                                   <!-- <div><i class="ft-mail prefix grey-text"></i></div> -->
+                                                   <input type="email" class="form-control" style="padding-left: calc(2.1em + 0.75rem);" id="email" name="email" placeholder="Email" value="">
                                                    <label for="email" style="padding-left: calc(2.5em + 0.75rem);">Email</label>
                                                 </div>
                                              </div>
@@ -142,11 +131,11 @@
                                              Login</button>
                                           </form>
                                        </div>
-                                       <div class="text-center">
+                                       <!-- <div class="text-center">
                                           <a href="#" class="colour d2 pr-1">Terms & Conditions  </a>
                                           <span class="colour d2">|</span>
                                           <a href="#" class="colour d2 pl-1">Privacy Policies</a>
-                                       </div>
+                                       </div> -->
                                        <div class="text-center colour d2 mb-1 mt-1 ">
                                           <div>Powered by AIDEPOS</div>
                                        </div>
@@ -169,10 +158,12 @@
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-12 text-center d1">                            Dummy text of the app
+                                       <div class="col-md-12 text-center d1">
+                                          Cloud System
                                        </div>
-                                       <div class="col-md-12 text-center d2">
-                                          It is a long established fact that a reader will be distracted by the readable content
+                                       <div class="col-md-12 text-center d2" style="font-size: 12px;">
+                                          Transform your retail/restaurant business<br/>
+                                          with our Cloud-based POS 
                                        </div>
                                     </div>
                                  </div>

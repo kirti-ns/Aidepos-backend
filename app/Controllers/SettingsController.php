@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\RoleModel;
 use App\Models\GeneralModel;
+use App\Models\FeatureModel;
 use App\Models\CommonModel;
 use App\Models\CurrencyModel;
 use App\Models\TerminalsModel;
@@ -53,10 +54,10 @@ class SettingsController extends BaseController
         $data['permission'] = $sessData['permissions'];
 
         $currencyModel = new CurrencyModel();
-        $data['currencies'] = $currencyModel->findAll();
+        $data['currencies'] = $currencyModel->where('pos_id',$sessData['pos_id'])->findAll();
 
         $terminalModel = new TerminalsModel();
-        $data['terminals'] = $terminalModel->findAll();
+        $data['terminals'] = $terminalModel->where('pos_id',$sessData['pos_id'])->findAll();
 
         $taxesModel = new TaxesModel();
         $data['taxes'] = $taxesModel->GetTaxMasterData();
@@ -77,19 +78,23 @@ class SettingsController extends BaseController
         
         $terminalModel = new TerminalsModel();
         $data['terminals'] = $terminalModel->GetTerminalData();
-        
+
+        $ftModel = new FeatureModel();
+        $data['features'] = $ftModel->GetFeatureData($sessData['pos_id']);
+
         $data['base_currency'] = "";
         if($sessData['store_id'] != "") {
             $general = new GeneralModel();
             $generalData = $general->select('general.id,c.currency_code')->join('currencies as c','general.currency_id = c.id')->where('general.store_id',$sessData['store_id'])->first();
-            $data['base_currency'] = $generalData['currency_code'];
+            if(!empty($generalData)) {
+                $data['base_currency'] = $generalData['currency_code'];
+            }
         }
         
         $currencyModel = new CurrencyModel();
-        if($sessData['role_name'] == "Owner"){
-            $storeModel->where('pos_id',$sessData['pos_id']);
-            $currencyModel->where('pos_id',$sessData['pos_id']);
-        }
+        $storeModel->where('pos_id',$sessData['pos_id']);
+        $currencyModel->where('pos_id',$sessData['pos_id']);
+        
         $data['stores'] = $storeModel->findAll();
         
         $location_master = new LocationMaster();
@@ -376,6 +381,7 @@ class SettingsController extends BaseController
                 break;
                 case 'payments':
                     $data = [
+                        'pos_id'=>$sessData['pos_id'],
                         'payment_type_id' => isset($post["payment_type_id"])?$post["payment_type_id"]:0,
                         'type_id' => isset($post["type_id"])?$post["type_id"]:0,
                         'receipt_name' => isset($post["receipt_name"])?$post["receipt_name"]:0,
@@ -396,18 +402,17 @@ class SettingsController extends BaseController
                 case 'general':
                     $data = [
                         'store_id' =>isset($post['store_id'])?$post['store_id']:"",
-                        // 'tax_id' =>isset($post["tax_id"])?$post["tax_id"]:"",
                         'currency_id' =>isset($post["currency_id"])?$post["currency_id"]:"",
                         'opening_hour' =>isset($post["opening_hour"])?$post["opening_hour"]:"",
                         'closing_hour' =>isset($post["closing_hour"])?$post["closing_hour"]:"",
+                        'rounding' =>isset($post["rounding"])?$post["rounding"]:0,
                         'rounding_to' =>isset($post["rounding_to"])?$post["rounding_to"]:0,
                         'middle_point' =>isset($post["middle_point"])?$post["middle_point"]:0,
                         'from_email' =>isset($post["from_email"])?$post["from_email"]:"",
                         'layby_deposit_per' =>isset($post["layby_deposit_per"])?$post["layby_deposit_per"]:0,
-                        'layby_source_location' =>isset($post["layby_source_location"])?$post["layby_source_location"]:"",
-                        'general_features' =>isset($post["general_features"])?json_encode($post["general_features"]):0
+                        'layby_source_location' =>isset($post["layby_source_location"])?$post["layby_source_location"]:""
                     ];
-                break;    
+                break;  
             }
 
             $db = db_connect();
@@ -455,10 +460,11 @@ class SettingsController extends BaseController
     {
        $request = service('request');
        $postData = $request->getPost();
-       
+       $sessData = getSessionData();
+
        $dtpostData = $postData['data'];
        $response = array();
-      ## Read value
+       ## Read value
        $draw = $dtpostData['draw'];
        $start = $dtpostData['start'];
        $rowperpage = $dtpostData['length']; // Rows display per page
@@ -494,6 +500,7 @@ class SettingsController extends BaseController
                 $cm->where('payments.status', 0);
             }
         }
+        $cm->where('payments.pos_id',$sessData['pos_id']);
         $cm->orderBy($columnName,$columnSortOrder);
 
         $records = $cm->findAll($rowperpage, $start);
@@ -684,6 +691,7 @@ class SettingsController extends BaseController
                 $cm->where('terminals.status', 0);
             }
         }
+        $cm->where('terminals.pos_id',$sessData['pos_id']);
         $cm->orderBy($columnName,$columnSortOrder);
 
         $records = $cm->findAll($rowperpage, $start);

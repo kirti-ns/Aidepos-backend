@@ -1,3 +1,11 @@
+<style type="text/css">
+  .select2-container .select2-selection--single {
+    height: 52px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 60px;
+  }
+</style>
 <div class="app-content content">
        <div class="content-wrapper">
       <?= view('includes/breadcrumb.php');?> 

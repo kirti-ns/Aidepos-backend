@@ -85,8 +85,9 @@
                     <div class="btn-group mr-1 mb-1">
                         <button type="button" class="btn btn-outline-info btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export As</button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);" data-type="layby-sales" id="export-to-pdf">PDF</a>
-                            <!-- <a class="dropdown-item" href="#">Another action</a> -->
+                            <a class="dropdown-item export-report" href="javascript:void(0);" data-type="layby-sales" data-file="pdf">PDF</a>
+                            <a class="dropdown-item export-report" href="javascript:void(0);" data-type="layby-sales" data-file="csv">CSV</a>
+                            <a class="dropdown-item export-report" href="javascript:void(0);" data-type="layby-sales" data-file="xlsx">Excel</a>
                         </div>
                     </div>
                 </section>

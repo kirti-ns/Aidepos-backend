@@ -38,31 +38,27 @@ class InventoryController extends BaseController
         $data['title'] = 'Inventory'; 
 
         $sessData = getSessionData();
-        /*if($sessData['store_id']){
-            $store->where('id',$sessData['store_id']);
-        }*/
 
         $data['permission'] = $sessData['permissions'];
         $store = new StoreModel();
-        /*if($sessData['role_name'] == "Staff") {
-            $store->where('id',$sessData['store_id']);
-
-        } else if ($sessData['role_name'] == "Owner") {
+        if($sessData['role_name'] == "Admin") {
             $store->where('pos_id',$sessData['pos_id']);
-        }*/
+        } else {
+            $store->where('id',$sessData['store_id']);
+        }
         $data['store'] = $store->findAll();
         
         $category = new CategoryModel();
-        $data['category'] = $category->findAll();
+        $data['category'] = $category->where('pos_id',$sessData['pos_id'])->findAll();
 
         $stockReasonModel = new StockAdjustmentReasonModel();
-        $data['reason'] = $stockReasonModel->select('id, reason')->where('status',1)->findAll();
+        $data['reason'] = $stockReasonModel->where('pos_id',$sessData['pos_id'])->select('id, reason')->where('status',1)->findAll();
        
         $location = new Location();
         $data['location'] = $location->whereIn('pos_id',[0,$sessData['pos_id']])->where('status',1)->findAll();
 
         $items = new ItemModel();
-        $itemlist = $items->getItemList($sessData['store_id']);
+        $itemlist = $items->getItemList($sessData['pos_id']);
         $data['items'] = json_encode($itemlist);
         
         $brandmasterModel = new BrandMasterModel();
@@ -758,12 +754,14 @@ class InventoryController extends BaseController
             $mdl->orLike('stores.store_name',$filter['search'])
                 ->orLike('items.item_name',$filter['search']);
         }
+        $mdl->where('current_inventory.pos_id',$sessData['pos_id']);
         $mdl->where('current_inventory.quantity >',0);
         $mdl->groupBy('current_inventory.item_id');
         $mdl->groupBy('current_inventory.store_id');
         $mdl->groupBy('current_inventory.location_id');
         $mdl->orderBy('current_inventory.id','desc');
         $records = $mdl->findAll($rowperpage, $start);
+        $flt->where('pos_id',$sessData['pos_id']);
         $flt->where('current_inventory.quantity >',0);
         $totalRecordwithFilter = $flt->countAllResults();//count($records);
         $data = array();
@@ -910,6 +908,8 @@ class InventoryController extends BaseController
         
         /*$tm->where('receiver_store_id',$store_id); 
         $tm->orWhere('supply_store_id',$store_id); */
+        $tmF->where('transfer.pos_id',$sessData['pos_id']);
+        $tm->where('transfer.pos_id',$sessData['pos_id']);
         $tm->orderBy('transfer.id','desc');
         $records = $tm->findAll($rowperpage, $start);
         $totalRecordwithFilter = $tmF->countAllResults();
@@ -971,7 +971,7 @@ class InventoryController extends BaseController
             $tm->orLike('stores.store_name',$filter['search'])
                 ->orLike('items.item_name',$filter['search']);
         }
-        
+        $tm->where('production.pos_id',$sessData['pos_id']);
         $tm->orderBy('production.id','desc');
         $records = $tm->findAll($rowperpage, $start);
         
@@ -1012,7 +1012,7 @@ class InventoryController extends BaseController
         if($filter['search'] != "") {
             $sim->orLike('reason',$filter['search']);
         }
-
+        $sim->where('pos_id',$sessData['pos_id']);
         $sim->orderBy('id','desc');
         $records = $sim->findAll($rowperpage, $start);
 
@@ -1072,6 +1072,8 @@ class InventoryController extends BaseController
             $stockadjustModel->where('store_id',$filter['store_id']);
             $samF->where('store_id',$filter['store_id']);
         }
+        $samF->where('stockadjusts.pos_id',$sessData['pos_id']);
+        $stockadjustModel->where('stockadjusts.pos_id',$sessData['pos_id']);
         $stockadjustModel->orderBy('stockadjusts.id','desc');
         $records = $stockadjustModel->findAll($rowperpage, $start);
         $totalRecordwithFilter = $samF->countAllResults();
@@ -1177,6 +1179,8 @@ class InventoryController extends BaseController
             $sim->orLike('stores.store_name',$filter['search'])
                 ->orLike('items.item_name',$filter['search']);
           }
+        $sim->where('store_items.pos_id',$sessData['pos_id']);
+        $simF->where('store_items.pos_id',$sessData['pos_id']);
         $sim->orderBy('id','desc');
         $records = $sim->findAll($rowperpage, $start);
         $totalRecordwithFilter = $simF->countAllResults();

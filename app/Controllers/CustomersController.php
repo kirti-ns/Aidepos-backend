@@ -17,9 +17,10 @@ class CustomersController extends BaseController
     {
         $data = [];
         $data['title'] = 'Customers'; 
-        
+        $sessData = getSessionData();
+
         $giftcard = New GiftCardMasterModel();
-        $data['giftcards'] = $giftcard->findAll();
+        $data['giftcards'] = $giftcard->where('pos_id',$sessData['pos_id'])->findAll();
 
         return $this->template->render('pages/customers/list_customers', $data); 
     }
@@ -157,9 +158,11 @@ class CustomersController extends BaseController
         $data = [];
         $data['title'] = 'Add Gift Card'; 
         $data['main_menu'] = 'Customers'; 
-        $data['main_menu_url'] = base_url('customers'); 
+        $data['main_menu_url'] = base_url('customers');
+        $sessData = getSessionData();
+
         $giftcard = New GiftCardMasterModel();
-        $giftcardData = $giftcard->findAll();
+        $giftcardData = $giftcard->where('pos_id',$sessData['pos_id'])->findAll();
         $data['giftcardData']  = $giftcardData;
         $data['url'] = uri_string();
 
@@ -171,9 +174,11 @@ class CustomersController extends BaseController
         $data = [];
         $data['title'] = 'Edit Gift Card'; 
         $data['main_menu'] = 'Customers'; 
-        $data['main_menu_url'] = base_url('customers'); 
+        $data['main_menu_url'] = base_url('customers');
+        $sessData = getSessionData();
+         
         $giftcard = New GiftCardMasterModel();
-        $giftcardData = $giftcard->findAll();
+        $giftcardData = $giftcard->where('pos_id',$sessData['pos_id'])->findAll();
         $data['giftcardData']  = $giftcardData;
 
         $giftcardModel = new GiftCardModel();
@@ -197,7 +202,7 @@ class CustomersController extends BaseController
         {
           $sessData = getSessionData();
             $post = $this->request->getVar();
-            // echo "<rpe>";print_r($post);die;
+
             switch($post['table_name']){
                 case 'customers':
                     $data = [
@@ -224,16 +229,12 @@ class CustomersController extends BaseController
                     ];
                 break;
                 case 'giftcards':
-                $bm = New GiftCardMasterModel();
-                  $batch_id =   $bm->select('*')
-                    ->orLike('batch_name', $post["batch_id"])
-                    ->first();
                    
                     $data = [
-                        'batch_id' => isset($batch_id['id'])?$batch_id['id']:"0",
+                        'batch_id' => isset($post['batch_id'])?$post['batch_id']:"",
                         'voucher_card_no' => isset($post["voucher_card_no"])?$post["voucher_card_no"]:"0",
                         'amount' => isset($post["amount"])?$post["amount"]:"0",
-                        'expiry_date' => isset($post["expiry_date"])?$post["expiry_date"]:"0"
+                        'expiry_date' => isset($post["expiry_date"])?$post["expiry_date"]:""
                     ];
                 break;
                 case 'loyaltypoints':

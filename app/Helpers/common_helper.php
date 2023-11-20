@@ -1,6 +1,15 @@
 <?php
 use App\Models\EmployeeModel;
 
+function exportToPDF($view,$data,$filename) {
+	$dompdf = new \Dompdf\Dompdf(); 
+    $dompdf->loadHtml(view($view, $data));
+    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->set_option('isFontSubsettingEnabled', true);
+    $dompdf->set_option('isPhpEnabled', true);
+    $dompdf->render();
+    $dompdf->stream($filename);
+}
 function RowStatus($type){
 	if($type == 1){
 		$class = "active-border";

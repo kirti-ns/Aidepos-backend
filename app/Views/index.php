@@ -34,7 +34,7 @@
                                     <i class="fa fa-calendar white font-large-1 float-left dashboard-icon " style="margin-left: 12px;"></i>
                                  </div>
                                  <div class="media-body">
-                                    <h3>$<?= $data['yesterday'];?> <!-- <i class="fa fa-caret-down dashboard-span-down-icon"></i> <span class="dashboard-span-down">05%</span> --></h3>
+                                    <h3>$<?= $data['yesterday'];?></h3>
                                     <span class="first-content">Yesterday</span> <span class="second-content">vs same day  </span>
                                  </div>
                               </div>
@@ -51,7 +51,7 @@
                                     <i class="fa fa-calendar-check-o white font-large-1 float-left dashboard-icon " style="margin-left: 12px;"></i>
                                  </div>
                                  <div class="media-body">
-                                    <h3>$<?= $data['current_month'];?> <!-- <i class="fa fa-caret-up dashboard-span-up-icon"></i> <span class="dashboard-span-up">05%</span> --></h3>
+                                    <h3>$<?= $data['current_month'];?></h3>
                                     <span class="first-content">This Month </span> <span class="second-content">vs same day </span>
                                  </div>
                               </div>
@@ -68,7 +68,7 @@
                                     <i class="fa fa-calendar-check-o white font-large-1 float-left dashboard-icon " style="margin-left: 12px;"></i>
                                  </div>
                                  <div class="media-body">
-                                    <h3>$<?= $data['last_month'];?> <!-- <i class="fa fa-caret-down dashboard-span-down-icon"></i> <span class="dashboard-span-down">25%</span> --></h3>
+                                    <h3>$<?= $data['last_month'];?></h3>
                                     <span class="first-content">Last Month</span> <span class="second-content">vs month before</span>
                                  </div>
                               </div>
@@ -131,8 +131,8 @@
                            <div class="card-content mt-2">
                               <div class="card-body">
                                  <div class="height-400">
-                                        <canvas id="simple-doughnut-chart" >
-                                        </canvas>
+                                    <div id="top-items-nta"></div>
+                                    <canvas id="simple-doughnut-chart"></canvas>
                                  </div>
                               </div>
                            </div>
@@ -146,12 +146,12 @@
                   <div class="col-md-4 ">
                      <div class="card">
             <div class="card-header no-border">
-                <h4 class="card-title">Store Based on monthly sales</span></h4>
+                <h4 class="card-title">Store Based Monthly Sales</span></h4>
                 <a class="heading-elements-toggle"><i class="ft-more-horizontal font-medium-3"></i></a>
                 <div class="heading-elements">
                     <ul class="list-inline text-center">
                         <div class="">
-                           <a href="<?= base_url('/store_based_sales')?>" class="dft-color"><u>View All</u> ></a>
+                           <a href="<?= base_url('/reports/sales-by-store')?>" class="dft-color"><u>View All</u> ></a>
                         </div>
                      </ul>
                 </div>
@@ -169,7 +169,7 @@
                         <div class="media-body">
                             <p class="text-bold-600 m-0"><?= $row['store_name'] ?>
                               <span class="float-right "><?= numberFormat($row['total']) ?></span></p>
-                            <p class="font-small-2 text-muted m-0"><?= $row['phone'] ?> &nbsp;&nbsp;&nbsp;authentic_corner@example.com</p>
+                            <p class="font-small-2 text-muted m-0"><?= $row['phone'] ?></p>
                         </div>
                     </div>
                      <hr>
@@ -219,7 +219,7 @@
                            <div class="heading-elements">
                               <ul class="list-inline text-center">
                                  <div class="">
-                                    <a href="<?= base_url('/daily_terminal_sales')?>" class="dft-color"><u>View All</u> ></a>
+                                    <a href="<?= base_url('/reports/sales-by-terminal')?>" class="dft-color"><u>View All</u> ></a>
                                  </div>
                               </ul>
                            </div>
@@ -271,10 +271,6 @@
       <!-- <script src="<?= base_url()?>/app-assets/js/scripts/charts/morris/bar.min.js"></script> -->
       
       <script src="<?= base_url()?>/public/app-assets/vendors/js/charts/chart.min.js"></script>
-      <script src="<?= base_url()?>/public/app-assets/js/scripts/charts/chartjs/pie-doughnut/pie.min.js"></script>
-      <script src="<?= base_url()?>/public/app-assets/js/scripts/charts/chartjs/pie-doughnut/pie-simple.min.js"></script>
-      <script src="<?= base_url()?>/public/app-assets/js/scripts/charts/chartjs/pie-doughnut/doughnut.min.js"></script>
-      <!-- END Barchart JS-->
       
    <script type="text/javascript">
       (function() {
@@ -284,7 +280,6 @@
          })();
        
         function createChart(data,labels,type){
-            console.log(type);
                Morris.Bar({
                element: "bar-chart",
                data: data,
@@ -329,31 +324,36 @@
       
    </script>
    <script type="text/javascript">
-      var barchart;
+      var piechart;
+      var isTopItemsFlg = true;
       $(window).on("load",function(){
 
+         <?php if($data['top_items']['top_items_total'] == "[]") { ?>
+            isTopItemsFlg = false;
+         <?php } ?>
+         if(!isTopItemsFlg){
+            $('#top-items-nta').html('No Data Found');
+         }
          var a=$("#simple-doughnut-chart");
-         barchart =   new Chart(a,
-            {
-               type:"doughnut",
-               options:{
-                     responsive:!0,
-                     maintainAspectRatio:!1,
-                     responsiveAnimationDuration:500
-               },
-               data:{
-                  labels:<?= $data['top_items']['top_items'];?>,
-                  datasets:[
-                        {
-                           label:"My First dataset",
-                           data:<?= $data['top_items']['top_items_total'];?>,
-                             backgroundColor:["#00A5A8","#626E82","#FF7D4D","#FF4558","#28D094"]
-                         }
-                        ]
-               }
-            }
-         )
-       console.log(barchart.data);
+         piechart = new Chart(a,
+         {
+            type:"doughnut",
+            options:{
+                  responsive:!0,
+                  maintainAspectRatio:!1,
+                  responsiveAnimationDuration:500
+            },
+            data:{
+               labels:<?= $data['top_items']['top_items'];?>,
+               datasets:[
+               {
+                  label:"My First dataset",
+                  data:<?= $data['top_items']['top_items_total'];?>,
+                    backgroundColor:["#00A5A8","#626E82","#FF7D4D","#FF4558","#28D094"]
+                }
+               ]
+            },
+         })
       });
       $(document).on('change','.top_items',function() {
          value = $(this).val();
@@ -366,16 +366,20 @@
             dataType: "json",
             encode: true,
          }).done(function (data) {
-            console.log(data.status);
             if(data.status == 'true'){
                labels = JSON.parse(data.data.top_items);
                datasets = JSON.parse(data.data.top_items_total);
-               barchart.data.labels = labels;
-               barchart.data.datasets[0].data = datasets;
-               barchart.update();
+               piechart.data.labels = labels;
+               piechart.data.datasets[0].data = datasets;
+               piechart.update();
+               isTopItemsFlg = true;
+               $('#simple-doughnut-chart').css({'display':'block'});
+               $('#top-items-nta').html('');
             }else{
                alertMessage(data.status,data.message);
-               
+               isTopItemsFlg = false;
+               $('#simple-doughnut-chart').css({'display':'none'});
+               $('#top-items-nta').html('No Data Found');
             }
             })
       })

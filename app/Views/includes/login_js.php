@@ -55,14 +55,12 @@ $(document).ready(function () {
          // Specify validation rules
          rules: {
             email: "required",
-            password: "required",
-            role_id: "required",
+            password: "required"
          },
 
          messages: {
             email: "Please enter email",
-            password: "Please enter password",
-            role_id: "Please select role"
+            password: "Please enter password"
          },
          errorElement: "div",
          errorPlacement: function (error, element) {
@@ -241,7 +239,7 @@ function form_submit(formid, event) {
 
 }
 
-/*$('#store').change(function(){
+$('#store').change(function(){
     var id = $(this).val();
 
     $.ajax({
@@ -261,6 +259,6 @@ function form_submit(formid, event) {
             $('.terminal-row').hide();
          }
       })    
- });*/
+ });
 
      </script>

@@ -38,7 +38,7 @@
                             <a class="nav-link" id="linkIcon12-tab9" data-toggle="tab" href="#variants" aria-controls="linkIcon12" aria-expanded="false">Variant</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="linkIcon12-tab9" data-toggle="tab" href="#expiration-date" aria-controls="linkIcon12" aria-expanded="false">Expiration Date</a>
+                            <a class="nav-link" id="linkIcon12-tab10" data-toggle="tab" href="#expiration-date" aria-controls="linkIcon12" aria-expanded="false">Expiration Date</a>
                         </li>
                     </ul>
                 </div>
@@ -107,19 +107,7 @@
                             <div class="filter-bar-item border-side-right"></div>
                             <div class="filter-bar-item filter-bar-last pl-2">
                                 <span>
-                                    <button type="button" class="btn btn-outline-info btn-sm import-customers mr-15"><i class="fa fa-download"></i></button>
                                     <a href="<?= base_url('items/add_item');?>" class="btn btn-info btn-sm mr-10"><i class="fa fa-plus"></i> Add New</a>
-                                    <span class="dropdown">
-                                        <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-default btn-sm dropdown-toggle dropdown-menu-right">
-                                            <i class="fa fa-ellipsis-h"></i>
-                                        </button>
-                                        <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
-                                            <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
-                                        </span>
-                                    </span>
                                 </span>
                             </div>
                         </section>
@@ -284,17 +272,6 @@
                             <div class="filter-bar-item filter-bar-last pl-2">
                                 <span>
                                     <a href="<?= base_url('items/add_category')?>" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add New</a>
-                                    <span class="dropdown">
-                                        <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-default btn-sm dropdown-toggle dropdown-menu-right" style="height: 28px;">
-                                            <i class="fa fa-ellipsis-h"></i>
-                                        </button>
-                                        <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
-                                            <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
-                                        </span>
-                                    </span>
                                 </span>
                             </div>
                         </section>
@@ -359,17 +336,6 @@
                             <div class="filter-bar-item filter-bar-last pl-2">
                                 <span>
                                     <a href="<?= base_url('items/add_subcategory')?>" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add New</a>
-                                    <span class="dropdown">
-                                        <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-default btn-sm dropdown-toggle dropdown-menu-right" style="height: 28px;">
-                                            <i class="fa fa-ellipsis-h"></i>
-                                        </button>
-                                        <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
-                                            <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
-                                        </span>
-                                    </span>
                                 </span>
                             </div>
                         </section>
@@ -407,7 +373,7 @@
                 </div>
                 <!-- SubCategory End -->
                 <!-- Modifier Start -->
-                <div class="tab-pane" id="modifiers" role="tabpanel" aria-labelledby="dropdownOptIcon21-tab5" aria-expanded="false">
+                <div class="tab-pane" id="modifiers" role="tabpanel" aria-labelledby="linkIcon12-tab5" aria-expanded="false">
                     <form class="filterModifiers">
                         <section class="mb-1 filter-bar">
                             <div class="filter-bar-item f-12">
@@ -434,17 +400,6 @@
                             <div class="filter-bar-item filter-bar-last pl-2">
                                 <span>
                                     <a href="<?= base_url("items/add_modifier")?>" class="btn btn-info btn-sm mr-10"><i class="fa fa-plus"></i> Add New</a>
-                                    <span class="dropdown">
-                                        <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-default btn-sm dropdown-toggle dropdown-menu-right">
-                                            <i class="fa fa-ellipsis-h"></i>
-                                        </button>
-                                        <span aria-labelledby="#btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right" style="top: 185px;">
-                                            <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
-                                        </span>
-                                    </span>
                                 </span>
                             </div>
                         </section>
@@ -483,7 +438,7 @@
                 </div>
                 <!-- Modifiers End -->
                 <!-- Recipe Start -->
-                <div class="tab-pane" id="recipes" role="tabpanel" aria-labelledby="dropdownOptIcon21-tab6" aria-expanded="false">
+                <div class="tab-pane" id="recipes" role="tabpanel" aria-labelledby="linkIcon12-tab6" aria-expanded="false">
                     <form class="filterRecipe">
                         <section class="mb-1 filter-bar">
                               <div class="filter-bar-item f-12">
@@ -495,21 +450,6 @@
                                     </select>
                                  </span>
                               </div>
-                              <!--  <div class="filter-bar-item f-12">
-                              <span>
-                                 <select name="equal[category]" class="form-control form-select purchase-search">
-                                    <option>Category: All</option>
-                                    <?php
-                                     if(isset($data['category'])){
-                                      foreach($data['category'] as $row){
-                                    ?>
-                                    <option value="<?= $row['id']?>"><?= $row['category_name']?></option>
-                                    <?php
-                                       }
-                                    } ?>
-                                 </select>
-                              </span>
-                           </div> -->
                             <div class="filter-bar-item" style="flex-grow: 1;">
                                 <span>
                                     <input type="text" placeholder="Search" name="match[search]" class="form-control purchase-search searchDtField" value="" />
@@ -525,17 +465,6 @@
                             <div class="filter-bar-item filter-bar-last pl-2">
                                 <span>
                                     <a href="<?= base_url("items/add_recipe") ?>" class="btn btn-info btn-sm mr-10"><i class="fa fa-plus"></i> Add New</a>
-                                    <span class="dropdown">
-                                        <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-default btn-sm dropdown-toggle dropdown-menu-right">
-                                            <i class="fa fa-ellipsis-h"></i>
-                                        </button>
-                                        <span aria-labelledby="#btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right" style="top: 185px;">
-                                            <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
-                                        </span>
-                                    </span>
                                 </span>
                             </div>
                         </section>
@@ -573,7 +502,7 @@
                 </div>
                 <!-- Recipe End -->
                 <!-- UOM Start -->
-                <div role="tabpanel" class="tab-pane" id="uom" aria-labelledby="activeIcon12-tab7" aria-expanded="true">
+                <div role="tabpanel" class="tab-pane" id="uom" aria-labelledby="linkIcon12-tab7" aria-expanded="true">
                     <form class="filteruom">
                         <section class="mb-1 filter-bar">
                             <div class="filter-bar-item f-12">
@@ -600,17 +529,6 @@
                             <div class="filter-bar-item filter-bar-last pl-2">
                                 <span>
                                     <a href="<?= base_url("items/add_uom")?>" class="btn btn-info btn-sm mr-10"><i class="fa fa-plus"></i> Add New</a>
-                                    <span class="dropdown">
-                                        <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-default btn-sm dropdown-toggle dropdown-menu-right">
-                                            <i class="fa fa-ellipsis-h"></i>
-                                        </button>
-                                        <span aria-labelledby="#btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right" style="top: 185px;">
-                                            <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
-                                        </span>
-                                    </span>
                                 </span>
                             </div>
                         </section>
@@ -675,17 +593,6 @@
                             <div class="filter-bar-item filter-bar-last pl-2">
                                 <span>
                                     <a href="<?= base_url("items/add_brand")?>" class="btn btn-info btn-sm mr-10"><i class="fa fa-plus"></i> Add New</a>
-                                    <span class="dropdown">
-                                        <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-default btn-sm dropdown-toggle dropdown-menu-right">
-                                            <i class="fa fa-ellipsis-h"></i>
-                                        </button>
-                                        <span aria-labelledby="#btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right" style="top: 185px;">
-                                            <a href="#" class="dropdown-item"><i class="fa fa-info-circle"></i> Things i can do</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-print"></i> Print </a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-download"></i> Download</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-question-circle-o"></i> Help</a>
-                                        </span>
-                                    </span>
                                 </span>
                             </div>
                         </section>
@@ -723,7 +630,7 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="variants" aria-labelledby="activeIcon12-tab9" aria-expanded="true">
+                <div role="tabpanel" class="tab-pane" id="variants" aria-labelledby="linkIcon12-tab9" aria-expanded="true">
                     <form class="filtervar">
                         <section class="mb-1 filter-bar">
                             <div class="filter-bar-item" style="flex-grow: 1;">
@@ -775,7 +682,7 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="expiration-date" aria-labelledby="activeIcon12-tab9" aria-expanded="true">
+                <div role="tabpanel" class="tab-pane" id="expiration-date" aria-labelledby="linkIcon12-tab10" aria-expanded="true">
                     <form class="filterExpire">
                         <section class="mb-1 filter-bar">
                             <div class="filter-bar-item" style="flex-grow: 1;">
@@ -789,14 +696,27 @@
                             <div class="filter-bar-item">
                                 <span><button id="exSubmit" type="button" class="btn btn-outline-info btn-sm">Search</button></span>
                             </div>
+                            <div class="filter-bar-item border-side-right"></div>
+                            <div class="filter-bar-item filter-bar-last pl-2">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-info dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export</button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item exp-items-export" href="javascript:void(0);" data-type="csv">CSV</a>
+                                        <a class="dropdown-item exp-items-export" href="javascript:void(0);" data-type="xlsx">XLSX</a>
+                                    </div>
+                                </div>
+                            </div>
                         </section>
                     </form>
                     <div class="card card-content collapse show">
                         <div class="card-body card-dashboard">
                             <section id="configuration">
                                 <div class="col-12">
-                                    <div class="status-div"><span class="active-span"></span><span> Active</span> <span class="inactive-span"></span><span> Inactive</span></div>
+                                    <div class="float-left">
+                                        Displays the list for items that will expire in 30 days or within 30 days and items that are already expired.
+                                    </div>
                                 </div>
+                                <br/>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="card">
@@ -1041,7 +961,7 @@
                     </div>
                     <form method="post" id="variant_master_form" name="variant_master_form">
                         <input type="hidden" name="action" id="action" value="post_items_data" />
-                        <input type="hidden" name="table_name" id="table_name" value="location" />
+                        <input type="hidden" name="table_name" id="table_name" value="variant_master" />
                         <input type="hidden" name="id" id="id" value="" />
 
                         <div class="modal-body">

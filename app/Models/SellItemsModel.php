@@ -44,7 +44,7 @@ class SellItemsModel extends Model
     { 
         $this->select('sell_items.item_id,items.item_name,sum(sell_items.qty) as total_qty');
         $this->join('items','items.id=sell_items.item_id');
-        // $this->join('items_master','items_master.id=items.item_master_id');
+        $this->where('items.pos_id',$pos_id);
         $this->where('month(sell_items.created_at)',$month);
         $this->groupBy('sell_items.item_id');
         $result =  $this->findAll();

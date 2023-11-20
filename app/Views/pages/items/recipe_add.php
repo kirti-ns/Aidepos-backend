@@ -1,3 +1,9 @@
+<style type="text/css">
+  #select2-group_name-container {
+    height: 52px!important;
+    line-height: 60px!important;
+  }
+</style>
 <div class="app-content content">
    <div class="content-wrapper">
        <?= view('includes/breadcrumb.php');?>

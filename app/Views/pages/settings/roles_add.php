@@ -37,7 +37,6 @@
                                      </div>
                                   </div>
                                </div>
-
                                <br>
                                <p><b>Permissions</b></p>
                                <div class="row back-office">
@@ -64,10 +63,10 @@
                                   </div>
                                   <div class="col-md-4 col-sm-12">
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[view_all_reports]" <?= isset($back_office_permission->view_all_reports) && ($back_office_permission->view_all_reports == 1)?'checked':''?> class="chk" id="input-12" value="1" >
-                                        <label for="input-12">
-                                           <p class="text-bold-600 m-0"><b>View All Reports</b></p>
-                                           <p class="font-small-2 text-muted m-0">Permission to view all reports</p>
+                                        <input type="checkbox" name="back_office_permission[customers]" class="chk" id="input-15" value="1" <?= isset($back_office_permission->customers) && ($back_office_permission->customers == 1)?'checked':''?> >
+                                        <label for="input-15">
+                                           <p class="text-bold-600 m-0"><b>Manage Customers</b></p>
+                                           <p class="font-small-2 text-muted m-0">Enable to manage Customers</p>
                                         </label>
                                      </fieldset>
                                      <br>
@@ -78,23 +77,58 @@
                                            <p class="font-small-2 text-muted m-0">Enable to manage Items </p>
                                         </label>
                                      </fieldset>
-                                     <br>
+                                     <br/>
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[manage_employees]" class="chk" id="input-14" value="1" <?= isset($back_office_permission->manage_employees) && ($back_office_permission->manage_employees == 1)?'checked':''?>  >
-                                        <label for="input-14">
-                                           <p class="text-bold-600 m-0"><b>Manage Employees</b></p>
-                                           <p class="font-small-2 text-muted m-0">Enable to manage Employees</p>
+                                        <input type="checkbox" name="back_office_permission[purchases]" class="chk" id="input-23" value="1" <?= isset($back_office_permission->purchases) && ($back_office_permission->purchases == 1)?'checked':''?> >
+                                        <label for="input-23">
+                                           <p class="text-bold-600 m-0"><b>Purchases</b></p>
+                                           <p class="font-small-2 text-muted m-0">Perform purchase, goods receive and return</p>
+                                        </label>
+                                     </fieldset>
+                                     <br/>
+                                     <fieldset>
+                                        <input type="checkbox" name="back_office_permission[purchase_approvals]" class="chk" id="input-18" value="1" <?= isset($back_office_permission->purchase_approvals) && ($back_office_permission->purchase_approvals == 1)?'checked':''?> >
+                                        <label for="input-18">
+                                           <p class="text-bold-600 m-0"><b>Purchase Approvals</b></p>
+                                           <p class="font-small-2 text-muted m-0">Review & Perform purchase approvals</p>
+                                        </label>
+                                     </fieldset>
+                                     <br/>
+                                     <fieldset>
+                                        <input type="checkbox" name="back_office_permission[stock_transfer]" class="chk" id="input-18" value="1" <?= isset($back_office_permission->stock_transfer) && ($back_office_permission->stock_transfer == 1)?'checked':''?> >
+                                        <label for="input-18">
+                                           <p class="text-bold-600 m-0"><b>Stock Transfer</b></p>
+                                           <p class="font-small-2 text-muted m-0">Perform stock transfer</p>
+                                        </label>
+                                     </fieldset>
+                                     <br/>
+                                     <fieldset>
+                                        <input type="checkbox" name="back_office_permission[stock_adjustment]" class="chk" id="input-24" value="1" <?= isset($back_office_permission->stock_adjustment) && ($back_office_permission->stock_adjustment == 1)?'checked':''?> >
+                                        <label for="input-24">
+                                           <p class="text-bold-600 m-0"><b>Stock adjustment</b></p>
+                                           <p class="font-small-2 text-muted m-0">Perform stock adjustment</p>
+                                        </label>
+                                     </fieldset>
+                                     <br/>
+                                     <fieldset>
+                                        <input type="checkbox" name="back_office_permission[sales]" class="chk" id="input-23" value="1" <?= isset($back_office_permission->sales) && ($back_office_permission->sales == 1)?'checked':''?> >
+                                        <label for="input-23">
+                                           <p class="text-bold-600 m-0"><b>Sales</b></p>
+                                           <p class="font-small-2 text-muted m-0">Enable to manage quotes and invoices</p>
                                         </label>
                                      </fieldset>
                                      <br>
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[manage_customers]" class="chk" id="input-15" value="1" <?= isset($back_office_permission->manage_customers) && ($back_office_permission->manage_customers == 1)?'checked':''?> >
-                                        <label for="input-15">
-                                           <p class="text-bold-600 m-0"><b>Manage Customers</b></p>
-                                           <p class="font-small-2 text-muted m-0">Enable to manage Customers</p>
+                                        <input type="checkbox" name="back_office_permission[store_terminal]" class="chk" id="input-22" value="1" <?= isset($back_office_permission->store_terminal) && ($back_office_permission->store_terminal == 1)?'checked':''?> >
+                                        <label for="input-22">
+                                           <p class="text-bold-600 m-0"><b>Manage POS devices</b></p>
+                                           <p class="font-small-2 text-muted m-0">Manage store settings and terminal settings</p>
                                         </label>
                                      </fieldset>
                                      <br>
+                                  </div>
+                                  <br>
+                                  <div class="col-md-4 col-sm-12">
                                      <fieldset>
                                         <input type="checkbox" name="back_office_permission[edit_general_settings]" class="chk" id="input-16" value="1" <?= isset($back_office_permission->edit_general_settings) && ($back_office_permission->edit_general_settings == 1)?'checked':''?> >
                                         <label for="input-16">
@@ -104,41 +138,31 @@
                                      </fieldset>
                                      <br>
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[manage_billing]" class="chk" id="input-17" value="1" <?= isset($back_office_permission->manage_billing) && ($back_office_permission->manage_billing == 1)?'checked':''?>>
-                                        <label for="input-17">
-                                           <p class="text-bold-600 m-0"><b>Manage billing</b></p>
-                                           <p class="font-small-2 text-muted m-0">Enable to manage billing</p>
+                                        <input type="checkbox" name="back_office_permission[employees]" class="chk" id="input-14" value="1" <?= isset($back_office_permission->employees) && ($back_office_permission->employees == 1)?'checked':''?>  >
+                                        <label for="input-14">
+                                           <p class="text-bold-600 m-0"><b>Manage Employees</b></p>
+                                           <p class="font-small-2 text-muted m-0">Enable to manage Employees</p>
                                         </label>
                                      </fieldset>
                                      <br>
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[stock_transfer]" class="chk" id="input-18" value="1" <?= isset($back_office_permission->stock_transfer) && ($back_office_permission->stock_transfer == 1)?'checked':''?> >
-                                        <label for="input-18">
-                                           <p class="text-bold-600 m-0"><b>Stock Transfer</b></p>
-                                           <p class="font-small-2 text-muted m-0">Perform stock transfer</p>
-                                        </label>
-                                     </fieldset>
-                                  </div>
-                                  <br>
-                                  <div class="col-md-4 col-sm-12">
-                                     <fieldset>
-                                        <input type="checkbox" name="back_office_permission[manage_payment_types]" class="chk" id="input-19" value="1" <?= isset($back_office_permission->manage_payment_types) && ($back_office_permission->manage_payment_types == 1)?'checked':''?>>
+                                        <input type="checkbox" name="back_office_permission[payment_types]" class="chk" id="input-19" value="1" <?= isset($back_office_permission->payment_types) && ($back_office_permission->payment_types == 1)?'checked':''?>>
                                         <label for="input-19">
                                            <p class="text-bold-600 m-0"><b>Manage payment types</b></p>
-                                           <p class="font-small-2 text-muted m-0">Enabletomanage payment types</p>
+                                           <p class="font-small-2 text-muted m-0">Enable to manage payment types</p>
                                         </label>
                                      </fieldset>
                                      <br>
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[manage_loyalty_program]" class="chk" id="input-20" value="1" <?= isset($back_office_permission->manage_loyalty_program) && ($back_office_permission->manage_loyalty_program == 1)?'checked':''?> >
+                                        <input type="checkbox" name="back_office_permission[clear_inventory]" class="chk" id="input-20" value="1" <?= isset($back_office_permission->clear_inventory) && ($back_office_permission->clear_inventory == 1)?'checked':''?> >
                                         <label for="input-20">
-                                           <p class="text-bold-600 m-0"><b>Manage loyalty program</b></p>
-                                           <p class="font-small-2 text-muted m-0">Enable to manage loyalty program</p>
+                                           <p class="text-bold-600 m-0"><b>Clear Stock and Transactions</b></p>
+                                           <p class="font-small-2 text-muted m-0">Enable to clear stock and transactions</p>
                                         </label>
                                      </fieldset>
                                      <br>
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[manage_taxes]" class="chk" id="input-21" value="1" <?= isset($back_office_permission->manage_taxes) && ($back_office_permission->manage_taxes == 1)?'checked':''?>>
+                                        <input type="checkbox" name="back_office_permission[tax]" class="chk" id="input-21" value="1" <?= isset($back_office_permission->tax) && ($back_office_permission->tax == 1)?'checked':''?>>
                                         <label for="input-21">
                                            <p class="text-bold-600 m-0"><b>Manage taxes</b></p>
                                            <p class="font-small-2 text-muted m-0">Enable to manage taxes</p>
@@ -146,39 +170,30 @@
                                      </fieldset>
                                      <br>
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[manage_pos_devices]" class="chk" id="input-22" value="1" <?= isset($back_office_permission->manage_pos_devices) && ($back_office_permission->manage_pos_devices == 1)?'checked':''?> >
-                                        <label for="input-22">
-                                           <p class="text-bold-600 m-0"><b>Manage POS devices</b></p>
-                                           <p class="font-small-2 text-muted m-0">Manage store settings and terminal settings</p>
+                                        <input type="checkbox" name="back_office_permission[location]" class="chk" id="input-21" value="1" <?= isset($back_office_permission->location) && ($back_office_permission->location == 1)?'checked':''?>>
+                                        <label for="input-21">
+                                           <p class="text-bold-600 m-0"><b>Manage Location</b></p>
+                                           <p class="font-small-2 text-muted m-0">Enable to manage location</p>
                                         </label>
                                      </fieldset>
-                                     <br>
+                                     <br/>
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[inventory]" class="chk" id="input-23" value="1" <?= isset($back_office_permission->inventory) && ($back_office_permission->inventory == 1)?'checked':''?> >
+                                        <input type="checkbox" name="back_office_permission[layby]" class="chk" id="input-23" value="1" <?= isset($back_office_permission->layby) && ($back_office_permission->layby == 1)?'checked':''?> >
                                         <label for="input-23">
-                                           <p class="text-bold-600 m-0"><b>Inventory</b></p>
-                                           <p class="font-small-2 text-muted m-0">Perform purchase</p>
+                                           <p class="text-bold-600 m-0"><b>Layby</b></p>
+                                           <p class="font-small-2 text-muted m-0">Enable to manage laybys</p>
                                         </label>
                                      </fieldset>
                                      <br>
                                      <fieldset>
-                                        <input type="checkbox" name="back_office_permission[stock_adjustment]" class="chk" id="input-24" value="1" <?= isset($back_office_permission->stock_adjustment) && ($back_office_permission->stock_adjustment == 1)?'checked':''?> >
-                                        <label for="input-24">
-                                           <p class="text-bold-600 m-0"><b>Stock adjustment</b></p>
-                                           <p class="font-small-2 text-muted m-0">Perform stock adjustment</p>
-                                        </label>
-                                     </fieldset>
-                                     <br>
-                                     <fieldset>
-                                        <input type="checkbox" name="back_office_permission[floor_plan]" class="chk" id="input-25" value="1" <?= isset($back_office_permission->floor_plan) && ($back_office_permission->floor_plan == 1)?'checked':''?> >
-                                        <label for="input-25">
-                                           <p class="text-bold-600 m-0"><b>Floor Plan</b></p>
-                                           <p class="font-small-2 text-muted m-0">To change floor plan</p>
+                                        <input type="checkbox" name="back_office_permission[view_all_reports]" <?= isset($back_office_permission->view_all_reports) && ($back_office_permission->view_all_reports == 1)?'checked':''?> class="chk" id="input-12" value="1" >
+                                        <label for="input-12">
+                                           <p class="text-bold-600 m-0"><b>View All Reports</b></p>
+                                           <p class="font-small-2 text-muted m-0">Permission to view all reports</p>
                                         </label>
                                      </fieldset>
                                   </div>
                                </div>
-                               <br>
                                <div class="row pos">
                                   <div class="col-md-6">
                                      <div class="media mt-1">
@@ -293,6 +308,7 @@
                                      </fieldset>
                                   </div>
                                </div>
+                               <br/>
                                <!-- <div class="row">
                                   <div class="col-md-6">
                                      <div class="media mt-1">
@@ -310,8 +326,8 @@
                                         <input type="checkbox" name="waiter" value="1" data-size="sm" data-color="danger" id="waiter" class="switchery waiter-switchery" <?= isset($value['waiter']) && ($value['waiter'] == 1)?'checked':''?>/>
                                      </div>
                                   </div>
-                               </div>
-                               <br>
+                               </div> -->
+                               <!-- <br>
                                <div class="row icheck_minimal skin">
                                   <div class="col-md-1 col-sm-12">
                                   </div>

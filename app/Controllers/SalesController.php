@@ -39,10 +39,10 @@ class SalesController extends BaseController
         $data['invoice'] = $invoiceModel->GetInvoiceData();
 
         $paymentinvoiceModel = new SalesPaymentModel();
-        $data['payment_invoice'] = $paymentinvoiceModel->select('sales_payment.*,customers.registerd_name,payment_type')->join('customers','sales_payment.customer_id = customers.id','left')->join('payment_type_master','sales_payment.payment_id = payment_type_master.id','left')->orderBy('payment_date','DESC')->findAll();
+        $data['payment_invoice'] = $paymentinvoiceModel->select('sales_payment.*,customers.registerd_name,payment_type')->join('customers','sales_payment.customer_id = customers.id','left')->join('payment_type_master','sales_payment.payment_id = payment_type_master.id','left')->orderBy('payment_date','DESC')->where('customers.pos_id',$sessData['pos_id'])->findAll();
         
         $customerModel = new CustomersModel();
-        $data['customer'] = $customerModel->findAll();
+        $data['customer'] = $customerModel->where('pos_id',$sessData['pos_id'])->findAll();
 
         $data['currency_symbol'] = '';
         if($sessData['store_id'] != '') {
@@ -54,10 +54,10 @@ class SalesController extends BaseController
         }
         
         $storeModel = new StoreModel();
-        if($sessData['role_name'] == 'Staff') {
-            $storeModel->where('id',$sessData['store_id']);
-        } else if($sessData['role_name'] == 'Owner') {
+        if($sessData['role_name'] == "Admin") {
             $storeModel->where('pos_id',$sessData['pos_id']);
+        } else {
+            $storeModel->where('id',$sessData['store_id']);
         }
         $data['stores'] = $storeModel->findAll();
 
@@ -389,7 +389,7 @@ class SalesController extends BaseController
         $data['invoice'] = $invoiceModel->select('sell_orders.*,customers.registerd_name,customers.address,payment_type as p_mode')->join('customers','customers.id = sell_orders.customer_id')->join('payment_type_master','payment_type_master.id = sell_orders.payment_mode')->where("sell_orders.id",$id)->first();
 
         $sellerItemsModel = new SellItemsModel();
-        $data['sell_items'] = $sellerItemsModel->select('sell_items.*, items_master.item_name')->join('items','items.id = sell_items.item_id')->join('items_master','items_master.id = items.item_master_id')->where("s_o_id",$id)->findAll();
+        $data['sell_items'] = $sellerItemsModel->select('sell_items.*, items.item_name')->join('items','items.id = sell_items.item_id')->where("s_o_id",$id)->findAll();
 
         $filename = "INV-000".$data['invoice']['id'].'.pdf';
         $dompdf = new \Dompdf\Dompdf(); 
@@ -1299,8 +1299,8 @@ class SalesController extends BaseController
                 ->orLike('order_number',$filter['search']);
         }
 
-        // $sell->where('invoice_type',1);
-        $sell->orderBy('id','desc');
+        $sell->where('sell_orders.pos_id',$sessData['pos_id']);
+        $sell->orderBy('sell_orders.id','desc');
         $records = $sell->findAll($rowperpage, $start);
         $totalRecordwithFilter = $sellF->countAllResults();
 
@@ -1377,8 +1377,9 @@ class SalesController extends BaseController
                 ->orLike('quote_number',$filter['search']);
           }
          // $purchase->where('order_status',0);
-          
-          $mdl->orderBy('id','desc');
+        $flt->where('quotes.pos_id',$sessData['pos_id']);
+        $mdl->where('quotes.pos_id',$sessData['pos_id']);  
+        $mdl->orderBy('id','desc');
         $records = $mdl->findAll($rowperpage, $start);
         $totalRecordwithFilter = $flt->countAllResults();
 

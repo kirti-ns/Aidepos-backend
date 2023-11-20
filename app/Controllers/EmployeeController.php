@@ -222,6 +222,7 @@ class EmployeeController extends BaseController
     {
        $request = service('request');
        $postData = $request->getPost();
+       $sessData = getSessionData();
        
        $dtpostData = $postData['data'];
        $response = array();
@@ -268,6 +269,7 @@ class EmployeeController extends BaseController
                 $cm->where('employees.status', 0);
             }
         }
+        $cm->where('employees.pos_id',$sessData['pos_id']);
         $cm->orderBy($columnName,$columnSortOrder);
 
         $records = $cm->findAll($rowperpage, $start);

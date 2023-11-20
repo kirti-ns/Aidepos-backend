@@ -42,7 +42,7 @@
                  <div class="form-floating">
                     <?php
                      $quoteNo = isset($data['quote_number'])?$data['quote_number']:'';
-                     $quote_number = 'QOT'.date('ymd').'0000'.$quoteNo; ?>
+                     $quote_number = 'QOT'.date('ymd').'00'.$quoteNo; ?>
                     <input type="text" class="form-control" id="" name="quote_number" placeholder="Quote Number" value="<?= isset($value['id'])?$value['quote_number']:$quote_number;?>">
                     <label for="floatingSelectGrid">Quote Number*</label>
                  </div>

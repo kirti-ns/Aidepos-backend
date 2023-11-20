@@ -46,18 +46,14 @@ class ReportsController extends BaseController
         $sessData = getSessionData();
 
         $store = new StoreModel();
-        if($sessData['role_name'] == "Staff") {
-            $store->where('id',$sessData['store_id']);
-        } else if ($sessData['role_name'] == "Owner") {
-            $store->where('pos_id',$sessData['pos_id']);
-        }
-        $data['store'] = $store->findAll();
+ 
+        $data['store'] = $store->where('pos_id',$sessData['pos_id'])->findAll();
 
         $customer = new CustomersModel();
-        $data['customers'] = $customer->findAll();
+        $data['customers'] = $customer->where('pos_id',$sessData['pos_id'])->findAll();
 
         $category = new CategoryModel();
-        $data['category'] = $category->findAll();
+        $data['category'] = $category->where('pos_id',$sessData['pos_id'])->findAll();
 
         $location = new Location();
         $data['location'] = $location->where('store_id',$sessData['store_id'])->where('status',1)->findAll();
@@ -68,6 +64,9 @@ class ReportsController extends BaseController
             break;
             case 'sales-by-terminal':
                 $page = 'pages/reports/sales-by-terminal';
+            break;
+            case 'sales-by-store':
+                $page = 'pages/reports/sales-by-store';
             break;
             case 'cancelled-invoices':
                 $page = 'pages/reports/cancelled-invoices';
@@ -89,6 +88,12 @@ class ReportsController extends BaseController
             break;
             case 'layby-sales':
                 $page = 'pages/reports/layby-sales';
+            break;
+            case 'transfer-summary':
+                $page = 'pages/reports/transfer-summary';
+            break;
+            case 'transfer-details':
+                $page = 'pages/reports/transfer-details';
             break;
         }
         
@@ -136,8 +141,9 @@ class ReportsController extends BaseController
 
         $flt->join('sell_orders o','sell_items.s_o_id = o.id');
         $flt->join('items i','sell_items.item_id = i.id');
+        $mdl->where('o.pos_id',$sessData['pos_id']);
+        $flt->where('o.pos_id',$sessData['pos_id']);
         $flt->groupBy('sell_items.item_id');
-        // $mdl->where('pos_id',$sessData['pos_id']);
         // $mdl->orderBy('id','desc');
         $records = $mdl->findAll($rowperpage, $start);
         $totalRecords = $mdl->countAllResults();
@@ -175,6 +181,7 @@ class ReportsController extends BaseController
         $columnName = $dtpost['columns'][$columnIndex]['data']; // Column name
         $columnSortOrder = $dtpost['order'][0]['dir']; // asc or desc
         $filter = $post['filter'];
+        $search = $filter['search'];
         $sessData = getSessionData();
 
         $mdl = new SellItemsModel();
@@ -187,6 +194,10 @@ class ReportsController extends BaseController
         if($filter['store_id'] != "") {
             $mdl->where('o.store_id',$filter['store_id']);
             $flt->where('o.store_id',$filter['store_id']);
+        }
+        if(!empty($search)) {
+            $mdl->like('s.store_name',$search)->orLike('i.item_name',$search);
+            $flt->orLike('s.store_name',$search)->orLike('i.item_name',$search);
         }
         if($filter['daterange'] != "") {
             $range = explode('-',$filter['daterange']);
@@ -202,6 +213,7 @@ class ReportsController extends BaseController
         $mdl->join('items i','sell_items.item_id = i.id');
         $mdl->join('terminals t','o.terminal_id = t.id');
         $mdl->join('stores s','o.store_id = s.id');
+        $mdl->where('o.pos_id',$sessData['pos_id']);
         $mdl->groupBy('sell_items.item_id');
         $mdl->groupBy('o.terminal_id');
 
@@ -209,6 +221,7 @@ class ReportsController extends BaseController
         $flt->join('items i','sell_items.item_id = i.id');
         $flt->join('terminals t','o.terminal_id = t.id');
         $flt->join('stores s','o.store_id = s.id');
+        $flt->where('o.pos_id',$sessData['pos_id']);
         $flt->groupBy('sell_items.item_id');
         $mdl->groupBy('o.terminal_id');
         // $mdl->where('pos_id',$sessData['pos_id']);
@@ -226,6 +239,87 @@ class ReportsController extends BaseController
                "item_name"=>$record['item_name'],
                "date"=>$record['invoice_date'],
                "sku"=>$record['sku_barcode'],
+               "qty"=>$record['total_qty'],
+               "amount"=>$record['total_amt']
+            ); 
+        }
+
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data,
+            "token" => csrf_hash() // New token hash
+        );
+
+        return $this->response->setJSON($response);
+    }
+    public function salesByStore()
+    {
+        $post = $this->request->getVar();
+        
+        $dtpost = $post['data'];
+        $draw = $dtpost['draw'];
+        $start = $dtpost['start'];
+        $rowperpage = 10; // Rows display per page
+        $columnIndex = $dtpost['order'][0]['column']; // Column index
+        $columnName = $dtpost['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $dtpost['order'][0]['dir']; // asc or desc
+        $filter = $post['filter'];
+        $search = $filter['search'];
+        $sessData = getSessionData();
+
+        $mdl = new SellItemsModel();
+        $flt = new SellItemsModel();
+        $flt->select('SUM(qty) as total_qty, SUM(rate) as amount, i.sku_barcode, item_id, i.item_name, s.store_name,o.invoice_date');
+
+        $mdl->select('SUM(qty) as total_qty, SUM(sell_items.total_amount) as total_amt, i.sku_barcode, item_id, i.item_name, s.id as storeid,s.store_name,o.invoice_date');
+        
+        if($filter['store_id'] != "") {
+            $mdl->where('o.store_id',$filter['store_id']);
+            $flt->where('o.store_id',$filter['store_id']);
+        }
+        if(!empty($search)) {
+            $mdl->like('s.store_name',$search)->orLike('i.item_name',$search);
+            $flt->orLike('s.store_name',$search)->orLike('i.item_name',$search);
+        }
+        if($filter['daterange'] != "") {
+            $range = explode('-',$filter['daterange']);
+            $startDt = date('Y-m-d',strtotime($range[0]));
+            $endDt = date('Y-m-d',strtotime($range[1]));
+
+            $mdl->where('o.invoice_date >=',$startDt);
+            $mdl->where('o.invoice_date <=',$endDt);
+            $flt->where('o.invoice_date >=',$startDt);
+            $flt->where('o.invoice_date <=',$endDt);
+        }
+        $mdl->join('sell_orders o','sell_items.s_o_id = o.id');
+        $mdl->join('items i','sell_items.item_id = i.id');
+        $mdl->join('stores s','o.store_id = s.id');
+        $mdl->groupBy('sell_items.item_id');
+        $mdl->groupBy('o.store_id');
+        $mdl->where('o.pos_id',$sessData['pos_id']);
+
+        $flt->join('sell_orders o','sell_items.s_o_id = o.id');
+        $flt->join('items i','sell_items.item_id = i.id');
+        $flt->join('stores s','o.store_id = s.id');
+        $flt->groupBy('sell_items.item_id');
+        $flt->groupBy('o.store_id');
+        $flt->where('o.pos_id',$sessData['pos_id']);
+
+        $records = $mdl->findAll($rowperpage, $start);
+
+        $totalRecords = $mdl->countAllResults();
+        $totalRecordwithFilter = $flt->countAllResults();
+
+        $data = array();
+        foreach($records as $record ){
+            $data[] = array(
+               "store_id"=>$record['storeid'],
+               "store_name"=>$record['store_name'],
+               "item_name"=>$record['item_name'],
+               "sku"=>$record['sku_barcode'],
+               "date"=>$record['invoice_date'],
                "qty"=>$record['total_qty'],
                "amount"=>$record['total_amt']
             ); 
@@ -365,11 +459,13 @@ class ReportsController extends BaseController
                 ->orLike('items.item_name',$filter['search']);
         }
         $mdl->where('current_inventory.quantity >',0);
+        $mdl->where('current_inventory.pos_id',$sessData['pos_id']);
         $mdl->groupBy('current_inventory.item_id');
         $mdl->groupBy('current_inventory.store_id');
         $mdl->orderBy('current_inventory.id','desc');
         $records = $mdl->findAll($rowperpage, $start);
         
+        $flt->where('current_inventory.pos_id',$sessData['pos_id']);
         $flt->where('current_inventory.quantity >',0);
         $flt->groupBy('current_inventory.item_id');
         $flt->groupBy('current_inventory.store_id');
@@ -682,6 +778,157 @@ class ReportsController extends BaseController
 
         return $this->response->setJSON($response);
     }
+    public function transferSummary()
+    {
+        $post = $this->request->getVar();
+        
+        $dtpost = $post['data'];
+        $draw = $dtpost['draw'];
+        $start = $dtpost['start'];
+        $rowperpage = 10; // Rows display per page
+        $columnIndex = $dtpost['order'][0]['column']; // Column index
+        $columnName = $dtpost['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $dtpost['order'][0]['dir']; // asc or desc
+        $filter = $post['filter'];
+        $sessData = getSessionData();
+
+        $mdl = new TransferModel();
+        $flt = new TransferModel();
+        $flt->select('id');
+
+        $mdl->select('transfer.*, s.store_name as supply_store,r.store_name as receive_store');
+
+        if($filter['supply_store_id'] != "") {
+            $mdl->where('transfer.supply_store_id',$filter['supply_store_id']);
+            $flt->where('transfer.supply_store_id',$filter['supply_store_id']);
+        }
+        if($filter['receiver_store_id'] != "") {
+            $mdl->where('transfer.receiver_store_id',$filter['receiver_store_id']);
+            $flt->where('transfer.receiver_store_id',$filter['receiver_store_id']);
+        }
+        if($filter['status'] != "") {
+            $mdl->where('transfer.status',$filter['status']);
+            $flt->where('transfer.status',$filter['status']);
+        }
+        if($filter['daterange'] != "") {
+            $range = explode('-',$filter['daterange']);
+            $startDt = date('Y-m-d',strtotime($range[0]));
+            $endDt = date('Y-m-d',strtotime($range[1]));
+
+            $mdl->where('date >=',$startDt);
+            $mdl->where('date <=',$endDt);
+            $flt->where('date >=',$startDt);
+            $flt->where('date <=',$endDt);
+        }
+        $mdl->join('stores s','transfer.supply_store_id = s.id')
+            ->join('stores r','transfer.receiver_store_id = r.id');
+        $mdl->where('transfer.pos_id',$sessData['pos_id']);
+
+        $flt->join('stores s','transfer.supply_store_id = s.id')
+            ->join('stores r','transfer.receiver_store_id = r.id');
+        $flt->where('transfer.pos_id',$sessData['pos_id']);
+
+        $records = $mdl->findAll($rowperpage, $start);
+
+        $data = [];
+        foreach ($records as $key => $value) {
+            $list['id'] = $value['id'];
+            $list['supply_store'] = $value['supply_store'];
+            $list['receive_store'] = $value['receive_store'];
+            $item = new TransferItemsModel();
+            $totalQty = $item->select('SUM(quantity) as qty, SUM(received_quantity) as rec_qty')->where('transfer_id',$value['id'])->first();
+            $list['qty'] = $totalQty['qty'];
+            $list['received_qty'] = $totalQty['rec_qty'];
+            $list['date'] = $value['date'];
+            $list['status'] = $value['status'];
+            $data[] = $list;
+        }
+        $totalRecords = $mdl->countAllResults();
+        $totalRecordwithFilter = $flt->countAllResults();
+        
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data,
+            "token" => csrf_hash() // New token hash
+        );
+
+        return $this->response->setJSON($response);
+    }
+    public function transferDetails()
+    {
+        $post = $this->request->getVar();
+        
+        $dtpost = $post['data'];
+        $draw = $dtpost['draw'];
+        $start = $dtpost['start'];
+        $rowperpage = 10; // Rows display per page
+        $columnIndex = $dtpost['order'][0]['column']; // Column index
+        $columnName = $dtpost['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $dtpost['order'][0]['dir']; // asc or desc
+        $filter = $post['filter'];
+        $sessData = getSessionData();
+
+        $mdl = new TransferModel();
+        $flt = new TransferModel();
+        $flt->select('id');
+
+        $mdl->select('transfer.*, s.store_name as supply_store,r.store_name as receive_store,sl.location_description as supply_location,rl.location_description as rec_location, items.item_name, items.sku_barcode, transfer_items.cost_price,transfer_items.quantity,transfer_items.received_quantity');
+
+        if($filter['supply_store_id'] != "") {
+            $mdl->where('transfer.supply_store_id',$filter['supply_store_id']);
+            $flt->where('transfer.supply_store_id',$filter['supply_store_id']);
+        }
+        if($filter['receiver_store_id'] != "") {
+            $mdl->where('transfer.receiver_store_id',$filter['receiver_store_id']);
+            $flt->where('transfer.receiver_store_id',$filter['receiver_store_id']);
+        }
+        if($filter['status'] != "") {
+            $mdl->where('transfer.status',$filter['status']);
+            $flt->where('transfer.status',$filter['status']);
+        }
+
+        if($filter['daterange'] != "") {
+            $range = explode('-',$filter['daterange']);
+            $startDt = date('Y-m-d',strtotime($range[0]));
+            $endDt = date('Y-m-d',strtotime($range[1]));
+
+            $mdl->where('transfer.date >=',$startDt);
+            $mdl->where('transfer.date <=',$endDt);
+            $flt->where('transfer.date >=',$startDt);
+            $flt->where('transfer.date <=',$endDt);
+        }
+        $mdl->join('transfer_items','transfer.id = transfer_items.transfer_id')
+            ->join('items','transfer_items.item_id = items.id')
+            ->join('stores s','transfer.supply_store_id = s.id')
+            ->join('stores r','transfer.receiver_store_id = r.id')
+            ->join('location sl','transfer.location_id = sl.id')
+            ->join('location rl','transfer.receive_location_id = rl.id');
+        $mdl->where('transfer.pos_id',$sessData['pos_id']);
+
+        $flt->join('transfer_items','transfer.id = transfer_items.transfer_id')
+            ->join('items','transfer_items.item_id = items.id')
+            ->join('stores s','transfer.supply_store_id = s.id')
+            ->join('stores r','transfer.receiver_store_id = r.id')
+            ->join('location sl','transfer.location_id = sl.id')
+            ->join('location rl','transfer.receive_location_id = rl.id');
+        $flt->where('transfer.pos_id',$sessData['pos_id']);
+
+        $records = $mdl->findAll($rowperpage, $start);
+        $totalRecords = $mdl->countAllResults();
+        $totalRecordwithFilter = $flt->countAllResults();
+        
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $records,
+            "token" => csrf_hash() // New token hash
+        );
+
+        return $this->response->setJSON($response);
+    }
     public function cancelledInvoice()
     {
         $post = $this->request->getVar();
@@ -754,6 +1001,7 @@ class ReportsController extends BaseController
     public function printReport()
     {
         $type = $_GET['type'];
+        $fileType = $_GET['file-type'];
         $filter = json_decode($_GET['filter']);
 
         $data = [];
@@ -761,7 +1009,7 @@ class ReportsController extends BaseController
         $data['report_data'] = array();
         $page = 'report-html-to-pdf';
         $sessData = getSessionData();
-        $filename = 'Report.pdf';
+        $filename = 'Report';
         $data['date'] = "";
         if(isset($filter->daterange)) {
             $range = explode('-',$filter->daterange);
@@ -773,7 +1021,8 @@ class ReportsController extends BaseController
         switch($type) {
             case 'sales-by-item':
                 $data['heading'] = 'Sales By Item';
-                $filename = 'sales_by_item.pdf';
+                $filename = 'sales_by_item';
+                $data['header'] = ['Item Name','SKU','Quantity sold','Amount'];
 
                 $mdl = new SellItemsModel();
                 $mdl->select('SUM(qty) as total_qty, SUM(sell_items.total_amount) as total_amt, i.sku_barcode, item_id, i.item_name');
@@ -790,9 +1039,6 @@ class ReportsController extends BaseController
                 $mdl->groupBy('sell_items.item_id');
 
                 $records = $mdl->findAll();
-                $data['header'] = [
-                    'Item Name', 'SKU', 'Quantity Sold', 'Amount'
-                ];
 
                 foreach($records as $record ){
                     $data['report_data'][] = [
@@ -803,10 +1049,47 @@ class ReportsController extends BaseController
                     ]; 
                 }
             break;
+            case 'sales-by-store':
+                $page = 'sales-by-store';
+                $data['heading'] = 'Sales By Store';
+                $filename = 'sales_by_store';
+                $data['header'] = ['Store ID','Store Name','Item Name','SKU','Date','Quantity Sold','Amount'];
+
+                $mdl = new SellItemsModel();
+                $mdl->select('SUM(qty) as total_qty, SUM(sell_items.total_amount) as total_amt, i.sku_barcode, item_id, i.item_name, o.invoice_date, s.store_name, s.id as storeid');
+                
+                if($filter->store_id != "") {
+                    $mdl->where('o.store_id',$filter->store_id);
+                }
+                if($filter->daterange != "") {
+                    $mdl->where('o.invoice_date >=',$startDt);
+                    $mdl->where('o.invoice_date <=',$endDt);
+                }
+                $mdl->join('sell_orders o','sell_items.s_o_id = o.id');
+                $mdl->join('items i','sell_items.item_id = i.id');
+                $mdl->join('stores s','o.store_id = s.id');
+                $mdl->groupBy('sell_items.item_id');
+                $mdl->groupBy('o.store_id');
+
+                $records = $mdl->findAll();
+
+                foreach($records as $record ){
+                    $data['report_data'][] = array(
+                       "store_id"=>$record['storeid'],
+                       "store_name"=>$record['store_name'],
+                       "item_name"=>$record['item_name'],
+                       "sku"=>$record['sku_barcode'],
+                       "date"=>$record['invoice_date'],
+                       "qty"=>$record['total_qty'],
+                       "amount"=>$record['total_amt']
+                    ); 
+                }
+            break;
             case 'sales-by-terminal':
                 $page = 'sales-by-terminal';
                 $data['heading'] = 'Sales By Terminal';
-                $filename = 'sales_by_terminal.pdf';
+                $filename = 'sales_by_terminal';
+                $data['header'] = ['Store','Terminal','Item Code','Item Name','SKU','Date','Quantity Sold','Amount'];
 
                 $mdl = new SellItemsModel();
                 $mdl->select('SUM(qty) as total_qty, SUM(sell_items.total_amount) as total_amt, i.sku_barcode, item_id, i.item_name, t.terminal_name,o.invoice_date, s.store_name');
@@ -823,8 +1106,6 @@ class ReportsController extends BaseController
                 $mdl->join('terminals t','o.terminal_id = t.id');
                 $mdl->join('stores s','o.store_id = s.id');
                 $mdl->groupBy('sell_items.item_id');
-                $mdl->groupBy('o.terminal_id');
-
                 $mdl->groupBy('o.terminal_id');
                 $records = $mdl->findAll();
 
@@ -844,7 +1125,8 @@ class ReportsController extends BaseController
             case 'credit-notes':
                 $page = 'credit-notes';
                 $data['heading'] = 'Credit Notes';
-                $filename = 'credit_notes.pdf';
+                $filename = 'credit_notes';
+                $data['header'] = ["Credit Note","Date","Customer Name","Amount","Balance"];
 
                 $mdl = new CreditNote();
                 $mdl->select('credit_notes.*, customers.registerd_name');
@@ -877,7 +1159,8 @@ class ReportsController extends BaseController
             case 'stock-on-hand':
                 $page = 'stock-on-hand';
                 $data['heading'] = 'Stock On Hand';
-                $filename = 'stock_on_hand.pdf';
+                $filename = 'stock_on_hand';
+                $data['header'] = ['Store','Location','SKU','Item Name','Category','Brand','Rate','UOM','Stock','Stock Value'];
 
                 $mdl = new CurrentInventory();
                 $mdl->select('current_inventory.id,current_inventory.quantity, items.id as item_code,items.item_name,items.sku_barcode,c.category_name,b.brand_name,p.retail_price,stores.store_name,uom_master.uom,l.location_description');
@@ -911,25 +1194,26 @@ class ReportsController extends BaseController
                 foreach($records as $record ){
 
                     $data['report_data'][] = [ 
-                       "id"=>$record['id'],
+                       // "id"=>$record['id'],
                        "store_name"=>$record['store_name'],
                        "location"=>$record['location_description'],
-                       "item_code"=>$record['item_code'],
+                       // "item_code"=>$record['item_code'],
+                       "sku"=>$record['sku_barcode'],
                        "item_name"=>$record['item_name'],
                        "category_name"=>$record['category_name'],
                        "brand_name"=>$record['brand_name'],
-                       "sku"=>$record['sku_barcode'],
-                       "current_inventory"=>$record['quantity'],
-                       "unit"=>$record['uom'],
-                       "inventory_amount"=>$record['quantity']*$record['retail_price'],
                        "cost_price"=>$record['retail_price'],
+                       "unit"=>$record['uom'],
+                       "current_inventory"=>$record['quantity'],
+                       "inventory_amount"=>$record['quantity']*$record['retail_price'],
                     ]; 
                 }
             break;
             case 'stock-price':
                 $page = 'stock-price';
                 $data['heading'] = 'Stock Price';
-                $filename = 'stock_price.pdf';
+                $filename = 'stock_price';
+                $data['header'] = ['Store','SKU','Item Name','Category','Supply Price','Retail Price','Stock Qty','Stock Value'];
 
                 $mdl = new ItemModel();
                 $mdl->select('items.id, items.item_name,items.sku_barcode,c.category_name,p.supply_price,p.retail_price,p.current_inventory, p.inventory_value,stores.store_name');
@@ -949,12 +1233,25 @@ class ReportsController extends BaseController
                 }
                 $mdl->where('items.pos_id',$sessData['pos_id']);
                 $records = $mdl->findAll();
-                $data['report_data'] = $records;
+                foreach($records as $record ){
+
+                    $data['report_data'][] = [ 
+                       "store_name"=>$record['store_name'],
+                       "sku_barcode"=>$record['sku_barcode'],
+                       "item_name"=>$record['item_name'],
+                       "category_name"=>$record['category_name'],
+                       "supply_price"=>$record['supply_price']?$record['supply_price']:'',
+                       "retail_price"=>$record['retail_price']?$record['retail_price']:'',
+                       "current_inventory"=>$record['current_inventory'],
+                       "inventory_value"=>$record['inventory_value'],
+                    ]; 
+                }
             break;
             case 'stock-valuation':
                 $page = 'stock-valuation';
                 $data['heading'] = 'Stock Valuation';
-                $filename = 'stock_valuation.pdf';
+                $filename = 'stock_valuation';
+                $data['header'] = ['Store','Item Name','SKU','Unit','Stock On Hand','Inventory Asset Value'];
 
                 $mdl = new ItemModel();
                 $mdl->select('items.id, items.item_name,items.sku_barcode,u.uom,p.supply_price,p.retail_price,p.current_inventory, p.inventory_value,stores.store_name');
@@ -971,12 +1268,23 @@ class ReportsController extends BaseController
                 }
                 $mdl->where('items.pos_id',$sessData['pos_id']);
                 $records = $mdl->findAll();
-                $data['report_data'] = $records;
+                foreach($records as $record ){
+
+                    $data['report_data'][] = [ 
+                       "store_name"=>$record['store_name'],
+                       "item_name"=>$record['item_name'],
+                       "sku_barcode"=>$record['sku_barcode'],
+                       "uom"=>$record['uom'],
+                       "current_inventory"=>$record['current_inventory'],
+                       "inventory_value"=>$record['inventory_value'],
+                    ]; 
+                }
             break;
             case 'stock-take-with-qty':
                 $page = 'stock-take-with-qty';
                 $data['heading'] = 'Stock Take With Quantity';
-                $filename = 'stock_take_with_qty.pdf';
+                $filename = 'stock_take_with_qty';
+                $data['header'] = ['Store','Location','Date','SKU','Item Name','Category','Rate','Opening','Received','Returned','Sold','Adjustment','Transfer','Production','Closing'];
 
                 $mdl = new StoreItemsModel();
                 $mdl->select('store_items.*,items.item_name,items.sku_barcode,c.category_name,p.retail_price,stores.store_name,l.location_description as location');
@@ -1010,12 +1318,32 @@ class ReportsController extends BaseController
                 $mdl->where('store_items.pos_id',$sessData['pos_id']);
                 $mdl->orderBy('store_items.id','desc');
                 $records = $mdl->findAll();
-                $data['report_data'] = $records;
+                foreach($records as $record ){
+
+                    $data['report_data'][] = [ 
+                       "store_name"=>$record['store_name'],
+                       "location"=>$record['location'],
+                       "created_at"=>date('Y-m-d',strtotime($record['location'])),
+                       "sku_barcode"=>$record['sku_barcode'],
+                       "item_name"=>$record['item_name'],
+                       "category_name"=>$record['category_name'],
+                       "retail_price"=>$record['retail_price'],
+                       "open_qty"=>$record['open_qty'],
+                       "received_qty"=>$record['received_qty'],
+                       "return_qty"=>$record['return_qty'],
+                       "adjustment_qty"=>$record['adjustment_qty'],
+                       "production_qty"=>$record['production_qty'],
+                       "transfer_qty"=>$record['transfer_qty'],
+                       "sold_qty"=>$record['sold_qty'],
+                       "close_qty"=>$record['close_qty'],
+                    ]; 
+                }
             break;
             case 'layby-sales':
                 $page = 'layby-sales';
                 $data['heading'] = 'Layby Sales';
-                $filename = 'layby_sales.pdf';
+                $filename = 'layby_sales';
+                $data['header'] = ['Contract','Store','Customer Name','Amount','Balance','Paid Amount','Date Last Paid','Due Date','Status'];
 
                 $mdl = new ContractModel();
                 $mdl->select('layby_contract.*, customers.registerd_name, stores.store_name');
@@ -1048,14 +1376,145 @@ class ReportsController extends BaseController
                 $laybydata = $thisModel->laybyReports($records);
                 $data['report_data'] = $laybydata;
             break;
+            case 'transfer-summary':
+                $page = 'transfer-summary';
+                $data['heading'] = 'Transfer Summary';
+                $filename = 'transfer_summary';
+                $data['header'] = ['Transfer Number','Supply Store','Receive Store','Total Item Qty','Total Received Qty','Date','Status'];
+
+                $mdl = new TransferModel();
+
+                $mdl->select('transfer.*, s.store_name as supply_store,r.store_name as receive_store');
+
+                if($filter->supply_store_id != "") {
+                    $mdl->where('transfer.supply_store_id',$filter->supply_store_id);
+                }
+                if($filter->receiver_store_id != "") {
+                    $mdl->where('transfer.receiver_store_id',$filter->receiver_store_id);
+                }
+                if($filter->status != "") {
+                    $mdl->where('transfer.status',$filter->status);
+                }
+                if($filter->daterange != "") {
+                    $range = explode('-',$filter->daterange);
+                    $startDt = date('Y-m-d',strtotime($range[0]));
+                    $endDt = date('Y-m-d',strtotime($range[1]));
+
+                    $mdl->where('date >=',$startDt);
+                    $mdl->where('date <=',$endDt);
+                }
+                $mdl->join('stores s','transfer.supply_store_id = s.id')
+                    ->join('stores r','transfer.receiver_store_id = r.id');
+                $mdl->where('transfer.pos_id',$sessData['pos_id']);
+
+                $records = $mdl->findAll();
+
+                $tdata = [];
+                foreach ($records as $key => $value) {
+                    $list['id'] = 'TO-000'.$value['id'];
+                    $list['supply_store'] = $value['supply_store'];
+                    $list['receive_store'] = $value['receive_store'];
+                    $item = new TransferItemsModel();
+                    $totalQty = $item->select('SUM(quantity) as qty, SUM(received_quantity) as rec_qty')->where('transfer_id',$value['id'])->first();
+                    $list['qty'] = $totalQty['qty'];
+                    $list['received_qty'] = $totalQty['rec_qty'];
+                    $list['date'] = $value['date'];
+                    $status = "Pending";
+                    if($value['status'] == "1") {
+                        $status = "Approved";
+                    }elseif($value['status'] == "2") {
+                        $status = "Cancelled";
+                    }
+                    $list['status'] = $status;
+                    $tdata[] = $list;
+                }
+
+                $data['report_data'] = $tdata;
+            break;
+            case 'transfer-details':
+                $page = 'transfer-details';
+                $data['heading'] = 'Transfer Details';
+                $filename = 'transfer_details';
+                $data['header'] = ['Transfer No','Supply Store','Supply Location','Receiver Store','Receiver Location','Item Name','SKU','Cost','Total Item Qty','Total Received Qty','Date','Status'];
+
+                $mdl = new TransferModel();
+
+                $mdl->select('transfer.*, s.store_name as supply_store,r.store_name as receive_store,sl.location_description as supply_location,rl.location_description as rec_location, items.item_name, items.sku_barcode, transfer_items.cost_price,transfer_items.quantity,transfer_items.received_quantity');
+
+                if($filter->supply_store_id != "") {
+                    $mdl->where('transfer.supply_store_id',$filter->supply_store_id);
+                }
+                if($filter->receiver_store_id != "") {
+                    $mdl->where('transfer.receiver_store_id',$filter->receiver_store_id);
+                }
+                if($filter->status != "") {
+                    $mdl->where('transfer.status',$filter->status);
+                }
+
+                if($filter->daterange != "") {
+                    $range = explode('-',$filter->daterange);
+                    $startDt = date('Y-m-d',strtotime($range[0]));
+                    $endDt = date('Y-m-d',strtotime($range[1]));
+
+                    $mdl->where('transfer.date >=',$startDt);
+                    $mdl->where('transfer.date <=',$endDt);
+                }
+                $mdl->join('transfer_items','transfer.id = transfer_items.transfer_id')
+                    ->join('items','transfer_items.item_id = items.id')
+                    ->join('stores s','transfer.supply_store_id = s.id')
+                    ->join('stores r','transfer.receiver_store_id = r.id')
+                    ->join('location sl','transfer.location_id = sl.id')
+                    ->join('location rl','transfer.receive_location_id = rl.id');
+                $mdl->where('transfer.pos_id',$sessData['pos_id']);
+
+                $records = $mdl->findAll();
+                $tdata = [];
+                foreach ($records as $key => $value) {
+                    $list['id'] = 'TO-000'.$value['id'];
+                    $list['supply_store'] = $value['supply_store'];
+                    $list['supply_location'] = $value['supply_location'];
+                    $list['receive_store'] = $value['receive_store'];
+                    $list['rec_location'] = $value['rec_location'];
+                    $list['item_name'] = $value['item_name'];
+                    $list['sku_barcode'] = $value['sku_barcode'];
+                    $list['cost_price'] = $value['cost_price'];
+                    $list['quantity'] = $value['quantity'];
+                    $list['received_quantity'] = $value['received_quantity'];
+                    $list['date'] = $value['date'];
+                    $status = "Pending";
+                    if($value['status'] == "1") {
+                        $status = "Approved";
+                    }elseif($value['status'] == "2") {
+                        $status = "Cancelled";
+                    }
+                    $list['status'] = $status;
+                    $tdata[] = $list;
+                }
+
+                $data['report_data'] = $tdata;
+            break;
         }
 
-        $dompdf = new \Dompdf\Dompdf(); 
-        $dompdf->loadHtml(view('pages/reports-pdf/'.$page, $data));
-        $dompdf->setPaper('A4', 'landscape');
-        $dompdf->set_option('isFontSubsettingEnabled', true);
-        $dompdf->set_option('isPhpEnabled', true);
-        $dompdf->render();
-        $dompdf->stream($filename);
+        $view = 'pages/reports-pdf/'.$page;
+        if($fileType == "pdf") {
+            $filename.='.pdf';
+            exportToPDF($view,$data,$filename);
+        } else if($fileType == "csv") {
+            $filename.='.csv';
+            $res = [
+                'status'=>'success',
+                'filename'=>$filename,
+                'data'=>$data
+            ];
+            return $this->response->setJSON($res);
+        } else if($fileType == "xlsx") {
+            $filename.='.xlsx';
+            $res = [
+                'status'=>'success',
+                'filename'=>$filename,
+                'data'=>$data
+            ];
+            return $this->response->setJSON($res);
+        }
     } 
 }

@@ -211,23 +211,16 @@
          // Specify validation rules
          rules: {
             store_id: "required",
-            tax_id: "required",
             currency_id: "required",
             opening_hour: "required",
-            closing_hour: "required",
-            rounding_to: "required",
-            middle_point: "required",
-            general_features: "required",
+            closing_hour: "required"
          },
          // Specify validation error messages
          messages: {
-            tax_id: "Please select tax type",
-            currency_id: "Please select currency name",
+            store_id: "Please select store",
+            currency_id: "Please select currency",
             opening_hour: "Please enter opening hours",
-            closing_hour: "Please enter closing hours",
-            rounding_to: "Please enter rounding no",
-            middle_point: "Please enter middle point no",
-            general_features: "Please select features",
+            closing_hour: "Please enter closing hours"
          },
          errorElement: "div",
          errorPlacement: function (error, element) {
@@ -1339,42 +1332,20 @@
          // Specify validation rules
          rules: {
             item_name: "required",
-            sku_barcode: "required",
-            supply_price: "required",
-            markup: "required",
-            retail_price: "required",
-            minimum_retail_price: "required",
-            current_invetory: "required",
-            inventory_value: "required",
-            re_order_point: "required",
             category_id: "required",
-            // subcategory_id: "required",
             uom_id: "required",
             tax_id: "required",
             purchase_tax_id: "required",
-            // brand_id: "required",
             modifier_id: "required",
-            // item_description: "required",
          },
 
          messages: {
             item_name: "Please enter item name",
-            sku_barcode: "Please enter barcode",
-            supply_price: "Please enter name",
-            markup: "Please enter name",
-            retail_price: "Please enter name",
-            minimum_retail_price: "Please enter name",
-            current_invetory: "Please enter name",
-            inventory_value: "Please enter name",
-            re_order_point: "Please enter name",
-            category_id: "Please enter name",
-            // subcategory_id: "Please enter name",
-            uom_id: "Please enter name",
-            tax_id: "Please enter name",
-            purchase_tax_id: "Please enter name",
-            // brand_id: "Please enter name",
-            modifier_id: "Please enter name",
-            // item_description: "Please enter name",
+            category_id: "Please select category",
+            uom_id: "Please select uom",
+            tax_id: "Please select tax",
+            purchase_tax_id: "Please select purchase tax",
+            modifier_id: "Please select modifier",
          },
          errorElement: "div",
          errorPlacement: function (error, element) {
@@ -1524,7 +1495,7 @@
             //$("#btnSubmit").attr("disabled", true);
             var form_url = base_url + '/' + $("#action").val();
             var formData = $('#payment_form').serialize();
-            console.log(formData);
+
             $.ajax({
                type: "POST",
                url: form_url,
@@ -2358,12 +2329,12 @@ function form_submit(formid, event,type=0) {
             }
             break;
          case 'forgot_password_form':
+         break;
          case 'reset_password_form':
             if (data.status == 'true') {
                window.location.href = base_url + "/login";
             }
             break;
-            /*priyanka Start*/
          case 'model_gift_card_form':
             if(data.status == 'true') {
                $('#batch_id').append(data.data);
@@ -2522,13 +2493,12 @@ function form_submit(formid, event,type=0) {
             }
          break;
          case 'payment_form':
-          if (data.status == 'true') {
-            window.location.href = base_url + "/settings#payment";
+            if (data.status == 'true') {
+               window.location.href = base_url + "/settings#payment";
             }
             break;
          case 'terminal_form':
             if (data.status == 'true') {
-               console.log(data.status);
                window.location.href = base_url + "/settings#terminals";
             }
             break;
@@ -2536,6 +2506,7 @@ function form_submit(formid, event,type=0) {
              if (data.status == 'true') {
                window.location.href = base_url + "/settings#currency";
             }
+            break;
          case 'role_form':
              if (data.status == 'true') {
                window.location.href = base_url + "/settings#roles";
@@ -2560,7 +2531,7 @@ function form_submit(formid, event,type=0) {
             break;
          case 'variant_master_form':
             if (data.status == 'true') {
-               window.location.href = base_url + "/items#variants";
+               window.location.reload();
             }
             break;
          case 'location_master_form':
@@ -2621,7 +2592,6 @@ function form_submit(formid, event,type=0) {
                window.location.href = base_url + "/items#subcategory";
             }
          break;
-            /*priyanka End*/
       }
    });
 

@@ -269,9 +269,9 @@ td{
 .td-cancelled ,.td-rejected{
     color: rgba(255, 69, 69, 1);
 }
-.dropdown-toggle::after{
+/*.dropdown-toggle::after{
     padding: 0px 0px 0px 0px !important;
-}
+}*/
 .form-group input {
   padding: 0;
   height: initial;

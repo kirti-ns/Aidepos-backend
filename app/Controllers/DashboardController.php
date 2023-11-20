@@ -42,11 +42,12 @@ class DashboardController extends BaseController
 
         $sessData = getSessionData();
         $store_id = '';
-        $pos_id = '';
-        if($sessData['role_name'] == "Staff") {
-            $store_id = $sessData['store_id'];
-        }else if($sessData['role_name'] == "Owner") {
+        $pos_id = $sessData['pos_id'];
+
+        if($sessData['role_name'] == "Admin") {
             $pos_id = $sessData['pos_id'];
+        } else {
+            $store_id = $sessData['store_id'];
         }
         
         $sellOrderModel = new SellordersModel();
@@ -57,14 +58,14 @@ class DashboardController extends BaseController
         $data['last_month'] = $sellOrderModel->today_sale(4,$store_id,$pos_id);
         
         $itemModel = new ItemModel();
-        $data['total_items'] = $itemModel->countAllResults();
-        $data['active_items'] = $itemModel->where('status',1)->countAllResults();
-        $data['inactive_items'] = $itemModel->where('status',0)->countAllResults();
+        $data['total_items'] = $itemModel->where('pos_id',$pos_id)->countAllResults();
+        $data['active_items'] = $itemModel->where('pos_id',$pos_id)->where('status',1)->countAllResults();
+        $data['inactive_items'] = $itemModel->where('pos_id',$pos_id)->where('status',0)->countAllResults();
 
         $categoryModel = new CategoryModel();
-        $data['total_categories'] = $categoryModel->where('status',1)->countAllResults();
+        $data['total_categories'] = $categoryModel->where('pos_id',$pos_id)->where('status',1)->countAllResults();
         $brandModel = new BrandMasterModel();
-        $data['total_brands'] = $brandModel->where('status',1)->countAllResults();
+        $data['total_brands'] = $brandModel->where('pos_id',$pos_id)->where('status',1)->countAllResults();
         
         $data['top_items'] = [];
         for($i = 1; $i <=  date('t'); $i++)
@@ -74,7 +75,6 @@ class DashboardController extends BaseController
         $date = date('Y-m-01'); // first day of current month
         $month = date('m');
         $sales = $sellOrderModel->getSalesByMonths($month);
-        //p($sales);
          $sale = array();
          foreach($dates_array as $key=>$row){
             $sale[$key]['date'] = $row;
@@ -114,7 +114,7 @@ class DashboardController extends BaseController
         $month = date('m');
         $data['top_items'] = [];
         $sellItemsModel = new SellItemsModel();
-        $sales_items = $sellItemsModel->getSaleItemsByMonths($month,$pos_id);
+        $sales_items = $sellItemsModel->getSaleItemsByMonths($month,$sessData['pos_id']);
         $top_items = $top_items_total = [];
         foreach($sales_items as $row){
             $top_items[] = $row['item_name'];
@@ -123,13 +123,13 @@ class DashboardController extends BaseController
        
         $data['top_items']['top_items'] = json_encode($top_items);
         $data['top_items']['top_items_total'] = json_encode($top_items_total);
-        
+
         $sellOrderModel = new SellordersModel();
         $date = date('Y-m-01'); 
         $month = date('m');
-        $data['sale'] = $sellOrderModel->getStoresByMonth($month);
+        $data['sale'] = $sellOrderModel->getStoresByMonth($month,$sessData['pos_id']);
         
-        $data['daily_sales'] = $sellOrderModel->getDailyTerminalSalesData();
+        $data['daily_sales'] = $sellOrderModel->getDailyTerminalSalesData($sessData['pos_id']);
         
         $data['current_year'] = $sellOrderModel->getTotalSalesByMonths($month);
         $data['previous_year'] = $sellOrderModel->getTotalSalesByMonths($previouse_month);
@@ -137,30 +137,4 @@ class DashboardController extends BaseController
         return $this->template->render('index',$data);
     }
     
-    public function StoreBasedSalesData()
-    {
-        $data = [];
-        $data['title'] = 'Dashboard'; 
-        $data['main_menu'] = ''; 
-        $data['main_menu_url'] = '';
-
-        $sellOrderModel = new SellordersModel();
-        $date = date('Y-m-01'); 
-        $month = date('m');
-        $data['sales'] = $sellOrderModel->getStoresByMonth($month);
-        return $this->template->render('store_based_monthly',$data);
-    }
-    
-    public function DailyTerminalBasedSalesData()
-    {
-        $data = [];
-        $data['title'] = 'Dashboard'; 
-        $data['main_menu'] = ''; 
-        $data['main_menu_url'] = '';
-
-        $sellOrderModel = new SellordersModel();
-        $data['daily_sales'] = $sellOrderModel->getDailyTerminalSalesData();
-
-        return $this->template->render('daily_terminal_based_sales',$data);
-    }
 }

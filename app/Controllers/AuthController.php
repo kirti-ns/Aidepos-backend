@@ -35,12 +35,10 @@ class AuthController extends BaseController
                 $employeeModel = new EmployeeModel();
                 $email = $post['email'];
                 $password = $post['password'];
-                $role_id = $post['role_id'];
                 $rememberme = isset($post['remember_me'])?$post['remember_me']:"";
                 
                 $data = $employeeModel->where('primary_email', $email)->first();
 
-                
                 if($data){
                     $db = db_connect();
                     $commonModel = new CommonModel($db);
@@ -49,10 +47,10 @@ class AuthController extends BaseController
                     
                     $pass = $data['password'];
                     $authenticatePassword = password_verify($password, $pass);
-                    $roleModel = new RoleModel();
-                    $role = $roleModel->where('id',$data['role_id'])->first();
                     
                     if($authenticatePassword){
+                        $roleModel = new RoleModel();
+                        $role = $roleModel->where('id',$data['role_id'])->first();
                         $roleId = "";
                         $roleName = "";
                         if(isset($role) && !empty($role)) {
@@ -64,7 +62,7 @@ class AuthController extends BaseController
                             'id' => $data['id'],
                             'name' => $data['first_name'].' '.$data['last_name'],
                             'email' => $data['primary_email'],
-                            'role_name' => "Manager",
+                            'role_name' => $roleName,
                             'profile' => $data['profile'],
                             'pos_id' => $data['pos_id'],
                             'is_super_user' => $data['is_super_user'] == 1 ? true : false,
@@ -90,7 +88,6 @@ class AuthController extends BaseController
                             "role" => $roleName,
                             "store_assigned" => $data['store_id'] != "" ? true : false
                         ]);
-
                     
                     }else{
                          return json_encode([
@@ -114,7 +111,7 @@ class AuthController extends BaseController
     {
         $data = [];
         $data['title'] = 'Store PopUp';
-        $data['modal-title'] = 'Please select store';
+        $data['modal-title'] = 'Please select Store';
         $session = session();
         $emp_id = $session->get('id');
         $is_super_user = $session->get('is_super_user');
@@ -151,15 +148,6 @@ class AuthController extends BaseController
                 $store = new StoreModel();
                 $storeDt = $store->select('store_name')->where('id',$post['store'])->first();
 
-                $h = date('H');
-                $d = date('d');
-                $m = date('m');
-                $pin = (int)$h * (int)$d + (int)$m;
-
-                $db = db_connect();
-                $commonModel = new CommonModel($db);
-                $uData = ['pin'=>$pin];
-                $commonModel->UpdateData('stores',$post['store'],$uData);
             }
             if(!empty($post['terminal'])){
                 $terminal = new TerminalsModel();

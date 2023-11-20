@@ -108,22 +108,28 @@ class SellordersModel extends Model
     }
     public function getSalesByMonths($month)
     { 
+        $sessData = getSessionData();
         $this->select('sum(total_amount) as total,date_format(created_at,"%d") as date');
         $this->where('month(created_at)',$month);
+        $this->where('pos_id',$sessData['pos_id']);
         $this->groupBy('date(created_at)');
         $result =  $this->findAll();
         return $result;
     }
     public function getTotalSalesByMonths($month)
     { 
+        $sessData = getSessionData();
         $this->select('sum(total_amount) as total');
+        $this->where('pos_id',$sessData['pos_id']);
         $this->where('month(created_at)',$month);
         $result =  $this->first();
         return $result;
     }
     public function getSalesByWeek($start_date,$end_date)
     {
+        $sessData = getSessionData();
         $this->select('sum(total_amount) as total,WEEKDAY(created_at) as day,date_format(created_at,"%a") as day_name');
+        $this->where('pos_id',$sessData['pos_id']);
         $this->where('created_at >= ',$start_date);
         $this->where('created_at <= ',$end_date);
         $this->groupBy('DAYOFWEEK(date)');
@@ -138,25 +144,28 @@ class SellordersModel extends Model
         $result =  $this->first();
         return $result;
     }
-    public function getStoresByMonth($month)
+    public function getStoresByMonth($month,$pos_id)
     {
         $this->select('sum(total_amount) as total,stores.store_name,stores.phone,stores.id');
         $this->join('stores','sell_orders.store_id = stores.id');
-        $this->where('month(sell_orders.created_at)',$month);
+        $this->where('sell_orders.pos_id',$pos_id);
+        $this->where('month(sell_orders.invoice_date)',$month);
         $this->groupBy('sell_orders.store_id');
+        $this->limit(5);
         $result =  $this->findAll();
         return $result;
     }
     
-    public function getDailyTerminalSalesData()
+    public function getDailyTerminalSalesData($pos_id)
     {  
         $date = date('Y-m-d');
         $this->select('sum(total_amount) as total,stores.store_name,sell_orders.terminal_id,terminals.terminal_name,stores.id');
-        $this->join('terminals','sell_orders.terminal_id = terminals.id');
         $this->join('stores','sell_orders.store_id = stores.id');
-        $this->where('sell_orders.created_at >= ',$date .' 00:00:00');
-        $this->where('sell_orders.created_at <= ',$date .' 23:59:59');
+        $this->join('terminals','sell_orders.terminal_id = terminals.id');
+        $this->where('sell_orders.invoice_date = ',$date);
+        $this->where('sell_orders.pos_id',$pos_id);
         $this->groupBy('sell_orders.terminal_id');
+        $this->limit(5);
         $result =  $this->findAll();
         return $result;
     }

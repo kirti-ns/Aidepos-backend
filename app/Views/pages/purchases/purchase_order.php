@@ -58,9 +58,11 @@
                   <li class="nav-item">
                      <a class="nav-link" id="activeIcon12-tab1" data-toggle="tab" href="#purchase-order" aria-controls="activeIcon12" aria-expanded="true">Purchase Order</a>
                   </li>
+                  <?php if(isset($data['permission']->purchase_approvals) && $data['permission']->purchase_approvals == 1) { ?>
                   <li class="nav-item">
                      <a class="nav-link" id="activeIcon12-tab1" data-toggle="tab" href="#purchase-order-review" aria-controls="activeIcon12" aria-expanded="true">Purchase Order Review</a>
                   </li>
+                  <?php } ?>
                   <li class="nav-item">
                      <a class="nav-link" id="linkIcon12-tab1" data-toggle="tab" href="#goods-received" aria-controls="linkIcon12" aria-expanded="false">Goods Received</a>
                   </li>
@@ -278,6 +280,7 @@
                   </div>
                </div>
             </div>
+            <?php if(isset($data['permission']->purchase_approvals) && $data['permission']->purchase_approvals == 1) { ?>
             <div role="tabpanel" class="tab-pane" id="purchase-order-review" aria-labelledby="activeIcon12-tab1" aria-expanded="true">
                <form class="filterReviewOrder">
                   <section class="mb-1 filter-bar">
@@ -379,6 +382,7 @@
                   </div>
                </div>
             </div>
+            <?php } ?>
             <div class="tab-pane" id="goods-received" role="tabpanel" aria-labelledby="linkIcon12-tab1" aria-expanded="false">
                <form class="filterGoodsReceived">
                   <section class="mb-1 filter-bar">
@@ -388,16 +392,6 @@
                               <option value="">Supplier: All</option>
                               <?php foreach($data['supplier'] as $c) { ?>
                                  <option value="<?= $c['id']; ?>"><?= $c['registered_name'] ?></option>
-                              <?php } ?>
-                           </select>
-                        </span>
-                     </div>
-                     <div class="filter-bar-item f-12">
-                        <span>
-                           <select name="category" class="form-control form-select purchase-search">
-                              <option value="">Category: All</option>
-                              <?php foreach($data['category'] as $c) { ?>
-                                 <option value="<?= $c['id']; ?>"><?= $c['category_name'] ?></option>
                               <?php } ?>
                            </select>
                         </span>
@@ -502,16 +496,6 @@
                               <option value="">Supplier: All</option>
                               <?php foreach($data['supplier'] as $c) { ?>
                                  <option value="<?= $c['id']; ?>"><?= $c['registered_name'] ?></option>
-                              <?php } ?>
-                           </select>
-                        </span>
-                     </div>
-                     <div class="filter-bar-item f-12">
-                        <span>
-                           <select name="category" class="form-control form-select purchase-search">
-                              <option value="">Category: All</option>
-                              <?php foreach($data['category'] as $c) { ?>
-                                 <option value="<?= $c['id']; ?>"><?= $c['category_name'] ?></option>
                               <?php } ?>
                            </select>
                         </span>

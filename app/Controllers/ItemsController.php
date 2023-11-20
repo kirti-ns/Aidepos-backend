@@ -47,42 +47,15 @@ class ItemsController extends BaseController
         
         $data['category'] = $categoryModel->GetCategoryData();
         $db = db_connect();
+
         $store = new StoreModel();
-        if($sessData['role_name'] == "Staff") {
-            $store->where('id',$sessData['store_id']);
-        } else {
-            $store->where('pos_id',$sessData['pos_id']);
-        }
-        $data['stores'] = $store->findAll();
+        $data['stores'] = $store->where('pos_id',$sessData['pos_id'])->findAll();
 
         $location_master = new LocationMaster();
         $data['location_master'] = $location_master->where('pos_id',$sessData['pos_id'])->findAll();
-       /* $subcat = [];
-        foreach($data['category'] as $key=>$row){
-            $subcat = $subcategoryModel->GetSubCategoryData($row['id']);
-            $data['category'][$key]['sub_category'] = $subcat;
-        }*/
-        /*$brandmatserModel = new BrandmasterModel();
-        $data['brand'] = $brandmatserModel->GetBrandData();
-        foreach($data['brand'] as $k=>$row){
-            $data['brand'][$k]['sub_item'] = $itemModel->GetItemsByBrandId($row['id']);
-        }*/
-       
-        // $modifiersModel = new ModifiersModel();
-        // $data['modifier'] = $modifiersModel->findAll();
-         
-        //  $data = [];
-        // $data['title'] = 'Items'; 
-        // $uomModel = new UomModel();
-        // $data['uom'] = $uomModel->findAll();
-
-        // $categoryModel = new CategoryModel();
-        // $subcategoryModel = new SubcategoryModel();
-        // $itemModel = new ItemModel();
-        // $data['category'] = $categoryModel->GetCategoryData();
 
         $brandmatserModel = new BrandmasterModel();
-        $data['brand'] = $brandmatserModel->where("status",1)->findAll();
+        $data['brand'] = $brandmatserModel->where('pos_id',$sessData['pos_id'])->where("status",1)->findAll();
         
         $data['item'] = $itemModel->GetItemData();
         return $this->template->render('pages/items/items_list', $data); 
@@ -91,6 +64,7 @@ class ItemsController extends BaseController
     public function itemExportOptions()
     {
         $post = $this->request->getVar();
+        $sessData = getSessionData();
 
         $weighingscale = new WeighingScaleModel();
         $weighingData = $weighingscale->first();
@@ -241,6 +215,113 @@ class ItemsController extends BaseController
                     'file_name'=>$file_name,
                     'header'=>$header
                 ]; 
+            break;
+            case 'expiry_items_export':
+                $db = db_connect();
+
+                $sql = "SELECT
+                        i.item_name,
+                        i.sku_barcode,
+                        s.store_name,
+                        l.location_description,
+                        id.qty,
+                        id.lot_no,
+                        id.dom,
+                        id.expiry_date,
+                        DATEDIFF(id.expiry_date, CURDATE()) AS remaining_days
+                        FROM
+                        current_inventory_details id
+                        JOIN
+                        current_inventory iv ON id.current_inventory_id = iv.id
+                        JOIN
+                        items i ON iv.item_id = i.id
+                        JOIN
+                        location l ON iv.location_id = l.id
+                        JOIN
+                        stores s ON iv.store_id = s.id
+                        WHERE
+                        i.item_options LIKE '%\"track_expiry\":1%' AND 
+                        id.qty > 0 AND
+                        i.pos_id = '".$sessData['pos_id']."'
+                        AND id.expiry_date >= CURDATE()
+                        AND id.expiry_date <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH)";
+                $query = $db->query($sql)->getResult();
+
+                $sql2 = "SELECT
+                        i.item_name,
+                        i.sku_barcode,
+                        s.store_name,
+                        l.location_description,
+                        id.qty,
+                        id.lot_no,
+                        id.dom,
+                        id.expiry_date,
+                        DATEDIFF(CURDATE(), id.expiry_date) as overdue_days
+                    FROM
+                        current_inventory_details id
+                    JOIN
+                        current_inventory iv ON id.current_inventory_id = iv.id
+                    JOIN
+                        items i ON iv.item_id = i.id
+                    JOIN
+                        stores s ON iv.store_id = s.id
+                    JOIN
+                        location l ON iv.location_id = l.id
+                    WHERE
+                        i.item_options LIKE '%\"track_expiry\":1%' AND 
+                        id.qty > 0 AND
+                        i.pos_id = '".$sessData['pos_id']."'
+                        AND id.expiry_date <= CURDATE()";
+                $query2 = $db->query($sql2)->getResult();
+
+                $data = [];
+                foreach($query as $k => $v) {
+                    $list['store_name'] = $v->store_name;
+                    $list['location_description'] = $v->location_description;
+                    $list['item_name'] = $v->item_name;
+                    $list['sku_barcode'] = $v->sku_barcode;
+                    $list['qty'] = $v->qty;
+                    $list['lot_no'] = $v->lot_no;
+                    $list['dom'] = $v->dom;
+                    $list['expiry_date'] = $v->expiry_date;
+                    $list['remaining_days'] = $v->remaining_days;
+                    $list['overdue_days'] = '-';
+                    $data[] = $list;
+                }
+
+                foreach($query2 as $k => $v) {
+                    $list['store_name'] = $v->store_name;
+                    $list['location_description'] = $v->location_description;
+                    $list['item_name'] = $v->item_name;
+                    $list['sku_barcode'] = $v->sku_barcode;
+                    $list['qty'] = $v->qty;
+                    $list['lot_no'] = $v->lot_no;
+                    $list['dom'] = $v->dom;
+                    $list['expiry_date'] = $v->expiry_date;
+                    $list['remaining_days'] = '-'.$v->overdue_days;           
+                    $list['overdue_days'] = $v->overdue_days;
+                    $data[] = $list;
+                }
+
+
+                $header = array('Store','Location','Item Name','SKU Barcode','Qty','Lot No','Date of Manf','Expiry Date','Remaining Days','Overdue Days');
+
+                $file_name = 'ItemsExpiryDetails_'.date('Ymd');
+                if($post['fileType'] == "xlsx") {
+                    $header = [
+                        ['Store','Location','Item Name','SKU Barcode','Qty','Lot No','Date of Manf','Expiry Date','Remaining Days','Overdue Days']
+                    ];
+                    $file_name.= '.xlsx';
+                } else if($post['fileType'] == "csv") {
+                    $file_name.= '.csv';
+                }
+
+                $res = [
+                    'data'=>$data,
+                    'file_name'=>$file_name,
+                    'header'=>$header
+                ];
+                
             break;
         }
 
@@ -502,7 +583,7 @@ class ItemsController extends BaseController
         $itemMdl = new ItemModel();
         $cItems = $itemMdl->where('category_id',$id)->countAllResults();
         $sku = $data['prefix'].$cItems;
-        $sku = (int) $sku + 1;
+        $sku = (int) $sku;
         
         if(!empty($data)){
             return json_encode(['status'=>"true",'message'=>'Fetch Data','sku'=>$sku]); 
@@ -785,7 +866,6 @@ class ItemsController extends BaseController
             $variantPrice = $itemsPriceModel->select('items_price.*,stores.store_name')->join('stores','items_price.store_id = stores.id','left')->where('items_id',$v['id'])->findAll();
             $data['variant_items'][$k]['stores'] = $variantPrice;
         }
-
         $cmModel = new CompositeMasterModel();
         $data['composite'] = $cmModel->findAll();
 
@@ -918,7 +998,7 @@ class ItemsController extends BaseController
          if ($this->request->getMethod() == "post") {
             $imageitem = "";
             $post = $this->request->getVar();
-            // p($post);
+
             $sessData = getSessionData();
             
             $result_data = "";
@@ -926,6 +1006,7 @@ class ItemsController extends BaseController
             switch($post['table_name']){
                 case 'uom_master':
                         $data = [
+                        'pos_id' => $sessData["pos_id"],
                         'formal_name' => $post["formal_name"],
                         'uom' => $post["uom"],
                         'decimal_point' => isset($post["decimal_point"])?$post["decimal_point"]:0,
@@ -973,6 +1054,7 @@ class ItemsController extends BaseController
                 case 'modifiers':
                         $data = [
                         'name' => $post["name"],
+                        'pos_id' => $sessData['pos_id'],
                         'store_id' => $sessData['store_id'],
                         // 'quantity' => $post["quantity"],
                         // 'group' => $post["group"],
@@ -984,6 +1066,7 @@ class ItemsController extends BaseController
                 break;
                 case 'recipes_master':
                         $data = [
+                            'pos_id'=>$sessData['pos_id'],
                             'store_id'=> $sessData['store_id'],
                             'group_name' => $post["group_name"],
                             'status' => isset($post["status"])?$post["status"]:0
@@ -1067,6 +1150,7 @@ class ItemsController extends BaseController
                 break;
                 case 'variant_master':
                     $data = [
+                        'pos_id'=>$sessData['pos_id'],
                         'product_name' => $post["variant_name"],
                         'status' => isset($post["status"])?$post["status"]:1
                     ];
@@ -1110,19 +1194,6 @@ class ItemsController extends BaseController
                 case 'categories':
                     $category_list = $this->getCategoryList();
                     $result_data = $category_list; 
-                    /*if(isset($post['sub'])){
-                        foreach($post['sub'] as $row){
-                            if($row['subcategory_name'] != "") {
-                                $new_data = array(
-                                    'pos_id' => $sessData['pos_id'],
-                                    'category_id'=>$result,
-                                    'subcategory_name'=>$row['subcategory_name'],
-                                    // 'description'=>$row['sub_description']
-                                );
-                               $commonModel->AddData('subcategories',$new_data);
-                           }
-                        }
-                    }*/
                 break;
                 case 'subcategories':
                     $subcategoryModel = new SubcategoryModel();
@@ -1534,8 +1605,9 @@ class ItemsController extends BaseController
     }
 
     public function getVariant(){
+        $sessData = getSessionData();
         $vmModel = new VariantMatserModel();
-        $variant = $vmModel->findAll();
+        $variant = $vmModel->where('pos_id',$sessData['pos_id'])->findAll();
         if(empty($variant)){
             echo json_encode(['status'=>"false","message"=>"Sub Category Not Found",'data'=>""]);
         }else{
@@ -1628,6 +1700,7 @@ class ItemsController extends BaseController
     {   
        $request = service('request');
        $postData = $request->getPost();
+       $sessData = getSessionData();
        
        $dtpostData = $postData['data'];
        $response = array();
@@ -1665,6 +1738,7 @@ class ItemsController extends BaseController
                 $cm->where('status', 0);
             }
         }
+        $cm->where('pos_id',$sessData['pos_id']);
         $cm->orderBy($columnName,$columnSortOrder);
 
         $records = $cm->findAll($rowperpage, $start);
@@ -1768,7 +1842,8 @@ class ItemsController extends BaseController
     {        
        $request = service('request');
        $postData = $request->getPost();
-       
+       $sessData = getSessionData();
+
        $dtpostData = $postData['data'];
        $response = array();
         ## Read value
@@ -1803,6 +1878,7 @@ class ItemsController extends BaseController
                 $cm->where('status', 0);
             }
         }
+        $cm->where('recipes_master.pos_id',$sessData['pos_id']);
         $cm->orderBy($columnName,$columnSortOrder);
 
         $records = $cm->findAll($rowperpage, $start);
@@ -1844,6 +1920,7 @@ class ItemsController extends BaseController
         
         $request = service('request');
         $postData = $request->getPost();
+        $sessData = getSessionData();
         $dtpostData = $postData['data'];
         $response = array();
 
@@ -1876,6 +1953,7 @@ class ItemsController extends BaseController
                 $cm->where('status', 0);
             }
         }
+        $cm->where('pos_id',$sessData['pos_id']);
         $cm->orderBy($columnName,$columnSortOrder);
 
         $records = $cm->findAll($rowperpage, $start);
@@ -1916,6 +1994,7 @@ class ItemsController extends BaseController
         
        $request = service('request');
        $postData = $request->getPost();
+       $sessData = getSessionData();
        
        $dtpostData = $postData['data'];
        $response = array();
@@ -1950,6 +2029,7 @@ class ItemsController extends BaseController
                 $cm->where('status', 0);
             }
         }
+        $cm->where('pos_id',$sessData['pos_id']);
         $cm->orderBy($columnName,$columnSortOrder);
 
         $records = $cm->findAll($rowperpage, $start);
@@ -1986,6 +2066,7 @@ class ItemsController extends BaseController
         
        $request = service('request');
        $postData = $request->getPost();
+       $sessData = getSessionData();
        
        $dtpostData = $postData['data'];
        $response = array();
@@ -2027,6 +2108,7 @@ class ItemsController extends BaseController
                 $cm->where('status', 0);
             }
         }
+        $cm->where('pos_id',$sessData['pos_id']);
         $cm->orderBy($columnName,$columnSortOrder);
 
         $records = $cm->findAll($rowperpage, $start);
@@ -2071,6 +2153,7 @@ class ItemsController extends BaseController
     {
        $request = service('request');
        $postData = $request->getPost();
+       $sessData = getSessionData();
        
        $dtpostData = $postData['data'];
        $response = array();
@@ -2098,7 +2181,8 @@ class ItemsController extends BaseController
             $i->like('product_name', $searchValue);
             $ft->like('product_name', $searchValue);
         }
-        
+
+        $i->where('pos_id',$sessData['pos_id']);
         $i->orderBy($columnName,$columnSortOrder);
         $records = $i->findAll($rowperpage, $start);
 
@@ -2327,7 +2411,8 @@ class ItemsController extends BaseController
                 stores s ON iv.store_id = s.id
                 WHERE
                 i.item_options LIKE '%\"track_expiry\":1%' AND 
-                id.qty > 0
+                id.qty > 0 AND
+                i.pos_id = '".$sessData['pos_id']."'
                 AND id.expiry_date >= CURDATE()
                 AND id.expiry_date <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH)";
         $query = $db->query($sql)->getResult();
@@ -2354,7 +2439,8 @@ class ItemsController extends BaseController
                 location l ON iv.location_id = l.id
             WHERE
                 i.item_options LIKE '%\"track_expiry\":1%' AND 
-                id.qty > 0
+                id.qty > 0 AND
+                i.pos_id = '".$sessData['pos_id']."'
                 AND id.expiry_date <= CURDATE()";
         $query2 = $db->query($sql2)->getResult();
 
@@ -2442,8 +2528,9 @@ class ItemsController extends BaseController
 
     public function getUomList()
     {
+        $sessData = getSessionData();
         $um = new UomModel();
-        $data = $um->where('status',1)->orderBy('id','desc')->findAll();
+        $data = $um->where('status',1)->where('pos_id',$sessData['pos_id'])->orderBy('id','desc')->findAll();
          $html = "";
          $html .=  '<option value="">Please select</option>';
             

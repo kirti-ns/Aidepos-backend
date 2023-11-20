@@ -567,8 +567,8 @@ class CommonController extends BaseController
          $post = $this->request->getVar();
 
          $data = array(
-                $post['key'] => $post['value']
-            );
+            $post['key'] => $post['value']
+         );
         
         $result = $commonModel->UpdateData($post['table_name'],$post['id'],$data);
         return json_encode([

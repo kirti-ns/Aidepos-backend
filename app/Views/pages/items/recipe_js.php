@@ -85,7 +85,6 @@
         if (tag !== '') {
           createTableRow(tag);
           tagsInput1.push(tag);
-          console.log(tagsInput1)
         }
       });
 
@@ -95,7 +94,6 @@
         var tag = tagInput;
         if (tag !== '') {
           tagsInput2.push(tag);
-          console.log(tagsInput2)
           var combinations = getAllTagCombinations(tagsInput1, tagsInput2, tagsInput3);
           updateTagTable(combinations);
         }
@@ -107,7 +105,6 @@
         var tag = tagInput;
         if (tag !== '') {
           tagsInput3.push(tag);
-          console.log(tagsInput3)
           var combinations = getAllTagCombinations(tagsInput1, tagsInput2, tagsInput3);
           updateTagTable(combinations);
         }
@@ -116,17 +113,22 @@
       // Create table row
       function createTableRow(tag) {
 
-        var row = $('<tr>').html('<td>' + tag + '</td>');
-        var table = document.querySelector(".variant-item-tbl");
-
-        var t1 = $('.variant-item-tbl tbody tr.new-row').length;
-
-        var rows = "";
+        var row = $('<tr>').html('<td>' + tag + '</td>'),
+        table = document.querySelector(".variant-item-tbl"),
+        t1 = $('.variant-item-tbl tbody tr.new-row').length,
+        rows = "",
+        cSupplyPr = "", cMrkp = "", cRetailPr = "", cMrp = "";
 
         var store = '<?php echo isset($data['encoded_store'])?$data['encoded_store']:""; ?>'
         var stArray = JSON.parse(store);
+        if(t1 == 0) {
+          sku = varianceSKU + 1;
+          cSupplyPr = ""
+        } else {
+          sku++;
+        }
         $.each(stArray,function(k,v){
-        
+
          rows += '<tr>'+
             '<td><input type="hidden" value="'+v.id+'" name="items['+t1+'][stores]['+k+'][store_id]"><input type="text" class="form-control store" name="items['+t1+'][stores]['+k+'][store_name]" placeholder="Store" value="'+v.store_name+'" readonly></td>'+
             '<td><input type="text" class="form-control p-retail_price" name="items['+t1+'][stores]['+k+'][retail_price]" placeholder="Retail Price" value=""></td>'+
@@ -136,10 +138,9 @@
            '<td class="text-center"><input type="text" class="form-control p-reorder_point" name="items['+t1+'][stores]['+k+'][reorder_point]" placeholder="ReOrder Point" value=""></td>'+
           '</tr>';
         });
-
         var html = '<tr class="item new-row">'+
         '<td style="padding-left:10px;"><input type="hidden" class="v_name" name="items['+t1+'][name]" value="'+tag+'"><span class="exploder fa fa-angle-right" data-toggle="collapse" data-id="'+t1+'" data-target="#cat'+t1+'" class="accordion-toggle"></span> <span class="variant">'+tag+'</span></td>'+
-        '<td><input type="text" class="form-control" name="items['+t1+'][sku]" value="" placeholder="SKU"></td>'+
+        '<td><input type="text" class="form-control" name="items['+t1+'][sku]" value="'+sku+'" placeholder="SKU"></td>'+
         '<td><input type="text" class="form-control" name="items['+t1+'][supply_price]" placeholder="Supply Price"></td>'+
         '<td><input type="text" class="form-control" name="items['+t1+'][mrp_percent]" placeholder="Markup(%)"></td>'+
         '<td><input type="text" class="form-control" name="items['+t1+'][retail_price]" placeholder="Retail Price"></td>'+
@@ -676,10 +677,6 @@
     $('.'+id).select2({
       minimumInputLength: 3,
     });
-    /*$("head").append($("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.css' type='text/css' media='screen' />"));
-    $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js", function () { 
-        $('.'+id).select2();
-    })*/
   }
 
   $('.item_id').select2({
@@ -717,10 +714,6 @@
             self.parents('td').siblings('td').children('.unit').val(1);
             self.parents('td').siblings('td').children('.cost').val(data.supply_price);
             self.parents('td').siblings('td').children('.total_cost').val(data.supply_price);
-            // var quantity = self.parents('td').siblings('td').children('.quantity').val();
-            // var price = data.retail_price;
-
-            // self.parents('td').siblings('td').children('.amount').val(quantity*price);
           }
         }
       });
@@ -821,15 +814,6 @@
       self.parents('td').siblings('td').children('.p-inventory_value').val(parseFloat(invtValue));
     }
 
-    /*$('.p-retail_price').each(function(k,v){
-      var t = $(this),
-      // mrp = $('#mrp').val();
-      
-      // netTotal = (parseFloat(supply_price))*(parseFloat(mrp)/100);
-      // total =  parseFloat(supply_price) + parseFloat(netTotal);
-      // parseFloat($('#minimum_retail_price').val(total)); 
-        
-    });*/
   });
   $(document).on('keyup','#supply_price',function() {
     var self = $(this);
@@ -1046,22 +1030,13 @@
               const Heading = [
                   ['Store ID','Category','Item Code','Item Name','Barcode','Unit','Purchase Price','Selling Price','Weighed/Non-Weighed Goods','Tax Label','Is Tax Inclusive','Inventory Qty']
               ];
-              var ws = XLSX.utils.json_to_sheet(data, { origin: 'A2', skipHeader: true });
-              XLSX.utils.sheet_add_aoa(ws, Heading, { origin: 'A1' });
-              var wb = XLSX.utils.book_new();
-              XLSX.utils.book_append_sheet(wb, ws, "Items");
-              XLSX.writeFile(wb,filename);
+              xlsxExport(data,Heading,filename,"Items");
+
             }else if(type == "plu_export_csv") {
               // r = JSON.parse(res);
               rows = r.response.data
-              let head = Object.keys(rows[0]).join(',') + '\n'; // header row
-              let body = rows.map(row => Object.values(row).join(',')).join('\n');
-
-              var e = document.createElement('a');
-              e.href = 'data:text/csv;charset=utf-8,' + encodeURI(head + body);
-              e.target = '_blank';
-              e.download = r.response.file_name;
-              e.click();
+              csvExport(rows,r.response.header,r.response.file_name)
+              
             }else if(type == "plu_export_txt") {
               // res = JSON.parse(res);
               rows = r.response.data
@@ -1255,23 +1230,20 @@
   });
 
   function checkCopyLocations()
-    {
-      var cF = $('#copy_from_location').val();
-      var cT = $('#copy_to_location').val();
+  {
+    var cF = $('#copy_from_location').val();
+    var cT = $('#copy_to_location').val();
 
-      if(cF != "" && cT != ""){
-        if(cF == cT) {
-          alertMessage('false','You can not choose same locations');
-          $('#copy_to_location').val('');
-          return false;
-        }
+    if(cF != "" && cT != ""){
+      if(cF == cT) {
+        alertMessage('false','You can not choose same locations');
+        $('#copy_to_location').val('');
+        return false;
       }
-
     }
 
-   /*$('#copy_from_location').change(checkCopyLocations);
-   $('#copy_to_location').change(checkCopyLocations);
-*/
+  }
+
   $('#copy_items_form').validate({
          rules: {
             main_store: "required",
@@ -1322,6 +1294,37 @@
             });
 
          }
-    });
+  });
+
+  $(document).on('click','.exp-items-export',function(){
+    var fileType = $(this).attr('data-type');
+
+    $.ajax({
+        type: "POST",
+        url: '<?= base_url() ?>'+'/items/itemExportOptions',
+        data: {fileType:fileType,type:'expiry_items_export'},
+        success: function (res) { 
+          var r = JSON.parse(res);
+          if(r.response.data && r.response.data.length > 0) {
+            res = JSON.parse(res);
+            if(fileType == "xlsx") {
+              var filename=res.response.file_name;
+              var data = res.response.data;
+              var heading = res.response.header;
+
+              xlsxExport(data,heading,filename,"Items Expiry Details");
+
+            }else if(fileType == "csv") {
+              var rows = r.response.data;
+              var heading = r.response.header;
+              var filename=res.response.file_name;
+              csvExport(rows,heading,filename)
+            }
+          } else {
+            alertMessage('false','No Data Found');
+          }
+        }
+      });
+  })
 
 </script>

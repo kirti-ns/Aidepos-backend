@@ -20,29 +20,13 @@
                                  </div>
                                  <div class="col-md-6">
                                     <div class="form-floating">
-                                       <input type="text" class="form-control" id="prefix" name="prefix" placeholder="SKU Prefix"  value="<?= isset($value['prefix'])?$value['prefix']:''?>">
+                                       <input type="number" class="form-control" id="prefix" name="prefix" placeholder="SKU Prefix"  value="<?= isset($value['prefix'])?$value['prefix']:''?>">
                                        <label for="prefix">SKU Prefix</label>
                                     </div>
-                                    <!-- <div class="form-floating">
-                                       <input type="text" class="form-control" id="description" name="description" placeholder="Description" value="<?= isset($value['description'])?$value['description']:''?>">
-                                       <label for="floatingInputGrid">Description</label>
-                                    </div> -->
                                  </div>
                               </div>
                               <div class="row pt-2">
-                                <!-- <div class="col-md-3">
-                                    <div class="form-floating">
-                                       <select class="form-select" id="uom_id" name="uom_id" aria-label="Floating label select example">
-                                          <?php if(!empty($data['uom'])){ 
-                                             foreach($data['uom'] as $row){
-                                          ?>
-                                           <option <?= isset($value['uom_id']) && ($value['uom_id'] == $row['id'])?'selected':''?> value="<?= $row['id']?>"><?= $row['uom']?></option>
-                                          <?php
-                                          } } ?>
-                                       </select>
-                                       <label for="floatingSelectGrid">Classification</label>
-                                    </div>
-                                 </div>-->
+                                
                                  <div class="col-md-6">
                                     <div class="form-floating">
                                        <input type="text" class="form-control" id="custom_report" name="custom_report" placeholder="Custom Report"  value="<?= isset($value['custom_reports'])?$value['custom_reports']:''?>">

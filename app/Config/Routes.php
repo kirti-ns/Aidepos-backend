@@ -44,8 +44,6 @@ $routes->post('/post-change_password','AuthController::ChangePassword');
 $routes->get('/otp','AuthController::OTP');
 
 $routes->get('dashboard','DashboardController::index');
-$routes->get('store_based_sales','DashboardController::StoreBasedSalesData');
-$routes->get('daily_terminal_sales','DashboardController::DailyTerminalBasedSalesData');
 
 $routes->get('/customers','CustomersController::index');
 $routes->get('/customers/add_customer','CustomersController::Add_Customer');
@@ -258,12 +256,15 @@ $routes->get('/reports/(:any)','ReportsController::reports/$1');
 $routes->get('/print-reports','ReportsController::printReport');
 $routes->post('/reports/sales-by-item','ReportsController::salesByItem');
 $routes->post('/reports/sales-by-terminal','ReportsController::salesByTerminal');
+$routes->post('/reports/sales-by-store','ReportsController::salesByStore');
 $routes->post('/reports/credit-notes','ReportsController::creditNotes');
 $routes->post('/reports/stock-on-hand','ReportsController::stockOnHand');
 $routes->post('/reports/stock-valuation','ReportsController::stockValuation');
 $routes->post('/reports/stock-price','ReportsController::stockPrice');
 $routes->post('/reports/stock-take-with-qty','ReportsController::stockTakeWithQty');
 $routes->post('/reports/layby-sales','ReportsController::laybySales');
+$routes->post('/reports/transfer-summary','ReportsController::transferSummary');
+$routes->post('/reports/transfer-details','ReportsController::transferDetails');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

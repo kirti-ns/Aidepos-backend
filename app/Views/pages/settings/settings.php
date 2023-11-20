@@ -34,9 +34,9 @@
                         <a class="nav-link" id="linkIcon12-tab1" data-toggle="tab" href="#tax" aria-controls="linkIcon12" aria-expanded="false">Taxes</a>
                      </li>
                      <?php } ?>
-                     <li class="nav-item">
+                     <!-- <li class="nav-item">
                         <a class="nav-link" id="linkIcon12-tab1" data-toggle="tab" href="#aggregator" aria-controls="linkIcon12" aria-expanded="false">Aggregator</a>
-                     </li>
+                     </li> -->
                      <?php if(isset($data['permission']->store_terminal) && $data['permission']->store_terminal == 1) { ?>
                      <li class="nav-item">
                         <a class="nav-link" id="linkIcon12-tab1" data-toggle="tab" href="#stores" aria-controls="linkIcon12" aria-expanded="false">Stores</a>
@@ -108,20 +108,6 @@
                                                    <label for="floatingSelectGrid">Currency</label>
                                                 </div>
                                              </div>
-                                            <!-- <div class="col-md-3">
-                                              <div class="form-floating">
-                                                <select class="form-select" name="tax_id" id="tax_id" aria-label="Floating label select example">
-                                                    <option value="">Please select</option>
-                                                    <?php if(!empty($data['tax'])){
-                                                       foreach($data['tax'] as $row){
-                                                          ?>
-                                                    <option value="<?= $row['id']?>"><?= $row['tax_type']?></option>
-                                                    <?php }
-                                                       } ?>
-                                                 </select>
-                                                 <label for="floatingSelectGrid">Tax Type</label>
-                                              </div>
-                                            </div> -->
                                             <div class="col-md-3">
                                               <div class="form-floating">
                                                  <input type="time" class="form-control" id="opening_hour" name="opening_hour" placeholder="Opening Hour" value="" >
@@ -134,25 +120,9 @@
                                                  <label for="floatingSelectGrid">Closing Hour</label>
                                               </div>
                                             </div>
-                                            <!-- <div class="col-md-3">
-                                              
-                                            </div> -->
                                           </div>
                                           <br>
-                                          <b>Rounding</b>
                                           <div class="row">
-                                             <div class="col-md-3">
-                                                <div class="form-floating">
-                                                  <input type="text" class="form-control" id="rounding_to" name="rounding_to" placeholder="Roundig To" value="" >
-                                                   <label for="floatingSelectGrid">Rounding To</label>
-                                                </div>
-                                             </div>
-                                             <div class="col-md-3">
-                                                <div class="form-floating">
-                                                   <input type="text" class="form-control" id="middle_point" name="middle_point" placeholder="Middle Point" value="" >
-                                                   <label for="floatingSelectGrid">Middle Point</label>
-                                                </div>
-                                             </div>
                                              <div class="col-md-3">
                                                 <div class="form-floating">
                                                   <input type="text" class="form-control" id="from_email" name="from_email" placeholder="From Email" value="" >
@@ -161,90 +131,66 @@
                                             </div>
                                              <div class="col-md-3">
                                                 <div class="form-floating">
-                                                  <input type="number" class="form-control" id="layby_deposit_per" name="layby_deposit_per" placeholder="Layby Deposit %" value="">
-                                                   <label for="floatingSelectGrid">Layby Deposit(%)</label>
-                                                </div>
-                                              </div>
-                                          </div> <br/>
-                                          <div class="row">
-                                             <div class="col-md-3">
-                                                <div class="form-floating">
                                                   <select class="form-select" id="layby_source_location" name="layby_source_location">
                                                     <option>Please select</option>
                                                   </select>
                                                    <label for="floatingSelectGrid">Layby Source Location</label>
                                                 </div>
                                               </div>
-                                          </div> <br>
-                                          <i class="feather ft-alert-circle"></i>   
-                                          If bill amount is 10.45 its rounded to 10.50 and bill amount of 10.55 rounded to 11.00
-                                          <br><br>
-
-                                      <div class="row">
-                                         <div class="col-md-6">
-                                        <div class="media mt-1">
-                                            <div class="pr-2">
-                                                <img src="<?= base_url()?>/public/app-assets/icons/barcode.png">
+                                             <div class="col-md-3">
+                                                <div class="form-floating">
+                                                  <input type="number" class="form-control" id="layby_deposit_per" name="layby_deposit_per" placeholder="Layby Deposit %" value="">
+                                                   <label for="floatingSelectGrid">Layby Deposit(%)</label>
+                                                </div>
+                                              </div>
+                                          </div> <br/>
+                                          <div class="row">
+                                          </div>
+                                         
+                                         <b>General Features</b><br>
+                                          <div class="row">
+                                            <div class="col-md-6">
+                                              <div class="media mt-1">
+                                                  <div class="pr-2">
+                                                      <img src="<?= base_url()?>/public/app-assets/icons/rounding.png">
+                                                  </div>
+                                                  <div class="media-body">
+                                                      <p class="text-bold-600 m-0">Rounding</p>
+                                                       
+                                                      <p class="font-small-2 text-muted m-0">Automatic bill amount rounding based on given rules</p>
+                                                  </div>
+                                              </div>
                                             </div>
-                                            <div class="media-body">
-                                                <p class="text-bold-600 m-0">Barcode Auto Generation</p>
-                                                 
-                                                <p class="font-small-2 text-muted m-0">Auto generate Barcode/SKU For Newly added items/Variants</p>
+                                            <div class="col-md-6">
+                                               <div class="mt-15">
+                                               <input type="checkbox" data-size="sm" data-color="danger" class="switchery" name="rounding" id="rounding" value="1" />
+                                              </div>
                                             </div>
-                                        </div>
-                                     </div>
-                                     <div class="col-md-6">
-                                         <div class="mt-15">
-                                         <input type="checkbox" data-size="sm" data-color="danger" name="general_features[barcode_generation]"  id="barcode_generation" class="switchery" >
-                                        </div>
-                                     </div>
-                                        </div>
-                                         <br>
-                                         <b>General Features</b><br><br>
-                                         <div class="row">
-                                         <div class="col-md-6">
-                                        <div class="media mt-1">
-                                            <div class="pr-2">
-                                               <img src="<?= base_url()?>/public/app-assets/icons/tax.png">
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="text-bold-600 m-0">Included Tax</p>
-                                                 
-                                                <p class="font-small-2 text-muted m-0">On adding items Retail price entering Including Tax</p>
-                                            </div>
-                                        </div>
-                                     </div>
-                                     <div class="col-md-6">
-                                         <div class="mt-15">
-                                          <input type="checkbox" data-size="sm" data-color="danger" name="general_features[included_tax]" id="included_tax" class="switchery"/>
-                                        </div>
-                                     </div>
-                                        </div>
-                                         <br>
-                                         <div class="row">
-                                         <div class="col-md-6">
-                                        <div class="media mt-1">
-                                            <div class="pr-2">
-                                                <img src="<?= base_url()?>/public/app-assets/icons/rounding.png">
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="text-bold-600 m-0">Rounding</p>
-                                                 
-                                                <p class="font-small-2 text-muted m-0">Automatic bill amount rounding based on given rules</p>
-                                            </div>
-                                        </div>
-                                     </div>
-                                     <div class="col-md-6">
-                                         <div class="mt-15">
-                                         <input type="checkbox" data-size="sm" data-color="danger" class="switchery" name="general_features[rounding]"  id="rounding"/>
-                                        </div>
-                                     </div>
-                                        </div>
-                                        <br>
-                                      <div class="form-footer text-right">
-                                         <?= SubmitButton();?>
-                                      </div>
-                                   </form>
+                                          </div>
+                                          <br>
+                                          <div class="row d-none" id="d-rounding">
+                                            <div class="col-md-3">
+                                                <div class="form-floating">
+                                                  <input type="number" class="form-control" id="rounding_to" name="rounding_to" placeholder="Roundig To" value="" >
+                                                   <label for="floatingSelectGrid">Rounding To</label>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-3">
+                                                <div class="form-floating">
+                                                   <input type="number" class="form-control" id="middle_point" name="middle_point" placeholder="Middle Point" value="" >
+                                                   <label for="floatingSelectGrid">Middle Point</label>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-3"></div>
+                                             <div class="col-md-12 mt-1">
+                                              <i class="feather ft-alert-circle"></i>   
+                                              If bill amount is 10.45 its rounded to 10.50 and bill amount of 10.55 rounded to 11.00<br>
+                                             </div>
+                                          </div>
+                                          <div class="form-footer text-right">
+                                             <?= SubmitButton();?>
+                                          </div>
+                                        </form>
                                        
                                       </div>
                                    </div>
@@ -263,216 +209,262 @@
                            <div class="row">
                               <div class="col-12">
                                  <div class="card">
+                                   
                                     <div class="card-content collapse show">
-                                       <div class="card-body card-dashboard">
-                                       <div class="row">
-                                       <div class="col-md-6">
-                                      <div class="media mt-1">
-                                          <div class="pr-2">
-                                              <img src="<?= base_url()?>/public/app-assets/icons/shifts.png"> 
+                                      <div class="card-body card-dashboard">
+                                        <input type="hidden" name="feature_id" id="feature_id" value="<?=isset($data['features'])?$data['features']['id']:"";?>">
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                              <div class="media mt-1">
+                                                  <div class="pr-2">
+                                                      <img src="<?= base_url() ?>/public/app-assets/icons/shifts.png"> 
+                                                  </div>
+                                                  <div class="media-body">
+                                                      <p class="text-bold-300 m-0">Shifts</p>
+                                                       
+                                                      <p class="font-small-2 text-muted m-0">Track cash that goes in and out of your drawers</p>
+                                                  </div>
+                                              </div>
                                           </div>
-                                          <div class="media-body">
-                                              <p class="text-bold-300 m-0">Shifts</p>
-                                               
-                                              <p class="font-small-2 text-muted m-0">Track cash that goes in and out of your drawers</p>
+                                          <div class="col-md-6">
+                                               <div class="mt-15">
+                                                <input type="checkbox" data-size="sm" data-feature="shifts" data-color="danger"name="shifts" class="switchery features" <?=isset($data['features']) && $data['features']['shifts'] == 1 ? "checked":"";?>/>
+                                              </div>
                                           </div>
-                                      </div>
-                                   </div>
-                                   <div class="col-md-6">
-                                       <div class="mt-15">
-                                        <input type="checkbox" data-size="sm" data-color="danger"name="switchery" id="switchery0" class="switchery" checked/>
-                                      </div>
-                                   </div>
-                                      </div>
-                                       <br>
+                                        </div>
+                                        <br>
                                     
-                                    <div class="row">
-                                       <div class="col-md-6">
-                                      <div class="media mt-1">
-                                          <div class="pr-2">
-                                              <img src="<?= base_url()?>/public/app-assets/icons/customers_loyalty.png"> 
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                              <div class="media mt-1">
+                                                  <div class="pr-2">
+                                                      <img src="<?= base_url() ?>/public/app-assets/icons/customers_loyalty.png"> 
+                                                  </div>
+                                                  <div class="media-body">
+                                                      <p class="text-bold-300 m-0">Customer Loyalty</p>
+                                                       
+                                                      <p class="font-small-2 text-muted m-0">A % of the purchase amount credit to points account of the customer</p>
+                                                  </div>
+                                              </div>
                                           </div>
-                                          <div class="media-body">
-                                              <p class="text-bold-300 m-0">Customer Loyalty</p>
-                                               
-                                              <p class="font-small-2 text-muted m-0">A % of the purchase amount credit to points account of the customer</p>
+                                          <div class="col-md-6">
+                                             <div class="mt-15">
+                                              <input type="checkbox" data-size="sm" data-color="danger"name="customer_loyalty" data-feature="customer_loyalty" class="switchery features" <?=isset($data['features']) && $data['features']['customer_loyalty'] == 1 ? "checked":"";?>/>
+                                            </div>
                                           </div>
-                                      </div>
-                                   </div>
-                                   <div class="col-md-6">
-                                       <div class="mt-15">
-                                        <input type="checkbox" data-size="sm" data-color="danger"name="switchery" id="switchery0" class="switchery" unchecked/>
-                                      </div>
-                                   </div>
-                                      </div>
-                                      <br>
+                                        </div>
+                                        <br>
                                     
-                                     <div class="row">
-                                       <div class="col-md-6">
-                                      <div class="media mt-1">
-                                          <div class="pr-2">
-                                             <img src="<?= base_url()?>/public/app-assets/icons/online_sale.png"> 
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                            <div class="media mt-1">
+                                                <div class="pr-2">
+                                                   <img src="<?= base_url() ?>/public/app-assets/icons/online_sale.png"> 
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="text-bold-300 m-0">Online Sale</p>
+                                                     
+                                                    <p class="font-small-2 text-muted m-0">Enable to sale your product through integrated e-commerce</p>
+                                                </div>
+                                            </div>
                                           </div>
-                                          <div class="media-body">
-                                              <p class="text-bold-300 m-0">Online Sale</p>
-                                               
-                                              <p class="font-small-2 text-muted m-0">Enable to sale your product through integrated e-commerce</p>
+                                          <div class="col-md-6">
+                                             <div class="mt-15">
+                                              <input type="checkbox" data-size="sm" data-color="danger"name="online_sale" data-feature="online_sale" class="switchery features" <?=isset($data['features']) && $data['features']['online_sale'] == 1 ? "checked":"";?>/>
+                                            </div>
                                           </div>
-                                      </div>
-                                   </div>
-                                   <div class="col-md-6">
-                                       <div class="mt-15">
-                                        <input type="checkbox" data-size="sm" data-color="danger"name="switchery" id="switchery0" class="switchery" unchecked/>
-                                      </div>
-                                   </div>
-                                      </div>
-                                      <br>
-                                       <div class="row">
-                                       <div class="col-md-6">
-                                      <div class="media mt-1">
-                                          <div class="pr-2">
-                                              <img src="<?= base_url()?>/public/app-assets/icons/weighing_scale.png"> 
-                                          </div>
-                                          <div class="media-body">
-                                              <p class="text-bold-300 m-0">Weighing Scale</p>
-                                               
-                                              <p class="font-small-2 text-muted m-0">Enable barcode weighing scale</p>
-                                          </div>
-                                      </div>
-                                   </div>
-                                   <div class="col-md-6">
-                                       <div class="mt-15">
-                                        <input type="checkbox" data-size="sm" data-color="danger"name="switchery" id="switchery0" class="switchery" checked/>
-                                      </div>
-                                   </div>
-                                      </div>
-                                      <br>
+                                        </div>
+                                        <br>
 
-                                    <div class="row">
-                                       <div class="col-md-6">
-                                      <div class="media mt-1">
-                                          <div class="pr-2">
-                                              <img src="<?= base_url()?>/public/app-assets/icons/low_stock.png">
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                            <div class="media mt-1">
+                                                <div class="pr-2">
+                                                    <img src="<?= base_url() ?>/public/app-assets/icons/weighing_scale.png"> 
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="text-bold-300 m-0">Weighing Scale</p>
+                                                     
+                                                    <p class="font-small-2 text-muted m-0">Enable barcode weighing scale</p>
+                                                </div>
+                                            </div>
                                           </div>
-                                          <div class="media-body">
-                                              <p class="text-bold-300 m-0">Low Stock Notification</p>
-                                               
-                                              <p class="font-small-2 text-muted m-0">Get daily email on items that are lower than your reorder point</p>
+                                          <div class="col-md-6">
+                                               <div class="mt-15">
+                                                <input type="checkbox" data-size="sm" data-color="danger"name="weighing_scale" data-feature="weighing_scale" class="switchery features" <?=isset($data['features']) && $data['features']['weighing_scale'] == 1 ? "checked":"";?>/>
+                                              </div>
                                           </div>
-                                      </div>
-                                   </div>
-                                   <div class="col-md-6">
-                                       <div class="mt-15">
-                                        <input type="checkbox" data-size="sm" data-color="danger"name="switchery" id="switchery0" class="switchery" checked/>
-                                      </div>
-                                   </div>
-                                      </div>
-                                      <br>
-                                     <div class="row">
-                                       <div class="col-md-6">
-                                      <div class="media mt-1">
-                                          <div class="pr-2">
-                                             <img src="<?= base_url()?>/public/app-assets/icons/tip.png">
+                                        </div>
+                                        <br>
+
+                                        <!-- <div class="row">
+                                          <div class="col-md-6">
+                                            <div class="media mt-1">
+                                                <div class="pr-2">
+                                                   <img src="<?= base_url()?>/public/app-assets/icons/tax.png">
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="text-bold-300 m-0">Included Tax</p>
+                                                     
+                                                    <p class="font-small-2 text-muted m-0">On adding items retail price entering including Tax</p>
+                                                </div>
+                                            </div>
                                           </div>
-                                          <div class="media-body">
-                                              <p class="text-bold-300 m-0">Tip</p>
-                                               
-                                              <p class="font-small-2 text-muted m-0">Waiter or captain tip option</p>
+                                          <div class="col-md-6">
+                                             <div class="mt-15">
+                                                <input type="checkbox" data-size="sm" data-color="danger" name="general_features[included_tax]" id="included_tax" class="switchery"/>
+                                              </div>
                                           </div>
-                                      </div>
-                                   </div>
-                                   <div class="col-md-6">
-                                       <div class="mt-15">
-                                        <input type="checkbox" data-size="sm" data-color="danger"name="switchery" id="switchery0" class="switchery" unchecked/>
-                                      </div>
-                                   </div>
-                                      </div>
-                                      <br>
-                                    <div class="row">
-                                       <div class="col-md-6">
-                                          <div class="media mt-1">
+                                        </div>
+                                        <br/> -->
+
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                            <div class="media mt-1">
+                                                <div class="pr-2">
+                                                    <img src="<?= base_url() ?>/public/app-assets/icons/barcode.png"> 
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="text-bold-300 m-0">Barcode Auto Generation</p>
+                                                     
+                                                    <p class="font-small-2 text-muted m-0">Auto generate Barcode/SKU For Newly added items/Variants</p>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                               <div class="mt-15">
+                                                <input type="checkbox" data-size="sm" data-color="danger"name="barcode_generation" data-feature="barcode_generation" class="switchery features" <?=isset($data['features']) && $data['features']['barcode_generation'] == 1 ? "checked":"";?>/>
+                                              </div>
+                                          </div>
+                                        </div>
+                                        <br>
+
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                            <div class="media mt-1">
                                               <div class="pr-2">
-                                                    <img src="<?= base_url()?>/public/app-assets/icons/gift_cards.png"> 
+                                                  <img src="<?= base_url() ?>/public/app-assets/icons/low_stock.png">
                                               </div>
                                               <div class="media-body">
-                                                  <p class="text-bold-300 m-0">Gift</p>
+                                                  <p class="text-bold-300 m-0">Low Stock Notification</p>
                                                    
-                                                  <p class="font-small-2 text-muted m-0">Prepaid gift card management and redeem</p>
+                                                  <p class="font-small-2 text-muted m-0">Get daily email on items that are lower than your reorder point</p>
                                               </div>
-                                          </div>
-                                       </div>
-                                       <div class="col-md-6">
-                                           <div class="mt-15">
-                                            <input type="checkbox" data-size="sm" data-color="danger"name="switchery" id="switchery0" class="switchery" checked/>
-                                          </div>
-                                       </div>
-                                    </div>
-                                     <?php if(isset($data['permission']->clear_inventory) && $data['permission']->clear_inventory == 1) { ?>
-                                      <br/><br/>
-                                      <b>Stock & Transaction Clearance</b>
-                                      <div class="row mt-1">
-                                        <div class="col-md-3">
-                                          <input type="date" name="s_t_date" id="s-t-date" class="form-control">
-                                        </div>
-                                      </div>
-                                      <div class="row mt-1">
-                                        <div class="col-md-6">
-                                          <div class="media mt-1">
-                                            <div class="pr-2">
-                                              <img src="<?=base_url()?>/public/app-assets/icons/tick.png">
                                             </div>
-                                            <div class="media-body">
-                                                <p class="text-bold-300 m-0">Clear Stock</p>
-                                                 
-                                                <p class="font-small-2 text-muted m-0">Clear Stock only (Transactions will not be affected)</p>
+                                          </div>
+                                          <div class="col-md-6">
+                                             <div class="mt-15">
+                                              <input type="checkbox" data-size="sm" data-color="danger"name="low_stock_notification" data-feature="low_stock_notification" class="switchery features" <?=isset($data['features']) && $data['features']['low_stock_notification'] == 1 ? "checked":"";?>/>
                                             </div>
                                           </div>
                                         </div>
-                                        <div class="col-md-6">
-                                           <div class="mt-15">
-                                            <button class="btn btn-info clear-s-t" data-type="1" style="height:32px;">Clear</button>
-                                          </div>
-                                       </div>
-                                      </div>
-                                      <div class="row mt-1">
-                                        <div class="col-md-6">
-                                          <div class="media mt-1">
-                                            <div class="pr-2">
-                                              <img src="<?=base_url()?>/public/app-assets/icons/tick.png">
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="text-bold-300 m-0">Clear Transactions</p>
-                                                 
-                                                <p class="font-small-2 text-muted m-0">Clear Transactions only (Stock will not be affected)</p>
+                                        <br>
+
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                            <div class="media mt-1">
+                                                <div class="pr-2">
+                                                   <img src="<?= base_url() ?>/public/app-assets/icons/tip.png">
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="text-bold-300 m-0">Tip</p>
+                                                     
+                                                    <p class="font-small-2 text-muted m-0">Waiter or captain tip option</p>
+                                                </div>
                                             </div>
                                           </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                           <div class="mt-15">
-                                            <button class="btn btn-info clear-s-t" data-type="2" style="height:32px;">Clear</button>
-                                          </div>
-                                       </div>
-                                      </div>
-                                      <div class="row mt-1">
-                                        <div class="col-md-6">
-                                          <div class="media mt-1">
-                                            <div class="pr-2">
-                                              <img src="<?=base_url()?>/public/app-assets/icons/tick.png">
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="text-bold-300 m-0">Clear Stock and Transactions</p>
-                                                 
-                                                <p class="font-small-2 text-muted m-0">Clear Both Stock & Transactions (Everything goes to Zero)</p>
+                                          <div class="col-md-6">
+                                             <div class="mt-15">
+                                              <input type="checkbox" data-size="sm" data-color="danger"name="tip" data-feature="tip" class="switchery features" <?=isset($data['features']) && $data['features']['tip'] == 1 ? "checked":"";?>/>
                                             </div>
                                           </div>
                                         </div>
-                                        <div class="col-md-6">
-                                           <div class="mt-15">
-                                            <button class="btn btn-info clear-s-t" data-type="3" style="height:32px;">Clear</button>
+                                        <br>
+                                        <div class="row">
+                                           <div class="col-md-6">
+                                              <div class="media mt-1">
+                                                  <div class="pr-2">
+                                                        <img src="<?= base_url() ?>/public/app-assets/icons/gift_cards.png"> 
+                                                  </div>
+                                                  <div class="media-body">
+                                                      <p class="text-bold-300 m-0">Gift</p>
+                                                       
+                                                      <p class="font-small-2 text-muted m-0">Prepaid gift card management and redeem</p>
+                                                  </div>
+                                              </div>
+                                           </div>
+                                           <div class="col-md-6">
+                                               <div class="mt-15">
+                                                <input type="checkbox" data-size="sm" data-color="danger"name="gift" data-feature="gift" class="switchery features" <?=isset($data['features']) && $data['features']['gift'] == 1 ? "checked":"";?>/>
+                                              </div>
+                                           </div>
+                                        </div>
+                                         <?php if (isset($data['permission']->clear_inventory) && $data['permission']->clear_inventory == 1) { ?>
+                                          <br/><br/>
+                                          <b>Stock & Transaction Clearance</b>
+                                          <div class="row mt-1">
+                                            <div class="col-md-3">
+                                              <input type="date" name="s_t_date" id="s-t-date" class="form-control">
+                                            </div>
                                           </div>
-                                       </div>
-                                      </div>
-                                      <?php } ?>
+                                          <div class="row mt-1">
+                                            <div class="col-md-6">
+                                              <div class="media mt-1">
+                                                <div class="pr-2">
+                                                  <img src="<?= base_url() ?>/public/app-assets/icons/tick.png">
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="text-bold-300 m-0">Clear Stock</p>
+                                                     
+                                                    <p class="font-small-2 text-muted m-0">Clear Stock only (Transactions will not be affected)</p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                               <div class="mt-15">
+                                                <button class="btn btn-info clear-s-t" data-type="1" style="height:32px;">Clear</button>
+                                              </div>
+                                           </div>
+                                          </div>
+                                          <div class="row mt-1">
+                                            <div class="col-md-6">
+                                              <div class="media mt-1">
+                                                <div class="pr-2">
+                                                  <img src="<?= base_url() ?>/public/app-assets/icons/tick.png">
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="text-bold-300 m-0">Clear Transactions</p>
+                                                     
+                                                    <p class="font-small-2 text-muted m-0">Clear Transactions only (Stock will not be affected)</p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                               <div class="mt-15">
+                                                <button class="btn btn-info clear-s-t" data-type="2" style="height:32px;">Clear</button>
+                                              </div>
+                                           </div>
+                                          </div>
+                                          <div class="row mt-1">
+                                            <div class="col-md-6">
+                                              <div class="media mt-1">
+                                                <div class="pr-2">
+                                                  <img src="<?= base_url() ?>/public/app-assets/icons/tick.png">
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="text-bold-300 m-0">Clear Stock and Transactions</p>
+                                                     
+                                                    <p class="font-small-2 text-muted m-0">Clear Both Stock & Transactions (Everything goes to Zero)</p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                               <div class="mt-15">
+                                                <button class="btn btn-info clear-s-t" data-type="3" style="height:32px;">Clear</button>
+                                              </div>
+                                           </div>
+                                          </div>
+                                          <?php } ?>
                                       </div>
                                     </div>
                                  </div>
@@ -1024,7 +1016,7 @@
                <?php } ?>
                <!-- Tax End --> 
                 <!-- Aggregator Start -->
-               <div class="tab-pane" id="aggregator" role="tabpanel" aria-labelledby="linkIcon12-tab1" aria-expanded="false">
+               <!-- <div class="tab-pane" id="aggregator" role="tabpanel" aria-labelledby="linkIcon12-tab1" aria-expanded="false">
                   <section class="mb-1 filter-bar">
                   <div class="filter-bar-item f-12">
                     <span>
@@ -1101,7 +1093,7 @@
                         </section>
                      </div>
                   </div>
-               </div>
+               </div> -->
                <!-- Aggregator End --> 
                <!-- Stores Start -->
                <?php if(isset($data['permission']->store_terminal) && $data['permission']->store_terminal == 1) { ?>
