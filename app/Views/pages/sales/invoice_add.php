@@ -218,7 +218,7 @@
                                               <input class="form-control rate" type="text" name="items[<?= $k+1; ?>][rate]" value="<?= $row['rate']; ?>">
                                             </td>
                                             <td>
-                                                <input class="discount form-control" type="number" name="items[<?= $k+1; ?>][discount]" value="<?= $row['discount']; ?>">&nbsp;<select class="form-control discount form-select" name="items[<?= $k+1; ?>][discount_type]"><option value="%" <?php $row['discount_type'] == '%' ? 'selected' : '' ?>>%</option><option value="ZMW" <?php $row['discount_type'] == 'ZMW' ? 'selected' : '' ?>>ZMW</option></select>
+                                                <input class="discount form-control" type="number" name="items[<?= $k+1; ?>][discount]" value="<?= $row['discount']; ?>">&nbsp;<select class="form-control discount_type form-select" name="items[<?= $k+1; ?>][discount_type]"><option value="%" <?php $row['discount_type'] == '%' ? 'selected' : '' ?>>%</option><option value="ZMW" <?php $row['discount_type'] == 'ZMW' ? 'selected' : '' ?>>ZMW</option></select>
                                                 <input class="discount_amount form-control" type="hidden" name="items[<?= $k+1; ?>][discount_amount]" value="<?= $row['discount_amount']; ?>">
                                             </td>
                                             <td class="flex is_include_tax">
@@ -263,7 +263,7 @@
                                                <input class="form-control rate" type="text" name="items[1][rate]">
                                             </td>
                                             <td class="text-center">
-                                               <input class="discount form-control" type="number" name="items[1][discount]">&nbsp;<select class="form-control discount form-select" name="items[1][discount_type]"><option value="%">%</option><option value="ZMW">ZMW</option></select>
+                                               <input class="discount form-control" type="number" name="items[1][discount]">&nbsp;<select class="form-control discount_type form-select" name="items[1][discount_type]"><option value="%">%</option><option value="ZMW">ZMW</option></select>
                                                 <input class="discount_amount form-control" type="hidden" name="items[1][discount_amount]" value="0.00">
                                             </td>
                                             <td class="flex is_include_tax">

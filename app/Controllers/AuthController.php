@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\RoleModel;
 use App\Models\EmployeeModel;
+use App\Models\AgentModel;
 use App\Models\StoreModel;
 use App\Models\TerminalsModel;
 use App\Models\CommonModel;
@@ -32,77 +33,129 @@ class AuthController extends BaseController
         if ($this->request->getMethod() == "post") {
 
                 $post = $this->request->getVar();
-                $employeeModel = new EmployeeModel();
                 $email = $post['email'];
                 $password = $post['password'];
-                $rememberme = isset($post['remember_me'])?$post['remember_me']:"";
-                
-                $data = $employeeModel->where('primary_email', $email)->first();
 
-                if($data){
-                    $db = db_connect();
-                    $commonModel = new CommonModel($db);
-                    $uData = ['timezone'=>$post['timezone']];
-                    $commonModel->UpdateData('employees',$data['id'],$uData);
-                    
-                    $pass = $data['password'];
-                    $authenticatePassword = password_verify($password, $pass);
-                    
-                    if($authenticatePassword){
-                        $roleModel = new RoleModel();
-                        $role = $roleModel->where('id',$data['role_id'])->first();
-                        $roleId = "";
-                        $roleName = "";
-                        if(isset($role) && !empty($role)) {
-                            $roleId = $role['id'];
-                            $roleName = $role['role_name'];
+                if($post['role'] == "2") {
+                    $rememberme = isset($post['remember_me'])?$post['remember_me']:"";
+
+                    $agentModel = new AgentModel();
+                    $data = $agentModel->where('email', $email)->first();
+                    if($data) {
+                        $pass = $data['password'];
+                        $authenticatePassword = password_verify($password, $pass);
+                        
+                        if($authenticatePassword){
+
+                            $ses_data = [
+                                'id' => $data['id'],
+                                'name' => $data['agent_name'],
+                                'email' => $data['email'],
+                                'isLoggedIn' => TRUE
+                            ];
+                            $session = session();
+                            $session->set($ses_data);
+                             if($rememberme==1){
+                                $session->set('remember_me', TRUE);
+                                setcookie('login_email',$email,time()+60*60*24*100);
+                                setcookie('login_pass',$password,time()+60*60*24*100);
+                             }
+                             else{
+                                // delete_cookie('login_email',$email,100);
+                                // delete_cookie('login_pass',$password,100);
+                             }
+                           
+                             return json_encode([
+                                "status" => "true",
+                                "message" => "Login successfully",
+                                "role_type"=>"2"
+                            ]);
+                        
+                        }else{
+                             return json_encode([
+                                "status" => "false",
+                                "message" => "Password is incorrect.",
+                            ]);
+
                         }
-
-                        $ses_data = [
-                            'id' => $data['id'],
-                            'name' => $data['first_name'].' '.$data['last_name'],
-                            'email' => $data['primary_email'],
-                            'role_name' => $roleName,
-                            'profile' => $data['profile'],
-                            'pos_id' => $data['pos_id'],
-                            'is_super_user' => $data['is_super_user'] == 1 ? true : false,
-                            'is_back_office' => $role['back_office'],
-                            'permissions' => json_decode($role['back_office_permission']),
-                            'isLoggedIn' => TRUE
-                        ];
-                        $session = session();
-                        $session->set($ses_data);
-                         if($rememberme==1){
-                             $session->set('remember_me', TRUE);
-                             setcookie('login_email',$email,time()+60*60*24*100);
-                            setcookie('login_pass',$password,time()+60*60*24*100);
-                         }
-                         else{
-                            // delete_cookie('login_email',$email,100);
-                            // delete_cookie('login_pass',$password,100);
-                         }
-                       
-                         return json_encode([
-                            "status" => "true",
-                            "message" => "Login successfully",
-                            "role" => $roleName,
-                            "store_assigned" => $data['store_id'] != "" ? true : false
-                        ]);
-                    
-                    }else{
-                         return json_encode([
+                    } else {
+                        return json_encode([
                             "status" => "false",
-                            "message" => "Password is incorrect.",
+                            "message" => "Email does not exist.",
+                        ]);
+                    }
+                } else {
+                    $employeeModel = new EmployeeModel();
+                    $rememberme = isset($post['remember_me'])?$post['remember_me']:"";
+                    
+                    $data = $employeeModel->where('primary_email', $email)->first();
+
+                    if($data){
+                        $db = db_connect();
+                        $commonModel = new CommonModel($db);
+                        $uData = ['timezone'=>$post['timezone']];
+                        $commonModel->UpdateData('employees',$data['id'],$uData);
+                        
+                        $pass = $data['password'];
+                        $authenticatePassword = password_verify($password, $pass);
+                        
+                        if($authenticatePassword){
+                            $roleModel = new RoleModel();
+                            $role = $roleModel->where('id',$data['role_id'])->first();
+                            $roleId = "";
+                            $roleName = "";
+                            if(isset($role) && !empty($role)) {
+                                $roleId = $role['id'];
+                                $roleName = $role['role_name'];
+                            }
+
+                            $ses_data = [
+                                'id' => $data['id'],
+                                'name' => $data['first_name'].' '.$data['last_name'],
+                                'email' => $data['primary_email'],
+                                'role_name' => $roleName,
+                                'profile' => $data['profile'],
+                                'pos_id' => $data['pos_id'],
+                                'is_super_user' => $data['is_super_user'] == 1 ? true : false,
+                                'is_back_office' => $role['back_office'],
+                                'permissions' => json_decode($role['back_office_permission']),
+                                'isLoggedIn' => TRUE
+                            ];
+                            $session = session();
+                            $session->set($ses_data);
+                             if($rememberme==1){
+                                 $session->set('remember_me', TRUE);
+                                 setcookie('login_email',$email,time()+60*60*24*100);
+                                setcookie('login_pass',$password,time()+60*60*24*100);
+                             }
+                             else{
+                                // delete_cookie('login_email',$email,100);
+                                // delete_cookie('login_pass',$password,100);
+                             }
+                           
+                             return json_encode([
+                                "status" => "true",
+                                "message" => "Login successfully",
+                                "role_type" => "1",
+                                "role" => $roleName,
+                                "store_assigned" => $data['store_id'] != "" ? true : false
+                            ]);
+                        
+                        }else{
+                             return json_encode([
+                                "status" => "false",
+                                "message" => "Password is incorrect.",
+                            ]);
+
+                        }
+                    }else{
+                        return json_encode([
+                            "status" => "false",
+                            "message" => "Email does not exist.",
                         ]);
 
-                    }
-                }else{
-                     return json_encode([
-                    "status" => "false",
-                    "message" => "Email does not exist.",
-                    ]);
-
-                }   
+                    }   
+                }
         }
 
     }

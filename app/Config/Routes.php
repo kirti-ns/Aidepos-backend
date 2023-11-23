@@ -44,6 +44,17 @@ $routes->post('/post-change_password','AuthController::ChangePassword');
 $routes->get('/otp','AuthController::OTP');
 
 $routes->get('dashboard','DashboardController::index');
+$routes->get('agent/dashboard','AgentController::index');
+$routes->get('agent/merchants','AgentController::List_Merchant');
+$routes->post('agent/merchants/getMerchants','AgentController::getMerchants');
+$routes->get('agent/merchants/add_merchant','AgentController::Add_Merchant');
+$routes->get('agent/merchants/edit_merchant/(:num)','AgentController::Edit_Merchant/$1');
+$routes->post('agent/post_data','AgentController::Post_Data');
+$routes->get('agent/renewals/term','AgentController::List_Terms');
+$routes->post('agent/renewals/getTerms','AgentController::getTerms');
+$routes->post('/agent/term/editStoreandStaff','AgentController::Edit_StoreandStaff');
+$routes->post('/agent/term/editNumofStore','AgentController::Edit_NumofStore');
+$routes->post('/agent/term/postNumofStaff','AgentController::Post_StoreandStaff');
 
 $routes->get('/customers','CustomersController::index');
 $routes->get('/customers/add_customer','CustomersController::Add_Customer');

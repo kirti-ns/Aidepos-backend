@@ -169,7 +169,7 @@
       $('<input class="uom form-control" type="text" name="items['+t1+'][uom]"><input class="uomid form-control " type="hidden" name="items['+t1+'][uomid]">').appendTo(cell2);
       $('<input class="form-control quantity" type="number" name="items['+t1+'][quantity]" value="1">').appendTo(cell3);
       $('<input class="form-control rate" type="text" name="items['+t1+'][rate]">').appendTo(cell4);
-      $('<input class="discount_amount form-control" type="hidden" name="items['+t1+'][discount_amount]" value="0.00"><input class="lb-discount form-control " type="number" name="items['+t1+'][discount]"><select class="form-control lb-discount form-select" name="items['+t1+'][discount_type]"><option value="%">%</option><option value="ZMW">ZMW</option></select>').appendTo(cell5);
+      $('<input class="discount_amount form-control" type="hidden" name="items['+t1+'][discount_amount]" value="0.00"><input class="lb-discount form-control " type="number" name="items['+t1+'][discount]"><select class="form-control lb-discount-type form-select" name="items['+t1+'][discount_type]"><option value="%">%</option><option value="ZMW">ZMW</option></select>').appendTo(cell5);
       $('<input type="text" name="items['+t1+'][tax_amount]" class="form-control tax_amount" readonly><input class="form-control form-border tax" type="hidden" name="items['+t1+'][tax]"><input class="form-control form-border tax_type" type="hidden" name="items['+t1+'][tax_type]">').appendTo(cell6);
       $('<input type="hidden" class="tax_exc_amt" name="items['+t1+'][tax_exc_amt]" value="0"><input class="tax_excl" id="tax_excl'+t1+'" type="checkbox" name="items['+t1+'][tax_excl]" value="1"><label for="tax_excl'+t1+'"></label>').appendTo(cell7);
       $('<input class="tabledit-input form-control amount" type="text" name="items['+t1+'][amount]" value="">').appendTo(cell8);
@@ -278,7 +278,7 @@ $("#terms").change(function(){
     var tax_rate = self.parents('td').siblings('td').children('.tax').val();
     var tab = self.parents('td').siblings('td').children('.item-add').attr('data-tab');
     var discount = self.parents('td').siblings('td').children('.lb-discount').val();
-    var discount_type =  self.parents('td').children('.discount_type').val();
+    var discount_type =  self.parents('td').children('.lb-discount-type').val();
    
     var discount_amount = 0;
    
@@ -321,7 +321,7 @@ $("#terms").change(function(){
     var tax_rate = self.parents('td').siblings('td').children('.tax').val();
     var tab = self.parents('td').siblings('td').children('.item-add').attr('data-tab');
     var discount = self.parents('td').siblings('td').children('.lb-discount').val();
-    var discount_type =  self.parents('td').children('.discount_type').val();
+    var discount_type =  self.parents('td').children('.lb-discount-type').val();
    
     var discount_amount = 0;
    
@@ -358,17 +358,50 @@ $("#terms").change(function(){
     calculateLaybyAmount()
   });
 
-  $(document).on('change','.lb-discount',function(){
+  /*$(document).on('change','.lb-discount',function(){
     
     var self = $(this);
     var discount = self.val();
-    var discount_type =  self.parents('td').children('.discount_type').val(); 
+    var discount_type =  self.parents('td').children('.lb-discount-type').val(); 
     var amount = self.parents('td').siblings('td').children('.amount').val();
     var discount_value = "";
     discount_value = amount * discount/ 100;
     self.parents('td').children('.discount_amount').val(discount_value); 
     calculateLaybyAmount();
+  })*/
+  function discountCalculateAmount(discount,discount_type,amount){
+    var disc = "";
+    if(discount !== "") {
+      if(discount_type == "%") {
+        disc = (parseFloat(amount) * parseFloat(discount)) / 100;
+      } else {
+        disc = parseFloat(amount) - discount;
+      }
+    }
+    return disc;
+  }
+  $(document).on('change','.lb-discount',function(){
+    
+    var self = $(this),
+    disc = self.val(),
+    disc_type = self.parents('td').children('.lb-discount-type').val(),
+    amt = self.parents('td').siblings('td').children('.amount').val();
+    // var disc_val = amt * disc/ 100;
+    discCommonFunc(self,disc,disc_type,amt)
   })
+  $(document).on('change','.lb-discount-type',function(){
+      
+      var self = $(this),
+      disc_type = self.val(),
+      disc = self.parents('td').children('.lb-discount').val(),
+      amt = self.parents('td').siblings('td').children('.amount').val();
+      discCommonFunc(self,disc,disc_type,amt)
+  })
+  function discCommonFunc(self,disc,disc_type,amt){
+        var disc_val =  discountCalculateAmount(disc,disc_type,amt);
+        self.parents('td').children('.discount_amount').val(disc_val); 
+        calculateLaybyAmount();
+  }
 
   $(document).on('click','.tax_excl',function(){
   
@@ -529,7 +562,7 @@ $("#terms").change(function(){
     $('#total-discount').val(discount_amount.toFixed(2));
 
     var discount = 0; 
-    $('.discount').each(function()
+    $('.lb-discount').each(function()
     { 
       var value = $(this).val();
       if(value > 0)
@@ -538,7 +571,6 @@ $("#terms").change(function(){
     
     var total = subTotal + (parseFloat(adjust) - parseFloat(discount_amount));
     var subTotalFinal = subTotal - tax_amount;
-    
     if(discount > 0) {
       var subDiscount = subTotalFinal * discount /100;
       var txDiscount = tax_amount * discount /100;

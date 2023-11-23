@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class StoreModel extends Model
+class AgentModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'stores';
+    protected $table            = 'agents';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["pos_id","store_name","phone","country_code","tax_no","address","zip","city","features","no_of_staff","status"];
+    protected $allowedFields    = ['agent_name','contact_name','email','phone','city','password','commission_level'];
 
     // Dates
     protected $useTimestamps = false;
@@ -40,20 +40,4 @@ class StoreModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
     
-    public function GetAllStore(){
-      
-          $this->select('*,(select count(id) as total from terminals where store_id = stores.id) as total_terminals');
-          $this->orderBy('id desc');
-          return $this->findAll();
-   
-    }
-    public function GetStoreName($id)
-    {
-        $this->select('stores.store_name,stores.id as store_id');
-        $this->table('stores');
-        $this->where('stores.id',$id);
-        $data = $this->findAll();
-        return $data;
-
-    }
 }

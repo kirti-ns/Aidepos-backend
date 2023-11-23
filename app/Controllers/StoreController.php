@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CommonModel;
 use App\Models\StoreModel;
+use App\Models\EmployeeModel;
 
 class StoreController extends BaseController
 {
@@ -51,23 +52,34 @@ class StoreController extends BaseController
             }
             
             if(isset($post['id']) && empty($post['id']))
-                {
-                    $storeModel = new StoreModel();
-                    $storeModel->save($data);
+            {
+
+                $emp = new EmployeeModel();
+                $empData = $emp->select('num_of_store')->where('pos_id',$sessData['pos_id'])->where('is_super_user',1)->first();
+
+                $storeModel = new StoreModel();
+                $storeCount = $storeModel->where('pos_id',$sessData['pos_id'])->countAllResults();
+                if($storeCount >= $empData['num_of_store']) {
                     return json_encode([
+                        "status" => "false",
+                        "message" => "You exceeded the number of stores assigned",
+                    ]);
+                }
+
+                $storeModel->save($data);
+                return json_encode([
                     "status" => "true",
                     "message" => "New Data Created successfully",
                 ]);
-                }
-                else{
-                    $id = $post['id'];
-                    $storeModel = new StoreModel();
-                    $storeModel->update($id,$data);
-                    return json_encode([
+            } else{
+                $id = $post['id'];
+                $storeModel = new StoreModel();
+                $storeModel->update($id,$data);
+                return json_encode([
                     "status" => "true",
                     "message" => "Data updated successfully",
                 ]);
-                }  
+            }  
         
     }
 }

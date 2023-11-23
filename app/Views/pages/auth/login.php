@@ -90,6 +90,12 @@
                                           <form method="post" class="form-horizontal" id="login_form" name="login_form" action="<?= base_url('post-login')?>">
                                              <input type="hidden" name="action" id="action" value="post-login">
                                              <input type="hidden" name="table_name" id="table_name" value="employee">
+                                             <fieldset class="mb-1">
+                                                <label for="merchant">Merchant</label>
+                                                <input type="radio" checked name="role" value="1" id="merchant" class="jui-ni-radio-buttons">
+                                                <label for="agent">Agent</label>
+                                                <input type="radio" name="role" value="2" id="agent" class="jui-ni-radio-buttons">
+                                             </fieldset>
                                              <div class="row">
                                              <div class="col-md-12 mb-1">
                                                 <div class="form-floating">

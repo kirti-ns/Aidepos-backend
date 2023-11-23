@@ -378,7 +378,8 @@
          },
 
          messages: {
-           last_name: "Please enter user store name",
+            first_name: "Please enter first name",
+            last_name: "Please enter last name",
             role_id: "Please select user role",
             tax_no: "Please enter  tax",
             primary_email: "Please enter primary email",

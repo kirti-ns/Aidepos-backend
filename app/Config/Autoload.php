@@ -63,6 +63,7 @@ class Autoload extends AutoloadConfig
      */
     public $classmap = [
         'Template' => APPPATH .'/Libraries/Template.php',
+        'AgentTemplate' => APPPATH .'/Libraries/AgentTemplate.php',
         'checkSession' => APPPATH . 'Hooks/checkSession.php'
     ];
 

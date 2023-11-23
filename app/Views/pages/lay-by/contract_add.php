@@ -206,7 +206,7 @@
                                                       <td class="d-flex">
                                                          <input class="discount_amount form-control" type="hidden" name="items[<?= $k+1; ?>][discount_amount]" value="<?= $row['discount_amount']; ?>">
                                                          <input class="lb-discount form-control" type="number" name="items[<?= $k+1; ?>][discount]" value="<?= $row['discount']; ?>">
-                                                         <select class="form-control lb-discount form-select" name="items[<?= $k+1; ?>][discount_type]">
+                                                         <select class="form-control lb-discount-type form-select" name="items[<?= $k+1; ?>][discount_type]">
                                                             <option value="%" <?php $row['discount_type'] == '%' ? 'selected' : '' ?>>%</option>
                                                             <option value="ZMW" <?php $row['discount_type'] == 'ZMW' ? 'selected' : '' ?>>ZMW</option>
                                                          </select>
@@ -255,7 +255,7 @@
                                                    <td class="d-flex">
                                                       <input class="discount_amount form-control" type="hidden" name="items[1][discount_amount]" value="0.00">
                                                       <input class="lb-discount form-control" type="number" name="items[1][discount]">
-                                                      <select class="form-control lb-discount form-select" name="items[1][discount_type]">
+                                                      <select class="form-control lb-discount-type form-select" name="items[1][discount_type]">
                                                          <option value="%">%</option>
                                                          <option value="ZMW">ZMW</option>
                                                       </select>
@@ -325,7 +325,7 @@
                                         </div>
                                        <div class="row">
                                           <div class="col-md-4">
-                                             <span>Sutotal</span>
+                                             <span>Subtotal</span>
                                           </div>
                                           <div class="col-md-4 conv-currency" style="visibility: hidden;">
                                             <!-- <span class="conv-curr-symbol f-w-600"><?= isset($value['currency_code']) ? $value['currency_code'] : '' ?></span> --><span class="subCurrTotal"><?= isset($value['sub_curr_total']) ? $value['sub_curr_total'] : '0.00' ?></span>

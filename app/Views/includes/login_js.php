@@ -55,12 +55,14 @@ $(document).ready(function () {
          // Specify validation rules
          rules: {
             email: "required",
-            password: "required"
+            password: "required",
+            role: "required"
          },
 
          messages: {
             email: "Please enter email",
-            password: "Please enter password"
+            password: "Please enter password",
+            role:"Please select role"
          },
          errorElement: "div",
          errorPlacement: function (error, element) {
@@ -210,10 +212,14 @@ function form_submit(formid, event) {
       switch (formid) {
          case 'login_form':
             if (data.status == 'true') {
-               if(data.store_assigned) {
-                  window.location.href = base_url + "store";
-               } else {
-                  window.location.href = base_url + "dashboard";
+               if(data.role_type == "2") {
+                  window.location.href = base_url + "agent/dashboard"
+               } else if(data.role_type == "1") {
+                  if(data.store_assigned) {
+                     window.location.href = base_url + "store";
+                  } else {
+                     window.location.href = base_url + "dashboard";
+                  }
                }
             }
             break;

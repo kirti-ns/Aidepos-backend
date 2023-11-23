@@ -9,6 +9,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use App\Libraries\Template;
+use App\Libraries\AgentTemplate;
 
 /**
  * Class BaseController
@@ -38,6 +39,7 @@ abstract class BaseController extends Controller
      */
     protected $helpers = ['url','common'];
     protected $template;
+    protected $agent_template;
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -55,6 +57,7 @@ abstract class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
         $this->template = new Template();
+        $this->agent_template = new AgentTemplate();
         // E.g.: $this->session = \Config\Services::session();
     }
 }

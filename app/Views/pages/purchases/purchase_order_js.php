@@ -309,10 +309,12 @@ $(document).on('change','.item-add',function() {
 });
 function discountCalculateAmount(discount,discount_type,amount){
     var disc = "";
-    if(discount_type == "%") {
-      disc = parseFloat(amount) * parseFloat(discount) / 100;
-    } else {
-      disc = parseFloat(amount) - discount;
+    if(discount !== "") {
+      if(discount_type == "%") {
+        disc = (parseFloat(amount) * parseFloat(discount)) / 100;
+      } else {
+        disc = parseFloat(amount) - discount;
+      }
     }
     return disc;
 }
@@ -684,21 +686,22 @@ function calculateAmount()
 
 function calculateSellAmount()
 {
-  var subTotal = 0; var amount = 0;
+  var subTotal = 0;var amount = 0;
   $('.amount').each(function()
   { 
     var value = $(this).val();
     if(value > 0)
       subTotal += parseFloat(value);
   });
-  
+
   var tax = 0; var tax_text = "Tax";
   $('.tax').each(function()
   { 
     var value = $(this).val();
     if(value > 0)
-      tax_text = 'Tax '// + $('.tax_type').val() +'('+value+'%)';
+      tax_text = 'Tax ';
   });
+  $('#tax_text').text(tax_text);
   
   var tax_amount = 0; 
   $('.tax_amount').each(function()
@@ -716,11 +719,7 @@ function calculateSellAmount()
     if(value > 0)
       tax_excl_amt += parseFloat(value);; 
   });
-     
-  $('.taxAmount').text(tax_amount.toFixed(2));
-  $('#total-tax').val(tax_amount);
-  $('#tax_text').text(tax_text);
-
+  
   var adjust = $('.adjustment_value').val();  
   if(adjust == ""){
     adjust = 0;
@@ -736,8 +735,25 @@ function calculateSellAmount()
   $('.discountAmount').text(discount_amount.toFixed(2));
   $('#total-discount').val(discount_amount.toFixed(2));
 
+  var discount = 0; 
+  $('.discount').each(function()
+  { 
+    var value = $(this).val();
+    if(value > 0)
+      discount += parseFloat(value); 
+  });
+
   var total = subTotal + parseFloat(adjust) - parseFloat(discount_amount);
   var subTotalFinal = subTotal - tax_amount;
+  if(discount > 0) {
+    var subDiscount = subTotalFinal * discount /100;
+    var txDiscount = tax_amount * discount /100;
+    subTotalFinal = subTotalFinal - subDiscount;
+    tax_amount = tax_amount - txDiscount
+  }
+  
+  $('.taxAmount').text(tax_amount.toFixed(2));
+  $('#total-tax').val(tax_amount);
   if(tax_excl_amt > 0) {
     total += tax_excl_amt;
     subTotalFinal += tax_excl_amt;
