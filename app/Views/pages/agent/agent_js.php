@@ -139,7 +139,7 @@ $(document).ready(function(){
           var c4 = data.expiry_date;
           var c5 = data.next_renw;
           var c6 = "<a href=\"#\" data-id=\" "+data.pos_id+ "\" class=\"transh-icon-color editTermRow\"><i class=\"fa fa-pencil\"></i></a>";
-          var c7 = '-';
+          var c7 = "<a href=\"#\" data-id=\""+data.id+"\" class=\"transh-icon-color additionalStore\"><i class=\"fa fa-plus\"></i></a>";;
 
           $(row).children().eq(0).html(c0);
           $(row).children().eq(1).html(c1);
@@ -149,7 +149,6 @@ $(document).ready(function(){
           $(row).children().eq(5).html(c5);
           $(row).children().eq(6).html(c6);
           $(row).children().eq(7).html(c7);
-          // $(row).children().eq(8).html(c8);
                            
         }
     });
@@ -169,6 +168,7 @@ $(document).ready(function(){
             address: "required",
             zip: "required",
             city: "required",
+            agent_agreed_amt: "required",
             password: "required",
             employee__con_password: {
                equalTo: "#employee_password"
@@ -184,6 +184,7 @@ $(document).ready(function(){
             address: "Please enter user address",
             zip: "Please enter user zip",
             city: "Please enter user city",
+            agent_agreed_amt:"Please enter agreed amount",
             password: "Please enter password",
          },
          errorElement: "div",
@@ -275,6 +276,9 @@ $(document).ready(function(){
                       '<td>'+
                         '<input type="number" class="form-control" name="store['+i+'][no_of_staff]" placeholder="Enter No of Staff" value="'+v.no_of_staff+'" />'+
                       '</td>'+
+                      '<td>'+
+                        '<input type="number" class="form-control" name="store['+i+'][no_of_terminal]" placeholder="Enter No of Terminal" value="'+v.no_of_terminal+'" />'+
+                      '</td>'+
                     '</tr>';
             i++;
           })
@@ -330,5 +334,62 @@ $(document).ready(function(){
       });
 
    })
+
+   $(document).on('change','#contract',function(){
+      var term = $(this).find(':selected').attr('data-term');
+
+      $('#term').val(term)
+   });
+
+   $(document).on('click','.additionalStore',function(){
+      var id = $(this).attr('data-id');
+      $('#emp-id-inp').val(id);
+      $.ajax({
+         type: "POST",
+         url: '<?=base_url()?>/agent/term/editAdditionalStore',
+         data: {
+            id: id
+         },
+         dataType: "json",
+         encode: true,
+      }).done(function (data) {
+         if(data.status == 'true'){
+          
+          $('#no-of-store-inp').val(data.data.additional_store);
+          $('#store-fee').val(data.data.additional_store_fee);
+        }
+      });
+      $('#additional-store-mdl').modal('show');
+
+
+   });
+
+   $(document).on('click','#btnSubmitAddStore',function(){
+      var id = $('#emp-id-inp').val();
+      var store = $('#no-of-store-inp').val();
+      var fee = $('#store-fee').val();
+
+      if(store != "" && fee != "") {
+
+        $.ajax({
+           type: "POST",
+           url: '<?=base_url()?>/agent/term/postAdditionalStore',
+           data: {
+              id: id,
+              num_of_store: store,
+              fee: fee
+           },
+           dataType: "json",
+           encode: true,
+        }).done(function (data) {
+           if(data.status == 'true'){
+            swal("Store Updated!", data.message, "success");
+            setTimeout(function(){
+              window.location.reload();
+            },500);
+           }
+        });
+      }
+   });
 });
 </script>

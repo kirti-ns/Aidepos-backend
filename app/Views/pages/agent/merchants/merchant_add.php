@@ -156,12 +156,6 @@
                                  </div>
                                  <div class="col-md-3">
                                     <div class="form-floating">
-                                       <input type="date" class="form-control" name="expiry_date" id="expiry_date" value="<?= isset($value['expiry_date'])?$value['expiry_date']:''?>" >
-                                       <label for="floatingSelectGrid">Expiry Date</label>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-3">
-                                    <div class="form-floating">
                                        <input type="password" class="form-control" name="employee_password" id="employee_password" placeholder="Password">
                                        <div class="form-control-position"  style="padding: 9px;">
                                           <i toggle="#password-field" class="fa fa-eye toggle-password"></i>
@@ -187,11 +181,18 @@
                                          <option value="">Select Contract</option>
                                          <?php if(!empty($data['contract'])) {
                                           foreach($data['contract'] as $c) { ?>
-                                            <option value="<?=$c['id']?>" <?= $c['id'] == $value['contract'] ? 'selected' : '' ?>><?=$c['license']?></option>
+                                            <option value="<?=$c['id']?>" data-term="<?=$c['term']?>" <?= isset($value['contract']) && ($c['id'] == $value['contract']) ? 'selected' : '' ?>><?=$c['license_period']?></option>
                                          <?php } } ?>
                                       </select>
+                                      <input type="hidden" class="form-control" name="term" id="term">
                                        <label for="contract">Contract</label>
                                     </div>
+                                 </div>
+                                 <div class="col-md-3">
+                                   <div class="form-floating">
+                                     <input type="number" name="agent_agreed_amt" id="agent_agreed_amt" class="form-control" value="<?= isset($value['agent_agreed_amt'])?$value['agent_agreed_amt']:''?>" placeholder="Agent Agreed Amount" <?= isset($value['agent_agreed_amt'])?'readonly':''?>>
+                                       <label for="agent_agreed_amt">Agent Agreed Amount</label>
+                                   </div>
                                  </div>
                               </div>
                               <br>

@@ -8,6 +8,7 @@ use App\Models\EmployeeModel;
 use App\Models\StoreModel;
 use App\Models\MerchantContractModel;
 use DateTime;
+use DateInterval;
 
 class AgentController extends BaseController
 {
@@ -130,21 +131,18 @@ class AgentController extends BaseController
         $contract = new MerchantContractModel();
         $contractData = $contract->findAll();
         $data['contract'] = [];
-
         foreach ($contractData as $key => $value) {
+            $p = "Monthly";
+            if($value['payment_structure'] == "3") {
+                $p = "Quarterly";
+            } else if($value['payment_structure'] == "4") {
+                $p = "Yearly";
+            } else if($value['payment_structure'] == "6") {
+                $p = "Annualy";
+            }
             $list['id'] = $value['id'];
-            $term  = "Month";
-            if($value['license_period_term'] == "2") {
-                $term = "Year";
-            }
-
-            $pay = "Monthly";
-            if($value['payment_structure'] == "1"){
-                $pay = "Quarterly";
-            } else if($value['payment_structure'] == "2") {
-                $pay = "Yearly";
-            }
-            $list['license'] = $value['license_period'].' '.$term.' - '.$pay.' Pay';
+            $list['license_period'] = $value['license_period'].' ('.$p.')';
+            $list['term'] = $value['term'];
             $data['contract'][] = $list;
         }
 
@@ -164,21 +162,18 @@ class AgentController extends BaseController
         $contract = new MerchantContractModel();
         $contractData = $contract->findAll();
         $data['contract'] = [];
-        
         foreach ($contractData as $key => $value) {
+            $p = "Monthly";
+            if($value['payment_structure'] == "3") {
+                $p = "Quarterly";
+            } else if($value['payment_structure'] == "4") {
+                $p = "Yearly";
+            } else if($value['payment_structure'] == "6") {
+                $p = "Annualy";
+            }
             $list['id'] = $value['id'];
-            $term  = "Month";
-            if($value['license_period_term'] == "2") {
-                $term = "Year";
-            }
-
-            $pay = "Monthly";
-            if($value['payment_structure'] == "1"){
-                $pay = "Quarterly";
-            } else if($value['payment_structure'] == "2") {
-                $pay = "Yearly";
-            }
-            $list['license'] = $value['license_period'].' '.$term.' - '.$pay.' Pay';
+            $list['license_period'] = $value['license_period'].' ('.$p.')';
+            $list['term'] = $value['term'];
             $data['contract'][] = $list;
         }
 
@@ -209,7 +204,7 @@ class AgentController extends BaseController
         }
             
         $data = [
-            'first_name' => $post["first_name"],
+           'first_name' => $post["first_name"],
             'last_name' => $post["last_name"],
             'profile' => $imagename,
             'primary_email' => $post["primary_email"],
@@ -222,22 +217,28 @@ class AgentController extends BaseController
             'state' => isset($post["state"])?$post["state"]:0,
             'country' => isset($post["country"])?$post["country"]:0,
             'gender' => isset($post["gender"])?$post["gender"]:0,
-            'expiry_date' => isset($post["expiry_date"])?$post["expiry_date"]:0,
             'store_id' => "",
             'terminal_id' => "",
             'role_id'=>1,
             'status' => isset($post["status"])?$post["status"]:0,
             'contract' => isset($post["contract"])?$post["contract"]:"",
-            'is_super_user'=>1,
+            'is_super_user'=> 1,
             'created_by'=>2
         ];
-                
+
+        if(isset($post['term']) && $post['term'] != "") {
+            $currentDate = new DateTime();
+            $numberOfMonths = $post['term'];
+            $newDate = $currentDate->add(new DateInterval("P{$numberOfMonths}M"));
+            $data['contract_date'] = date('Y-m-d');
+            $data['expiry_date'] = $newDate->format('Y-m-d');  
+        }   
         if(isset($post['id']) && empty($post['id']))
         {
+            $data['created_by_id'] = $agent_id;
             $password = password_hash($post["employee_password"],PASSWORD_DEFAULT);
             $data['password'] = $password;
-
-            $data['created_by_id'] = $agent_id;
+            $data['agent_agreed_amt'] = $post['agent_agreed_amt'];
 
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $charactersLength = strlen($characters);
@@ -255,15 +256,16 @@ class AgentController extends BaseController
             $commonModel = new CommonModel($db);
             $pResult = $commonModel->AddData('pos',$pData);
 
-            $data['pos_id'] = $pResult;
+            $data['pos_id'] = $pResult;      
 
             $fData = [
                 'pos_id'=>$pResult,
                 'barcode_generation'=>1
             ];
             $commonModel->AddData('features',$fData);
-            $commonModel->AddData('employees',$data);
 
+            $employeeModel = new EmployeeModel();
+            $employeeModel->save($data);
             return json_encode([
                 "status" => "true",
                 "message" => "New Data Created successfully",
@@ -311,7 +313,6 @@ class AgentController extends BaseController
        $searchValue = $advancesearchValue['match']['search'];
 
        $agent_id = session()->get('id');
-
         $cm = new EmployeeModel();
         $cmfilter = new EmployeeModel();
        
@@ -339,6 +340,7 @@ class AgentController extends BaseController
         $cmfilter->where('created_by',2)->where('created_by_id',$agent_id);
         $cm->where('is_super_user',1);
         $cmfilter->where('is_super_user',1);
+        $cm->orderBy('id','DESC');
 
         $records = $cm->findAll($rowperpage, $start);
         $totalRecordwithFilter = $cmfilter->countAllResults();
@@ -351,18 +353,11 @@ class AgentController extends BaseController
             $records[$k]['next_renw'] = "-";
             if($row['contract'] != "") {
                 $contractDt = $contract->where('id',$row['contract'])->first();
-                $term = $contractDt['license_period_term'] == "1" ? "Month" : "Year";
-                $records[$k]['license'] = $contractDt['license_period'].' '.$term;
+                $records[$k]['license'] = $contractDt['license_period'];
 
-                if($row['contract_date'] != "") {
-                    $givenDate = $row['contract_date']; 
-                    $startDate = new DateTime($givenDate);
-
-                    if($contractDt['license_period_term'] == "1") {
-                        $records[$k]['next_renw'] = $startDate->modify('+'.$contractDt['license_period'].' months')->format('Y-m-d');
-                    } else {
-                        $records[$k]['next_renw'] = $startDate->modify('+'.$contractDt['license_period'].' years')->format('Y-m-d');
-                    }
+                $records[$k]['next_renw'] = '-';
+                if($row['expiry_date'] != "") {
+                    $records[$k]['next_renw'] = date('Y-m-d', strtotime($row['expiry_date'] . ' +1 day'));
                 }
             }
             $records[$k]['created_at'] = date('Y-m-d',strtotime($row['created_at']));
@@ -435,6 +430,49 @@ class AgentController extends BaseController
             $data = array('no_of_staff'=>$val['no_of_staff']);
             $result = $commonModel->UpdateData('stores',$val['store_id'],$data);
         }
+
+        return json_encode([
+            "status" => "true",
+            "message" => "Data Updated Successfully",
+        ]);
+    }
+
+    public function Edit_AdditionalStore()
+    {
+        $request = service('request');
+        $post = $request->getPost();
+        
+        $id = $post['id'];
+        $emp = new EmployeeModel();
+        $empData = $emp->where('id',$id)->first();
+
+        if(!empty($empData)) {
+            return json_encode([
+                    "status" => "true",
+                    "message" => "Data updated successfully",
+                    "data" => $empData
+                ]);
+        } else {
+            return json_encode([
+                "status" => "false",
+                "message" => "No Data found",
+            ]);    
+        }
+    }
+
+    public function Post_AdditionalStore()
+    {
+        $request = service('request');
+        $post = $request->getPost();
+
+        $db = db_connect();
+        $commonModel = new CommonModel($db);
+
+        $data = array(
+            'additional_store'=>$post['num_of_store'],
+            'additional_store_fee'=>$post['fee']
+        );
+        $result = $commonModel->UpdateData('employees',$post['id'],$data);
 
         return json_encode([
             "status" => "true",

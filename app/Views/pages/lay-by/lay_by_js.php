@@ -375,7 +375,7 @@ $("#terms").change(function(){
       if(discount_type == "%") {
         disc = (parseFloat(amount) * parseFloat(discount)) / 100;
       } else {
-        disc = parseFloat(amount) - discount;
+        disc = discount;
       }
     }
     return disc;

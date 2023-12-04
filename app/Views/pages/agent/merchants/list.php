@@ -77,7 +77,6 @@
                                              <th>City</th>
                                              <th>Stores</th>
                                              <th>Created Date</th>
-                                             <th>Expiry Date</th>
                                              <!-- <th class="text-left">Action</th> -->
                                           </tr>
                                        </thead>

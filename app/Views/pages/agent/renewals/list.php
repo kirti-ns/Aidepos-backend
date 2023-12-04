@@ -59,7 +59,7 @@
                                           <th>Expiry Date</th>
                                           <th>Next Renewal Date</th>
                                           <th>No of Users per Store</th>
-                                          <!-- <th>Action</th> -->
+                                          <th>Additional Stores</th>
                                        </tr>
                                     </thead>
                                     <tbody>
@@ -94,6 +94,7 @@
                                       <th style="width: 30px;">Store ID</th>
                                       <th>Store Name</th>
                                       <th>No of Employees</th>
+                                      <th>No of Terminals</th>
                                     </thead>
                                     <tbody id="append-row">
                                       
@@ -113,3 +114,40 @@
     </div>
   </div>
 </div>
+      <div class="modal fade text-left" id="additional-store-mdl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel19" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel19">Additional Store</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="add_store_management" name="add_store_management">
+                        <input type="hidden" name="emp_id" id="emp-id-inp">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                  <table class="table table-bordered" id="sTbl">
+                                    <thead>
+                                      <th>No of Additional Store</th>
+                                      <th>Fee</th>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td><input type="number" name="store" class="form-control" id="no-of-store-inp"></td>
+                                        <td><input type="number" name="store_fee" class="form-control" id="store-fee"></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default_new" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i> Cancel</button>
+                            <button id="btnSubmitAddStore" type="button" class="btn btn-info"><i class="fa fa-file-o"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+      </div>

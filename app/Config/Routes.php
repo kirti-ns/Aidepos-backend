@@ -55,6 +55,8 @@ $routes->post('agent/renewals/getTerms','AgentController::getTerms');
 $routes->post('/agent/term/editStoreandStaff','AgentController::Edit_StoreandStaff');
 $routes->post('/agent/term/editNumofStore','AgentController::Edit_NumofStore');
 $routes->post('/agent/term/postNumofStaff','AgentController::Post_StoreandStaff');
+$routes->post('/agent/term/editAdditionalStore','AgentController::Edit_AdditionalStore');
+$routes->post('/agent/term/postAdditionalStore','AgentController::Post_AdditionalStore');
 
 $routes->get('/customers','CustomersController::index');
 $routes->get('/customers/add_customer','CustomersController::Add_Customer');

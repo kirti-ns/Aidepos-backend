@@ -15,7 +15,7 @@ class EmployeeModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['first_name','last_name','role_id','primary_email','country_code','phone','secondary_email','address','zip','city','password','store_id','forgot_password_token','status','state','country','time_zone','language','gender','nick_name','profile','contract','contract_date','num_of_store'];
+    protected $allowedFields    = ['pos_id','first_name','last_name','role_id','primary_email','country_code','phone','secondary_email','address','zip','city','password','store_id','forgot_password_token','status','state','country','time_zone','expiry_date','gender','profile','contract','contract_date','num_of_store','additional_store','additional_store_fee','is_super_user','agent_agreed_amt'];
 
     // Dates
     protected $useTimestamps = false;
